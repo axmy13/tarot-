@@ -457,9 +457,14 @@
         }, 50);
     }
 
-    resetHistoryBtn.addEventListener('click', resetHistory);
-    drawBtn.addEventListener('click', performDivination);
+    // 兼容 iPad 的点击处理
+const clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
 
+resetHistoryBtn.addEventListener(clickEvent, resetHistory);
+drawBtn.addEventListener(clickEvent, function(e) {
+    if (clickEvent === 'touchstart') e.preventDefault(); 
+    performDivination();
+});
     function init() {
         resetAllCardsToBack();
         updateHistoryUI();
