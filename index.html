@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>神秘塔罗牌占卜 | 灵境塔罗</title>
-    <meta name="description" content="抽一张塔罗牌，聆听命运的答案。心诚则灵。">
+    <meta name="description" content="三张牌牌阵 · 过去 · 现在 · 未来">
     <style>
         * {
             margin: 0;
@@ -16,16 +16,15 @@
         body {
             min-height: 100vh;
             background: linear-gradient(145deg, #1a0f1a 0%, #0f0a1a 100%);
-            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             position: relative;
-            overflow-x: hidden;
         }
 
-        /* 动态星光粒子 */
+        /* 动态星光 */
         .star {
             position: fixed;
             background: white;
@@ -41,124 +40,116 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 750px;
             width: 100%;
             background: rgba(25, 15, 35, 0.65);
             backdrop-filter: blur(12px);
-            border-radius: 64px;
-            padding: 24px 20px 40px;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            border-radius: 48px;
+            padding: 20px 16px 32px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
             border: 1px solid rgba(210, 180, 140, 0.5);
             z-index: 2;
             position: relative;
         }
 
-        .container::after {
-            content: '✦  ✦  ✦';
-            position: absolute;
-            bottom: 18px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 12px;
-            letter-spacing: 6px;
-            color: #c9aa6f;
-            opacity: 0.5;
-        }
-
         h1 {
             text-align: center;
-            font-size: 2.1rem;
+            font-size: 1.8rem;
             letter-spacing: 4px;
             background: linear-gradient(135deg, #f3e7c9, #d8b56e);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 6px;
-            text-shadow: 0 0 20px rgba(216,181,110,0.3);
+            margin-bottom: 4px;
         }
 
         .sub {
             text-align: center;
             color: #b8aa8c;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            display: inline-block;
-            width: auto;
-            margin: 0 auto 20px;
-            padding-top: 8px;
-            font-style: italic;
+            display: block;
+            margin-bottom: 20px;
         }
 
-        .card-area {
+        /* 三张牌区域 */
+        .spread-area {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            margin: 20px 0 20px;
-            perspective: 800px;
+            gap: 12px;
+            margin: 15px 0 20px;
+        }
+
+        .card-slot {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .slot-label {
+            color: #d8b56e;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 30px;
         }
 
         .tarot-card {
-            width: 280px;
-            height: 380px;
+            width: 100%;
+            max-width: 170px;
+            height: auto;
+            aspect-ratio: 3 / 4;
             background: #2a1e2e;
-            border-radius: 24px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6);
             position: relative;
             transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            margin: 0 auto;
         }
 
         .tarot-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 40px -12px black;
+            transform: translateY(-5px) scale(1.02);
         }
 
         .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 24px;
+            border-radius: 16px;
             backface-visibility: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.6s ease;
+            transition: all 0.5s ease;
+            box-sizing: border-box;
         }
 
         .card-back {
             background: radial-gradient(circle at 30% 25%, #2f2138, #160e1a);
-            border: 2px solid #c9aa6f;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 0 15px rgba(201,170,111,0.3);
+            border: 1px solid #c9aa6f;
             transform: rotateY(0deg);
         }
 
         .card-back::before {
-            content: "◈ 塔罗 ◈";
-            font-size: 1.4rem;
-            font-weight: bold;
+            content: "◈";
+            font-size: 2rem;
             color: #d6b16e;
-            letter-spacing: 6px;
-            text-shadow: 0 0 5px #ffd58c;
-        }
-
-        .card-back::after {
-            content: "✧ 点击启示 ✧";
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.7rem;
-            color: #b48b4b;
         }
 
         .card-front {
             background: linear-gradient(145deg, #fef7e0, #f4e5c7);
             transform: rotateY(180deg);
-            padding: 18px 12px;
+            padding: 8px;
             text-align: center;
-            color: #2e1e2a;
-            border: 8px double #b47c48;
-            box-shadow: inset 0 0 20px rgba(180,124,72,0.2);
+            border: 4px double #b47c48;
+            font-size: 0.8rem;
+            overflow-y: auto;
         }
 
         .tarot-card.flipped {
@@ -166,170 +157,129 @@
         }
 
         .card-name {
-            font-size: 1.8rem;
+            font-size: 1rem;
             font-weight: bold;
-            margin-top: 15px;
-            border-bottom: 2px solid #b47c48;
+            border-bottom: 1px solid #b47c48;
             display: inline-block;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .card-symbol {
-            font-size: 3.5rem;
-            margin: 15px 0 10px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            font-size: 1.8rem;
+            margin: 6px 0;
         }
 
         .card-meaning {
-            font-size: 1rem;
-            line-height: 1.45;
-            margin: 10px 10px;
-            background: rgba(180, 124, 72, 0.15);
-            padding: 12px;
-            border-radius: 32px;
-            font-weight: 500;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            background: rgba(180,124,72,0.15);
+            padding: 6px;
+            border-radius: 12px;
         }
 
         .card-luck {
-            margin-top: 10px;
-            font-size: 1rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            background: linear-gradient(95deg, #e9dbbd, #dfce9e);
+            background: #e9dbbd;
             display: inline-block;
-            padding: 6px 16px;
-            border-radius: 40px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
         }
 
         .btn-draw {
             display: block;
             width: 80%;
-            margin: 30px auto 10px;
+            margin: 20px auto 15px;
             background: linear-gradient(95deg, #c9aa6f, #b58d4f);
             border: none;
-            padding: 14px 0;
-            font-size: 1.3rem;
+            padding: 12px 0;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #1f1225;
             border-radius: 60px;
             cursor: pointer;
             font-family: inherit;
             letter-spacing: 3px;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-draw::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-draw:hover::before {
-            left: 100%;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
         }
 
         .btn-draw:active {
-            transform: scale(0.96);
+            transform: scale(0.97);
         }
 
         .history-area {
-            margin-top: 28px;
+            margin-top: 20px;
             background: rgba(0,0,0,0.35);
-            border-radius: 48px;
-            padding: 14px 16px;
-            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 10px 12px;
         }
 
         .history-title {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
             color: #e2ca9a;
             text-align: center;
-            margin-bottom: 10px;
         }
 
         .history-list {
-            max-height: 150px;
+            max-height: 100px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
+            margin-top: 6px;
         }
 
         .history-item {
             background: #2c1e2c60;
-            border-radius: 60px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
+            border-radius: 30px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
             display: flex;
             justify-content: space-between;
             color: #eedbba;
-            border-left: 4px solid #c9aa6f;
-        }
-
-        .history-name {
-            font-weight: bold;
-        }
-
-        .history-message {
-            font-size: 0.7rem;
+            border-left: 3px solid #c9aa6f;
         }
 
         .reset-history {
             background: none;
             border: 1px solid #7f6a4a;
             color: #cbbf96;
-            font-size: 0.6rem;
-            padding: 4px 12px;
+            font-size: 0.55rem;
+            padding: 3px 10px;
             border-radius: 30px;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 6px;
             display: block;
             margin-left: auto;
             margin-right: auto;
-            transition: all 0.2s;
-        }
-
-        .reset-history:hover {
-            background: #4f3a2e60;
-            color: #ffecb3;
         }
 
         footer {
             text-align: center;
-            font-size: 0.65rem;
-            margin-top: 22px;
+            font-size: 0.55rem;
+            margin-top: 15px;
             color: #7e6e54;
         }
 
-        @media (max-width: 500px) {
-            .tarot-card { width: 240px; height: 340px; }
-            .card-name { font-size: 1.5rem; }
-            .card-symbol { font-size: 3rem; }
-            .btn-draw { font-size: 1rem; }
+        @media (max-width: 550px) {
+            .card-name { font-size: 0.85rem; }
+            .card-symbol { font-size: 1.5rem; }
+            .card-meaning { font-size: 0.6rem; }
         }
     </style>
 </head>
 <body>
 
 <script>
-    // 动态生成星光
     function createStars() {
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 80; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
-            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.width = Math.random() * 2.5 + 1 + 'px';
             star.style.height = star.style.width;
             star.style.animationDelay = Math.random() * 5 + 's';
             star.style.animationDuration = Math.random() * 3 + 2 + 's';
@@ -341,30 +291,42 @@
 
 <div class="container">
     <h1>✦ 灵境塔罗 ✦</h1>
-    <div style="text-align: center;"><span class="sub">⚡ 抽一张牌 · 聆听命运的答案 ⚡</span></div>
+    <span class="sub">⚡ 三张牌牌阵 · 过去 · 现在 · 未来 ⚡</span>
 
-    <div class="card-area">
-        <div class="tarot-card" id="tarotCard">
-            <div class="card-back"></div>
-            <div class="card-front" id="cardFront">
-                <div class="card-name">?</div>
-                <div class="card-symbol">🔮</div>
-                <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
-                <div class="card-luck">✨ 静心触摸 ✨</div>
+    <div class="spread-area">
+        <div class="card-slot">
+            <div class="slot-label">📜 过去</div>
+            <div class="tarot-card" id="cardPast">
+                <div class="card-back"></div>
+                <div class="card-front"></div>
+            </div>
+        </div>
+        <div class="card-slot">
+            <div class="slot-label">🔮 现在</div>
+            <div class="tarot-card" id="cardPresent">
+                <div class="card-back"></div>
+                <div class="card-front"></div>
+            </div>
+        </div>
+        <div class="card-slot">
+            <div class="slot-label">✨ 未来</div>
+            <div class="tarot-card" id="cardFuture">
+                <div class="card-back"></div>
+                <div class="card-front"></div>
             </div>
         </div>
     </div>
 
-    <button class="btn-draw" id="drawBtn">✨ 抽取塔罗牌 ✨</button>
+    <button class="btn-draw" id="drawBtn">✨ 展开牌阵 ✨</button>
 
     <div class="history-area">
         <div class="history-title">📜 占卜纪事录</div>
         <div class="history-list" id="historyList">
-            <div class="history-item" style="opacity:0.7;">✨ 点击抽牌，启示将在此显现 ✨</div>
+            <div class="history-item" style="opacity:0.7;">✨ 点击展开牌阵 ✨</div>
         </div>
         <button class="reset-history" id="resetHistoryBtn">🗑 清空记录</button>
     </div>
-    <footer>心诚则灵 · 每张牌皆映照当下之念</footer>
+    <footer>心诚则灵 · 每张牌映照当下之念</footer>
 </div>
 
 <script>
@@ -394,34 +356,20 @@
     ];
 
     let historyRecords = [];
-    const tarotCardDiv = document.getElementById('tarotCard');
-    const cardFront = document.getElementById('cardFront');
+
+    const cardPast = document.getElementById('cardPast');
+    const cardPresent = document.getElementById('cardPresent');
+    const cardFuture = document.getElementById('cardFuture');
     const drawBtn = document.getElementById('drawBtn');
     const historyListEl = document.getElementById('historyList');
     const resetHistoryBtn = document.getElementById('resetHistoryBtn');
 
-    let isFlipped = false;
-    let currentCardData = null;
+    let currentCards = { past: null, present: null, future: null };
+    let isFlipped = { past: false, present: false, future: false };
 
-    // 抽牌音效（用Web Audio API生成一个简单的神秘音效）
-    function playDrawSound() {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.frequency.value = 440;
-            gainNode.gain.value = 0.15;
-            oscillator.type = 'sine';
-            oscillator.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8);
-            oscillator.stop(audioCtx.currentTime + 0.8);
-        } catch(e) { console.log("音效不支持"); }
-    }
-
-    function renderCardFront(card) {
-        cardFront.innerHTML = `
+    function renderCardFront(cardElement, card, slot) {
+        const frontDiv = cardElement.querySelector('.card-front');
+        frontDiv.innerHTML = `
             <div class="card-name">${card.name}</div>
             <div class="card-symbol">${card.symbol}</div>
             <div class="card-meaning">「 ${card.meaning} 」</div>
@@ -429,22 +377,32 @@
         `;
     }
 
-    function addHistoryRecord(card) {
+    function addHistoryRecord(cards) {
         const now = new Date();
         const timeStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        historyRecords.unshift({ name: card.name, shortMeaning: card.luck, time: timeStr });
-        if (historyRecords.length > 8) historyRecords.pop();
+        const record = {
+            id: Date.now(),
+            past: cards.past.name,
+            present: cards.present.name,
+            future: cards.future.name,
+            time: timeStr
+        };
+        historyRecords.unshift(record);
+        if (historyRecords.length > 6) historyRecords.pop();
         updateHistoryUI();
     }
 
     function updateHistoryUI() {
         if (historyRecords.length === 0) {
-            historyListEl.innerHTML = `<div class="history-item" style="opacity:0.7;">✨ 暂无占卜记录，点击抽牌 ✨</div>`;
+            historyListEl.innerHTML = `<div class="history-item" style="opacity:0.7;">✨ 点击展开牌阵 ✨</div>`;
             return;
         }
         let html = '';
         for (let rec of historyRecords) {
-            html += `<div class="history-item"><span class="history-name">📜 ${rec.name}</span><span class="history-message">${rec.shortMeaning}  ·  ${rec.time}</span></div>`;
+            html += `<div class="history-item">
+                        <span>📜 ${rec.past} · ${rec.present} · ${rec.future}</span>
+                        <span>${rec.time}</span>
+                    </div>`;
         }
         historyListEl.innerHTML = html;
     }
@@ -464,59 +422,46 @@
         return { ...tarotDeck[randomIndex] };
     }
 
-    function performDivination() {
-        playDrawSound();
-        const newCard = drawRandomCard();
-        currentCardData = newCard;
+    function resetAllCardsToBack() {
+        [cardPast, cardPresent, cardFuture].forEach(card => {
+            card.classList.remove('flipped');
+        });
+        isFlipped = { past: false, present: false, future: false };
+        currentCards = { past: null, present: null, future: null };
         
-        if (isFlipped) {
-            tarotCardDiv.classList.remove('flipped');
-            isFlipped = false;
-            setTimeout(() => {
-                renderCardFront(newCard);
-                tarotCardDiv.classList.add('flipped');
-                isFlipped = true;
-                addHistoryRecord(newCard);
-            }, 160);
-        } else {
-            renderCardFront(newCard);
-            tarotCardDiv.classList.add('flipped');
-            isFlipped = true;
-            addHistoryRecord(newCard);
-        }
+        [cardPast, cardPresent, cardFuture].forEach(card => {
+            const frontDiv = card.querySelector('.card-front');
+            frontDiv.innerHTML = '';
+        });
     }
 
-    function resetCardToBack() {
-        if (isFlipped) {
-            tarotCardDiv.classList.remove('flipped');
-            isFlipped = false;
-            cardFront.innerHTML = `
-                <div class="card-name">?</div>
-                <div class="card-symbol">🔮</div>
-                <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
-                <div class="card-luck">✨ 静心触摸 ✨</div>
-            `;
-            currentCardData = null;
-        }
+    function performDivination() {
+        resetAllCardsToBack();
+        
+        const newPast = drawRandomCard();
+        const newPresent = drawRandomCard();
+        const newFuture = drawRandomCard();
+        
+        currentCards = { past: newPast, present: newPresent, future: newFuture };
+        
+        renderCardFront(cardPast, newPast, 'past');
+        renderCardFront(cardPresent, newPresent, 'present');
+        renderCardFront(cardFuture, newFuture, 'future');
+        
+        setTimeout(() => {
+            cardPast.classList.add('flipped');
+            cardPresent.classList.add('flipped');
+            cardFuture.classList.add('flipped');
+            isFlipped = { past: true, present: true, future: true };
+            addHistoryRecord(currentCards);
+        }, 50);
     }
 
-    drawBtn.addEventListener('click', performDivination);
     resetHistoryBtn.addEventListener('click', resetHistory);
-    tarotCardDiv.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
-        resetCardToBack();
-    });
+    drawBtn.addEventListener('click', performDivination);
 
     function init() {
-        tarotCardDiv.classList.remove('flipped');
-        isFlipped = false;
-        cardFront.innerHTML = `
-            <div class="card-name">?</div>
-            <div class="card-symbol">🔮</div>
-            <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
-            <div class="card-luck">✨ 静心触摸 ✨</div>
-        `;
-        currentCardData = null;
+        resetAllCardsToBack();
         updateHistoryUI();
     }
     init();
