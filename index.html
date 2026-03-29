@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>神秘塔罗牌占卜 | 探索未至之境</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1a0f1a 0%, #0f0a1a 100%);
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20% 40%, rgba(255,215,150,0.3) 1px, transparent 1px),
+                              radial-gradient(1px 1px at 80% 70%, rgba(200,180,255,0.4) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(25, 15, 35, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 64px;
+            padding: 24px 20px 40px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(210, 180, 140, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .container::after {
+            content: '✦  ✦  ✦';
+            position: absolute;
+            bottom: 18px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 6px;
+            color: #c9aa6f;
+            opacity: 0.5;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.1rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #f3e7c9, #d8b56e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #b8aa8c;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 20px;
+            padding-top: 8px;
+            font-style: italic;
+        }
+
+        .card-area {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 20px;
+            perspective: 800px;
+        }
+
+        .tarot-card {
+            width: 260px;
+            height: 360px;
+            background: #2a1e2e;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .tarot-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s ease;
+        }
+
+        .card-back {
+            background: radial-gradient(circle at 30% 25%, #2f2138, #160e1a);
+            border: 1px solid #c9aa6f;
+            transform: rotateY(0deg);
+        }
+
+        .card-back::before {
+            content: "◈ 塔罗 ◈";
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #d6b16e;
+            letter-spacing: 6px;
+        }
+
+        .card-back::after {
+            content: "✧ 点击启示 ✧";
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.7rem;
+            color: #b48b4b;
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, #fef7e0, #f4e5c7);
+            transform: rotateY(180deg);
+            padding: 18px 12px;
+            text-align: center;
+            color: #2e1e2a;
+            border: 6px double #b47c48;
+        }
+
+        .tarot-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-name {
+            font-size: 1.7rem;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 2px solid #b47c48;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card-symbol {
+            font-size: 3.8rem;
+            margin: 20px 0 10px;
+        }
+
+        .card-meaning {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin: 15px 10px;
+            background: rgba(180, 124, 72, 0.15);
+            padding: 12px;
+            border-radius: 32px;
+        }
+
+        .card-luck {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: #e9dbbd;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        .btn-draw {
+            display: block;
+            width: 80%;
+            margin: 30px auto 10px;
+            background: linear-gradient(95deg, #c9aa6f, #b58d4f);
+            border: none;
+            padding: 14px 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1f1225;
+            border-radius: 60px;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: 3px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+        }
+
+        .btn-draw:active {
+            transform: scale(0.96);
+        }
+
+        .history-area {
+            margin-top: 28px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 48px;
+            padding: 14px 16px;
+        }
+
+        .history-title {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #e2ca9a;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .history-list {
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            background: #2c1e2c60;
+            border-radius: 60px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            color: #eedbba;
+            border-left: 4px solid #c9aa6f;
+        }
+
+        .history-name {
+            font-weight: bold;
+        }
+
+        .history-message {
+            font-size: 0.7rem;
+        }
+
+        .reset-history {
+            background: none;
+            border: 1px solid #7f6a4a;
+            color: #cbbf96;
+            font-size: 0.6rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.65rem;
+            margin-top: 22px;
+            color: #7e6e54;
+        }
+
+        @media (max-width: 500px) {
+            .tarot-card { width: 220px; height: 310px; }
+            .card-name { font-size: 1.3rem; }
+            .card-symbol { font-size: 2.8rem; }
+            .btn-draw { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>✦ 灵境塔罗 ✦</h1>
+    <div style="text-align: center;"><span class="sub">⚡ 抽一张牌 · 聆听神秘低语 ⚡</span></div>
+
+    <div class="card-area">
+        <div class="tarot-card" id="tarotCard">
+            <div class="card-back"></div>
+            <div class="card-front" id="cardFront">
+                <div class="card-name">?</div>
+                <div class="card-symbol">🔮</div>
+                <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
+                <div class="card-luck">✨ 静心触摸 ✨</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-draw" id="drawBtn">✨ 抽取塔罗牌 ✨</button>
+
+    <div class="history-area">
+        <div class="history-title">📜 占卜纪事录</div>
+        <div class="history-list" id="historyList">
+            <div class="history-item" style="opacity:0.7;">✨ 点击抽牌，启示将在此显现 ✨</div>
+        </div>
+        <button class="reset-history" id="resetHistoryBtn">🗑 清空记录</button>
+    </div>
+    <footer>心诚则灵 · 每张牌皆映照当下之念</footer>
+</div>
+
+<script>
+    const tarotDeck = [
+        { name: "愚者", symbol: "🃟", meaning: "新的开始，自由与冒险，天真无畏。", luck: "🌿 突破框架" },
+        { name: "魔术师", symbol: "🪄", meaning: "创造力与显化，你拥有改变现状的所有资源。", luck: "⚡ 行动即魔法" },
+        { name: "女祭司", symbol: "🌙", meaning: "直觉与内在智慧，静默中藏有真相。", luck: "🔮 信任直觉" },
+        { name: "皇后", symbol: "🌸", meaning: "丰盛、母性与自然之美，孕育收获。", luck: "💐 繁荣靠近" },
+        { name: "皇帝", symbol: "👑", meaning: "秩序与权威，建立稳定结构。", luck: "🏛️ 掌控局面" },
+        { name: "教皇", symbol: "⛪", meaning: "传统指引与精神共鸣，寻求良师。", luck: "📿 贵人相助" },
+        { name: "恋人", symbol: "💞", meaning: "抉择与结合，关系面临重要发展。", luck: "💘 缘分流动" },
+        { name: "战车", symbol: "🏇", meaning: "意志力与胜利，克服障碍。", luck: "🚀 势如破竹" },
+        { name: "力量", symbol: "🦁", meaning: "以柔克刚，坚韧的内在勇气。", luck: "❤️‍🔥 刚柔并济" },
+        { name: "隐士", symbol: "🏔️", meaning: "内省与指引，寻求灵魂的答案。", luck: "🕯️ 静心悟道" },
+        { name: "命运之轮", symbol: "🎡", meaning: "转折与因果，命运正在转向。", luck: "🍀 时来运转" },
+        { name: "正义", symbol: "⚖️", meaning: "平衡与因果，诚实面对选择。", luck: "📜 公平回报" },
+        { name: "倒吊人", symbol: "🪢", meaning: "换个视角，牺牲换来领悟。", luck: "🌀 静待转机" },
+        { name: "死神", symbol: "💀", meaning: "结束与新生，蜕变不可避免。", luck: "🌅 破而后立" },
+        { name: "节制", symbol: "🏺", meaning: "调和与耐心，中庸之道。", luck: "✨ 平衡之美" },
+        { name: "恶魔", symbol: "👹", meaning: "束缚与执念，认清内心枷锁。", luck: "🔗 挣脱枷锁" },
+        { name: "高塔", symbol: "🗼", meaning: "突变与觉醒，摧毁旧有结构。", luck: "⚡ 焕然一新" },
+        { name: "星星", symbol: "⭐", meaning: "希望与疗愈，黎明前的微光。", luck: "🌟 信念成真" },
+        { name: "月亮", symbol: "🌕", meaning: "不安与幻梦，倾听潜意识。", luck: "🌙 暗藏启示" },
+        { name: "太阳", symbol: "☀️", meaning: "成功与喜悦，生命力绽放。", luck: "🎉 光芒万丈" },
+        { name: "审判", symbol: "📯", meaning: "觉醒与召唤，重新评估自我。", luck: "🔔 迎来新生" },
+        { name: "世界", symbol: "🌍", meaning: "完成与圆满，旅程达成。", luck: "🏆 功德圆满" }
+    ];
+
+    let historyRecords = [];
+    const tarotCardDiv = document.getElementById('tarotCard');
+    const cardFront = document.getElementById('cardFront');
+    const drawBtn = document.getElementById('drawBtn');
+    const historyListEl = document.getElementById('historyList');
+    const resetHistoryBtn = document.getElementById('resetHistoryBtn');
+
+    let isFlipped = false;
+    let currentCardData = null;
+
+    function renderCardFront(card) {
+        cardFront.innerHTML = `
+            <div class="card-name">${card.name}</div>
+            <div class="card-symbol">${card.symbol}</div>
+            <div class="card-meaning">「 ${card.meaning} 」</div>
+            <div class="card-luck">✨ ${card.luck} ✨</div>
+        `;
+    }
+
+    function addHistoryRecord(card) {
+        const now = new Date();
+        const timeStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        historyRecords.unshift({ name: card.name, shortMeaning: card.luck, time: timeStr });
+        if (historyRecords.length > 8) historyRecords.pop();
+        updateHistoryUI();
+    }
+
+    function updateHistoryUI() {
+        if (historyRecords.length === 0) {
+            historyListEl.innerHTML = `<div class="history-item" style="opacity:0.7;">✨ 暂无占卜记录，点击抽牌 ✨</div>`;
+            return;
+        }
+        let html = '';
+        for (let rec of historyRecords) {
+            html += `<div class="history-item"><span class="history-name">📜 ${rec.name}</span><span class="history-message">${rec.shortMeaning}  ·  ${rec.time}</span></div>`;
+        }
+        historyListEl.innerHTML = html;
+    }
+
+    function resetHistory() {
+        historyRecords = [];
+        updateHistoryUI();
+        const tip = document.createElement('div');
+        tip.innerText = '✨ 占卜记录已洁净 ✨';
+        tip.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#2a1d2c;color:#f3deba;padding:6px 18px;border-radius:60px;font-size:0.7rem;z-index:999';
+        document.body.appendChild(tip);
+        setTimeout(() => tip.remove(), 1500);
+    }
+
+    function drawRandomCard() {
+        const randomIndex = Math.floor(Math.random() * tarotDeck.length);
+        return { ...tarotDeck[randomIndex] };
+    }
+
+    function performDivination() {
+        const newCard = drawRandomCard();
+        currentCardData = newCard;
+        
+        if (isFlipped) {
+            tarotCardDiv.classList.remove('flipped');
+            isFlipped = false;
+            setTimeout(() => {
+                renderCardFront(newCard);
+                tarotCardDiv.classList.add('flipped');
+                isFlipped = true;
+                addHistoryRecord(newCard);
+            }, 160);
+        } else {
+            renderCardFront(newCard);
+            tarotCardDiv.classList.add('flipped');
+            isFlipped = true;
+            addHistoryRecord(newCard);
+        }
+    }
+
+    function resetCardToBack() {
+        if (isFlipped) {
+            tarotCardDiv.classList.remove('flipped');
+            isFlipped = false;
+            cardFront.innerHTML = `
+                <div class="card-name">?</div>
+                <div class="card-symbol">🔮</div>
+                <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
+                <div class="card-luck">✨ 静心触摸 ✨</div>
+            `;
+            currentCardData = null;
+        }
+    }
+
+    drawBtn.addEventListener('click', performDivination);
+    resetHistoryBtn.addEventListener('click', resetHistory);
+    tarotCardDiv.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        resetCardToBack();
+    });
+
+    function init() {
+        tarotCardDiv.classList.remove('flipped');
+        isFlipped = false;
+        cardFront.innerHTML = `
+            <div class="card-name">?</div>
+            <div class="card-symbol">🔮</div>
+            <div class="card-meaning">点击抽取牌面，命运之轮转动...</div>
+            <div class="card-luck">✨ 静心触摸 ✨</div>
+        `;
+        currentCardData = null;
+        updateHistoryUI();
+    }
+    init();
+</script>
+</body>
+</html>
