@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>神秘塔罗牌占卜 | 探索未至之境</title>
+    <title>神秘塔罗牌占卜 | 灵境塔罗</title>
+    <meta name="description" content="抽一张塔罗牌，聆听命运的答案。心诚则灵。">
     <style>
         * {
             margin: 0;
@@ -15,7 +16,7 @@
         body {
             min-height: 100vh;
             background: linear-gradient(145deg, #1a0f1a 0%, #0f0a1a 100%);
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -94,8 +95,8 @@
         }
 
         .tarot-card {
-            width: 260px;
-            height: 360px;
+            width: 280px;
+            height: 380px;
             background: #2a1e2e;
             border-radius: 24px;
             cursor: pointer;
@@ -158,35 +159,37 @@
         }
 
         .card-name {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            margin-top: 20px;
+            margin-top: 15px;
             border-bottom: 2px solid #b47c48;
             display: inline-block;
             padding-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .card-symbol {
-            font-size: 3.8rem;
-            margin: 20px 0 10px;
+            font-size: 3.5rem;
+            margin: 15px 0 10px;
         }
 
         .card-meaning {
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.45;
-            margin: 15px 10px;
+            margin: 10px 10px;
             background: rgba(180, 124, 72, 0.15);
             padding: 12px;
             border-radius: 32px;
+            font-weight: 500;
         }
 
         .card-luck {
             margin-top: 10px;
-            font-size: 0.8rem;
+            font-size: 1rem;
             font-weight: bold;
             background: #e9dbbd;
             display: inline-block;
-            padding: 4px 12px;
+            padding: 6px 16px;
             border-radius: 40px;
         }
 
@@ -275,9 +278,9 @@
         }
 
         @media (max-width: 500px) {
-            .tarot-card { width: 220px; height: 310px; }
-            .card-name { font-size: 1.3rem; }
-            .card-symbol { font-size: 2.8rem; }
+            .tarot-card { width: 240px; height: 340px; }
+            .card-name { font-size: 1.5rem; }
+            .card-symbol { font-size: 3rem; }
             .btn-draw { font-size: 1rem; }
         }
     </style>
@@ -285,7 +288,7 @@
 <body>
 <div class="container">
     <h1>✦ 灵境塔罗 ✦</h1>
-    <div style="text-align: center;"><span class="sub">⚡ 抽一张牌 · 聆听神秘低语 ⚡</span></div>
+    <div style="text-align: center;"><span class="sub">⚡ 抽一张牌 · 聆听命运的答案 ⚡</span></div>
 
     <div class="card-area">
         <div class="tarot-card" id="tarotCard">
@@ -313,28 +316,28 @@
 
 <script>
     const tarotDeck = [
-        { name: "愚者", symbol: "🃟", meaning: "新的开始，自由与冒险，天真无畏。", luck: "🌿 突破框架" },
-        { name: "魔术师", symbol: "🪄", meaning: "创造力与显化，你拥有改变现状的所有资源。", luck: "⚡ 行动即魔法" },
-        { name: "女祭司", symbol: "🌙", meaning: "直觉与内在智慧，静默中藏有真相。", luck: "🔮 信任直觉" },
-        { name: "皇后", symbol: "🌸", meaning: "丰盛、母性与自然之美，孕育收获。", luck: "💐 繁荣靠近" },
-        { name: "皇帝", symbol: "👑", meaning: "秩序与权威，建立稳定结构。", luck: "🏛️ 掌控局面" },
-        { name: "教皇", symbol: "⛪", meaning: "传统指引与精神共鸣，寻求良师。", luck: "📿 贵人相助" },
-        { name: "恋人", symbol: "💞", meaning: "抉择与结合，关系面临重要发展。", luck: "💘 缘分流动" },
-        { name: "战车", symbol: "🏇", meaning: "意志力与胜利，克服障碍。", luck: "🚀 势如破竹" },
-        { name: "力量", symbol: "🦁", meaning: "以柔克刚，坚韧的内在勇气。", luck: "❤️‍🔥 刚柔并济" },
-        { name: "隐士", symbol: "🏔️", meaning: "内省与指引，寻求灵魂的答案。", luck: "🕯️ 静心悟道" },
-        { name: "命运之轮", symbol: "🎡", meaning: "转折与因果，命运正在转向。", luck: "🍀 时来运转" },
-        { name: "正义", symbol: "⚖️", meaning: "平衡与因果，诚实面对选择。", luck: "📜 公平回报" },
-        { name: "倒吊人", symbol: "🪢", meaning: "换个视角，牺牲换来领悟。", luck: "🌀 静待转机" },
-        { name: "死神", symbol: "💀", meaning: "结束与新生，蜕变不可避免。", luck: "🌅 破而后立" },
-        { name: "节制", symbol: "🏺", meaning: "调和与耐心，中庸之道。", luck: "✨ 平衡之美" },
-        { name: "恶魔", symbol: "👹", meaning: "束缚与执念，认清内心枷锁。", luck: "🔗 挣脱枷锁" },
-        { name: "高塔", symbol: "🗼", meaning: "突变与觉醒，摧毁旧有结构。", luck: "⚡ 焕然一新" },
-        { name: "星星", symbol: "⭐", meaning: "希望与疗愈，黎明前的微光。", luck: "🌟 信念成真" },
-        { name: "月亮", symbol: "🌕", meaning: "不安与幻梦，倾听潜意识。", luck: "🌙 暗藏启示" },
-        { name: "太阳", symbol: "☀️", meaning: "成功与喜悦，生命力绽放。", luck: "🎉 光芒万丈" },
-        { name: "审判", symbol: "📯", meaning: "觉醒与召唤，重新评估自我。", luck: "🔔 迎来新生" },
-        { name: "世界", symbol: "🌍", meaning: "完成与圆满，旅程达成。", luck: "🏆 功德圆满" }
+        { name: "愚者", symbol: "🃟", meaning: "新的开始往往伴随着未知，不一定要准备好才能出发", luck: "🌿 天真但不盲目" },
+        { name: "魔术师", symbol: "🪄", meaning: "你拥有行动所需的资源与能力，关键是从第一个小动作开始", luck: "✨ 专注即力量" },
+        { name: "女祭司", symbol: "🌙", meaning: "有些答案不在表面，安静下来之后才会浮现", luck: "🕯️ 信任潜意识" },
+        { name: "皇后", symbol: "🌸", meaning: "滋养自己与享受美好，是一种值得培养的能力", luck: "💐 接纳丰盛" },
+        { name: "皇帝", symbol: "👑", meaning: "建立秩序和界限是必要的，也可以保留一点柔软", luck: "🏛️ 稳而不僵" },
+        { name: "教皇", symbol: "⛪", meaning: "传统与他人的经验可以参考，但最终要回到你自己的感受", luck: "📿 择其善者" },
+        { name: "恋人", symbol: "💞", meaning: "选择带来成长，即使选错，也会让你更清楚自己", luck: "💘 为自己的选择负责" },
+        { name: "战车", symbol: "🏇", meaning: "冲突与困难是意志力的试金石，坚持和绕路都是智慧", luck: "🚀 意志主导" },
+        { name: "力量", symbol: "🦁", meaning: "真正的力量往往不是对抗，而是耐心与温柔地面对", luck: "❤️ 以柔克刚" },
+        { name: "隐士", symbol: "🏔️", meaning: "独处与反思不是逃避，是在为下一步积蓄光亮", luck: "🔦 内省即指引" },
+        { name: "命运之轮", symbol: "🎡", meaning: "生活中总有无法控制的起伏，顺应它会轻松一些", luck: "🍃 接纳无常" },
+        { name: "正义", symbol: "⚖️", meaning: "因果真实不虚，你此刻能做的，只是对当下诚实", luck: "📜 种因得果" },
+        { name: "倒吊人", symbol: "🪢", meaning: "暂停、换个角度，有时比硬闯更能看清出路", luck: "🌀 换个视野" },
+        { name: "死神", symbol: "💀", meaning: "结束总带着不舍，但死去的部分会为新的可能腾出空间", luck: "🌱 自然代谢" },
+        { name: "节制", symbol: "🏺", meaning: "平衡不是静止，是在两端之间慢慢调整", luck: "🌊 调和与耐心" },
+        { name: "恶魔", symbol: "👹", meaning: "执念与习惯很难一下子摆脱，先看见它，就已经是松动", luck: "🔗 觉察即自由" },
+        { name: "高塔", symbol: "🗼", meaning: "突如其来的冲击让人痛苦，但也可能拆掉了早该离开的", luck: "⚡ 崩塌后重建" },
+        { name: "星星", symbol: "⭐", meaning: "希望未必能解决问题，但它能让你愿意再走一步", luck: "🌟 微光不灭" },
+        { name: "月亮", symbol: "🌕", meaning: "恐惧与不安常来自“不知道”，先安抚自己，再去看清", luck: "🌙 面对潜意识" },
+        { name: "太阳", symbol: "☀️", meaning: "当你感到清晰、轻松、温暖时，好好享受，这不常有", luck: "🎈 全然喜悦" },
+        { name: "审判", symbol: "📯", meaning: "你心里早就知道什么该放下、什么该继续，只是还没准备好", luck: "🔔 内在召唤" },
+        { name: "世界", symbol: "🌍", meaning: "一段旅程完成时，回望来路，你会感谢那个没放弃的自己", luck: "🏁 完整与整合" }
     ];
 
     let historyRecords = [];
