@@ -2,472 +2,306 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>神秘塔罗牌占卜 | 灵境塔罗</title>
-    <meta name="description" content="三张牌牌阵 · 过去 · 现在 · 未来">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>灵境塔罗 - 忘忧占卜站</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
+        :root {
+            --primary-bg: #0f0c29;
+            --accent-gold: #d4af37;
+            --text-color: #e0e0e0;
+            --card-back: #1c1c3c;
         }
 
         body {
-            min-height: 100vh;
-            background: linear-gradient(145deg, #1a0f1a 0%, #0f0a1a 100%);
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            position: relative;
-        }
-        /* 动态星光 */
-        .star {
-            position: fixed;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 0.8; transform: scale(1); }
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
         }
 
-        .container {
-            max-width: 750px;
+        header {
+            text-align: center;
+            padding: 20px;
             width: 100%;
-            background: rgba(25, 15, 35, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 20px 16px 32px;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-            border: 1px solid rgba(210, 180, 140, 0.5);
-            z-index: 2;
-            position: relative;
         }
 
         h1 {
-            text-align: center;
             font-size: 1.8rem;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #f3e7c9, #d8b56e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 4px;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            margin-bottom: 5px;
         }
 
-        .sub {
-            text-align: center;
-            color: #b8aa8c;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        /* 三张牌区域 */
-        .spread-area {
+        .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
-            margin: 15px 0 20px;
+            gap: 15px;
+            max-width: 1000px;
+            padding: 10px;
+            perspective: 1000px;
         }
 
-        .card-slot {
-            flex: 1;
-            min-width: 100px;
-            text-align: center;
-        }
-
-        .slot-label {
-            color: #d8b56e;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            background: rgba(0,0,0,0.4);
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 30px;
-        }
-
-        .tarot-card {
-            width: 100%;
-            max-width: 170px;
-            height: auto;
-            aspect-ratio: 3 / 4;
-            background: #2a1e2e;
-            border-radius: 16px;
+        .card-container {
+            width: 100px;
+            height: 180px;
+            perspective: 1000px;
             cursor: pointer;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: all 0.4s ease;
-            margin: 0 auto;
         }
 
-        .tarot-card:hover {
-            transform: translateY(-5px) scale(1.02);
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.flipped {
+            transform: rotateY(180deg);
         }
 
         .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 16px;
             backface-visibility: hidden;
+            border-radius: 10px;
+            border: 2px solid var(--accent-gold);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            transition: all 0.5s ease;
+            align-items: center;
+            padding: 10px;
             box-sizing: border-box;
         }
 
         .card-back {
-            background: radial-gradient(circle at 30% 25%, #2f2138, #160e1a);
-            border: 1px solid #c9aa6f;
-            transform: rotateY(0deg);
-        }
-
-        .card-back::before {
-            content: "◈";
-            font-size: 2rem;
-            color: #d6b16e;
+            background-color: var(--card-back);
+            background-image: radial-gradient(circle, #2c2c5c 1px, transparent 1px);
+            background-size: 10px 10px;
         }
 
         .card-front {
-            background: linear-gradient(145deg, #fef7e0, #f4e5c7);
-            transform: rotateY(180deg);
-            padding: 8px;
-            text-align: center;
-            border: 4px double #b47c48;
-            font-size: 0.8rem;
-            overflow-y: auto;
-        }
-
-        .tarot-card.flipped {
+            background-color: #fff;
+            color: #333;
             transform: rotateY(180deg);
         }
 
-        .card-name {
-            font-size: 1rem;
-            font-weight: bold;
-            border-bottom: 1px solid #b47c48;
-            display: inline-block;
-            margin-bottom: 6px;
-        }
-
-        .card-symbol {
-            font-size: 1.8rem;
-            margin: 6px 0;
-        }
-
-        .card-meaning {
-            font-size: 0.7rem;
-            line-height: 1.3;
-            background: rgba(180,124,72,0.15);
-            padding: 6px;
-            border-radius: 12px;
-        }
-
-        .card-luck {
-            font-size: 0.7rem;
-            font-weight: bold;
-            background: #e9dbbd;
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 20px;
-            margin-top: 6px;
-        }
-
-        .btn-draw {
-            display: block;
-            width: 80%;
-            margin: 20px auto 15px;
-            background: linear-gradient(95deg, #c9aa6f, #b58d4f);
-            border: none;
-            padding: 12px 0;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #1f1225;
-            border-radius: 60px;
-            cursor: pointer;
-            font-family: inherit;
-            letter-spacing: 3px;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-        }
-
-        .btn-draw:active {
-            transform: scale(0.97);
-        }
-
-        .history-area {
-            margin-top: 20px;
-            background: rgba(0,0,0,0.35);
-            border-radius: 32px;
-            padding: 10px 12px;
-        }
-
-        .history-title {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: #e2ca9a;
+        .card-label {
+            position: absolute;
+            top: -25px;
+            width: 100%;
             text-align: center;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
         }
 
-        .history-list {
-            max-height: 100px;
-            overflow-y: auto;
+        .controls {
+            margin: 30px 0;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 6px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active {
+            transform: scale(0.95);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        #history {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 50px;
         }
 
         .history-item {
-            background: #2c1e2c60;
-            border-radius: 30px;
-            padding: 4px 8px;
-            font-size: 0.7rem;
-            display: flex;
-            justify-content: space-between;
-            color: #eedbba;
-            border-left: 3px solid #c9aa6f;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px 0;
+            font-size: 0.9rem;
         }
 
-        .reset-history {
-            background: none;
-            border: 1px solid #7f6a4a;
-            color: #cbbf96;
-            font-size: 0.55rem;
-            padding: 3px 10px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 6px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 0.55rem;
-            margin-top: 15px;
-            color: #7e6e54;
-        }
-
-        @media (max-width: 550px) {
-            .card-name { font-size: 0.85rem; }
-            .card-symbol { font-size: 1.5rem; }
-            .card-meaning { font-size: 0.6rem; }
+        @media (min-width: 600px) {
+            .card-container { width: 160px; height: 280px; }
+            h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-<script>
-    function createStars() {
-        for (let i = 0; i < 80; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = Math.random() * 2.5 + 1 + 'px';
-            star.style.height = star.style.width;
-            star.style.animationDelay = Math.random() * 5 + 's';
-            star.style.animationDuration = Math.random() * 3 + 2 + 's';
-            document.body.appendChild(star);
-        }
-    }
-    createStars();
-</script>
+<header>
+    <h1>✨ 灵境塔罗 ✨</h1>
+    <p>静心思考你的问题，然后开启牌阵</p>
+</header>
 
 <div class="container">
-    <h1>✦ 灵境塔罗 ✦</h1>
-    <span class="sub">⚡ 三张牌牌阵 · 过去 · 现在 · 未来 ⚡</span>
-
-    <div class="spread-area">
-        <div class="card-slot">
-            <div class="slot-label">📜 过去</div>
-            <div class="tarot-card" id="cardPast">
-                <div class="card-back"></div>
-                <div class="card-front"></div>
-            </div>
-        </div>
-        <div class="card-slot">
-            <div class="slot-label">🔮 现在</div>
-            <div class="tarot-card" id="cardPresent">
-                <div class="card-back"></div>
-                <div class="card-front"></div>
-            </div>
-        </div>
-        <div class="card-slot">
-            <div class="slot-label">✨ 未来</div>
-            <div class="tarot-card" id="cardFuture">
-                <div class="card-back"></div>
-                <div class="card-front"></div>
-            </div>
+    <div class="card-container">
+        <div class="card-label">过去</div>
+        <div class="card-inner" id="cardPast">
+            <div class="card-back">❂</div>
+            <div class="card-front"></div>
         </div>
     </div>
-
-    <button class="btn-draw" id="drawBtn">✨ 展开牌阵 ✨</button>
-
-    <div class="history-area">
-        <div class="history-title">📜 占卜纪事录</div>
-        <div class="history-list" id="historyList">
-            <div class="history-item" style="opacity:0.7;">✨ 点击展开牌阵 ✨</div>
+    <div class="card-container">
+        <div class="card-label">现在</div>
+        <div class="card-inner" id="cardPresent">
+            <div class="card-back">❂</div>
+            <div class="card-front"></div>
         </div>
-        <button class="reset-history" id="resetHistoryBtn">🗑 清空记录</button>
     </div>
-    <footer>心诚则灵 · 每张牌映照当下之念</footer>
+    <div class="card-container">
+        <div class="card-label">未来</div>
+        <div class="card-inner" id="cardFuture">
+            <div class="card-back">❂</div>
+            <div class="card-front"></div>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <button id="drawBtn">🔮 展开牌阵</button>
+    <button id="resetHistoryBtn">🧹 清空记录</button>
+</div>
+
+<div id="history">
+    <h3 style="color: var(--accent-gold); margin-top: 0;">占卜记录</h3>
+    <div id="historyList"></div>
 </div>
 
 <script>
     const tarotDeck = [
-        { name: "愚者", symbol: "🃟", meaning: "新的开始往往伴随着未知，不一定要准备好才能出发", luck: "🌿 天真但不盲目" },
-        { name: "魔术师", symbol: "🪄", meaning: "你拥有行动所需的资源与能力，关键是从第一个小动作开始", luck: "✨ 专注即力量" },
-        { name: "女祭司", symbol: "🌙", meaning: "有些答案不在表面，安静下来之后才会浮现", luck: "🕯️ 信任潜意识" },
-        { name: "皇后", symbol: "🌸", meaning: "滋养自己与享受美好，是一种值得培养的能力", luck: "💐 接纳丰盛" },
-        { name: "皇帝", symbol: "👑", meaning: "建立秩序和界限是必要的，也可以保留一点柔软", luck: "🏛️ 稳而不僵" },
-        { name: "教皇", symbol: "⛪", meaning: "传统与他人的经验可以参考，但最终要回到你自己的感受", luck: "📿 择其善者" },
-        { name: "恋人", symbol: "💞", meaning: "选择带来成长，即使选错，也会让你更清楚自己", luck: "💘 为自己的选择负责" },
-        { name: "战车", symbol: "🏇", meaning: "冲突与困难是意志力的试金石，坚持和绕路都是智慧", luck: "🚀 意志主导" },
-        { name: "力量", symbol: "🦁", meaning: "真正的力量往往不是对抗，而是耐心与温柔地面对", luck: "❤️ 以柔克刚" },
-        { name: "隐士", symbol: "🏔️", meaning: "独处与反思不是逃避，是在为下一步积蓄光亮", luck: "🔦 内省即指引" },
-        { name: "命运之轮", symbol: "🎡", meaning: "生活中总有无法控制的起伏，顺应它会轻松一些", luck: "🍃 接纳无常" },
-        { name: "正义", symbol: "⚖️", meaning: "因果真实不虚，你此刻能做的，只是对当下诚实", luck: "📜 种因得果" },
-        { name: "倒吊人", symbol: "🪢", meaning: "暂停、换个角度，有时比硬闯更能看清出路", luck: "🌀 换个视野" },
-        { name: "死神", symbol: "💀", meaning: "结束总带着不舍，但死去的部分会为新的可能腾出空间", luck: "🌱 自然代谢" },
-        { name: "节制", symbol: "🏺", meaning: "平衡不是静止，是在两端之间慢慢调整", luck: "🌊 调和与耐心" },
-        { name: "恶魔", symbol: "👹", meaning: "执念与习惯很难一下子摆脱，先看见它，就已经是松动", luck: "🔗 觉察即自由" },
-        { name: "高塔", symbol: "🗼", meaning: "突如其来的冲击让人痛苦，但也可能拆掉了早该离开的", luck: "⚡ 崩塌后重建" },
-        { name: "星星", symbol: "⭐", meaning: "希望未必能解决问题，但它能让你愿意再走一步", luck: "🌟 微光不灭" },
-        { name: "月亮", symbol: "🌕", meaning: "恐惧与不安常来自"不知道"，先安抚自己，再去看清", luck: "🌙 面对潜意识" },
-        { name: "太阳", symbol: "☀️", meaning: "当你感到清晰、轻松、温暖时，好好享受，这不常有", luck: "🎈 全然喜悦" },
-        { name: "审判", symbol: "📯", meaning: "你心里早就知道什么该放下、什么该继续，只是还没准备好", luck: "🔔 内在召唤" },
-        { name: "世界", symbol: "🌍", meaning: "一段旅程完成时，回望来路，你会感谢那个没放弃的自己", luck: "🏁 完整与整合" }
+        { name: "愚者", desc: "新的开始，冒险，纯真。" },
+        { name: "魔术师", desc: "行动，创造力，意志力。" },
+        { name: "女祭司", desc: "直觉，神秘，潜意识。" },
+        { name: "皇后", desc: "丰饶，母性，自然。" },
+        { name: "皇帝", desc: "权威，结构，稳定。" },
+        { name: "教皇", desc: "传统，信仰，指引。" },
+        { name: "恋人", desc: "选择，和谐，爱情。" },
+        { name: "战车", desc: "意志，胜利，自律。" },
+        { name: "力量", desc: "勇气，耐心，柔中带刚。" },
+        { name: "隐士", desc: "内省，孤独，寻找真理。" },
+        { name: "命运之轮", desc: "转机，运气，因果循环。" },
+        { name: "正义", desc: "平衡，诚实，责任。" },
+        { name: "倒吊人", desc: "牺牲，换个角度，等待。" },
+        { name: "死神", desc: "结束，转变，新生。" },
+        { name: "节制", desc: "平衡，节制，融合。" },
+        { name: "恶魔", desc: "束缚，沉迷，物质诱惑。" },
+        { name: "高塔", desc: "剧变，觉醒，解构。" },
+        { name: "星星", desc: "希望，灵感，宁静。" },
+        { name: "月亮", desc: "不安，幻象，潜意识。" },
+        { name: "太阳", desc: "成功，快乐，活力。" },
+        { name: "审判", desc: "觉醒，复活，评估。" },
+        { name: "世界", desc: "圆满，成就，旅行。" }
     ];
-
-    let historyRecords = [];
 
     const cardPast = document.getElementById('cardPast');
     const cardPresent = document.getElementById('cardPresent');
     const cardFuture = document.getElementById('cardFuture');
     const drawBtn = document.getElementById('drawBtn');
-    const historyListEl = document.getElementById('historyList');
     const resetHistoryBtn = document.getElementById('resetHistoryBtn');
+    const historyList = document.getElementById('historyList');
 
-    let currentCards = { past: null, present: null, future: null };
-    let isFlipped = { past: false, present: false, future: false };
-
-    function renderCardFront(cardElement, card, slot) {
-        const frontDiv = cardElement.querySelector('.card-front');
-        frontDiv.innerHTML = `
-            <div class="card-name">${card.name}</div>
-            <div class="card-symbol">${card.symbol}</div>
-            <div class="card-meaning">「 ${card.meaning} 」</div>
-            <div class="card-luck">✨ ${card.luck} ✨</div>
-        `;
-    }
-
-    function addHistoryRecord(cards) {
-        const now = new Date();
-        const timeStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        const record = {
-            id: Date.now(),
-            past: cards.past.name,
-            present: cards.present.name,
-            future: cards.future.name,
-            time: timeStr
-        };
-        historyRecords.unshift(record);
-        if (historyRecords.length > 6) historyRecords.pop();
-        updateHistoryUI();
-    }
-
-    function updateHistoryUI() {
-        if (historyRecords.length === 0) {
-            historyListEl.innerHTML = `<div class="history-item" style="opacity:0.7;">✨ 点击展开牌阵 ✨</div>`;
-            return;
-        }
-        let html = '';
-        for (let rec of historyRecords) {
-            html += `<div class="history-item">
-                        <span>📜 ${rec.past} · ${rec.present} · ${rec.future}</span>
-                        <span>${rec.time}</span>
-                    </div>`;
-        }
-        historyListEl.innerHTML = html;
-    }
-
-    function resetHistory() {
-        historyRecords = [];
-        updateHistoryUI();
-        const tip = document.createElement('div');
-        tip.innerText = '✨ 占卜记录已洁净 ✨';
-        tip.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#2a1d2c;color:#f3deba;padding:6px 18px;border-radius:60px;font-size:0.7rem;z-index:999';
-        document.body.appendChild(tip);
-        setTimeout(() => tip.remove(), 1500);
-    }
+    let historyData = JSON.parse(localStorage.getItem('tarotHistory')) || [];
 
     function drawRandomCard() {
-        const randomIndex = Math.floor(Math.random() * tarotDeck.length);
-        return { ...tarotDeck[randomIndex] };
+        return tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
     }
 
-    function resetAllCardsToBack() {
-        [cardPast, cardPresent, cardFuture].forEach(card => {
-            card.classList.remove('flipped');
-        });
-        isFlipped = { past: false, present: false, future: false };
-        currentCards = { past: null, present: null, future: null };
-        
-        [cardPast, cardPresent, cardFuture].forEach(card => {
-            const frontDiv = card.querySelector('.card-front');
-            frontDiv.innerHTML = '';
-        });
+    function renderCardFront(element, cardData) {
+        const front = element.querySelector('.card-front');
+        front.innerHTML = `<strong style="font-size:1.2rem;color:#24243e">${cardData.name}</strong>
+                           <p style="font-size:0.8rem;margin-top:10px">${cardData.desc}</p>`;
+    }
+
+    function resetAllCards() {
+        cardPast.classList.remove('flipped');
+        cardPresent.classList.remove('flipped');
+        cardFuture.classList.remove('flipped');
     }
 
     function performDivination() {
-        resetAllCardsToBack();
-        
-        const newPast = drawRandomCard();
-        const newPresent = drawRandomCard();
-        const newFuture = drawRandomCard();
-        
-        currentCards = { past: newPast, present: newPresent, future: newFuture };
-        
-        renderCardFront(cardPast, newPast, 'past');
-        renderCardFront(cardPresent, newPresent, 'present');
-        renderCardFront(cardFuture, newFuture, 'future');
+        resetAllCards();
         
         setTimeout(() => {
-            cardPast.classList.add('flipped');
-            cardPresent.classList.add('flipped');
-            cardFuture.classList.add('flipped');
-            isFlipped = { past: true, present: true, future: true };
-            addHistoryRecord(currentCards);
-        }, 50);
-    }
-    // 兼容 iPad 的点击处理
-const clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+            const res = {
+                past: drawRandomCard(),
+                present: drawRandomCard(),
+                future: drawRandomCard(),
+                time: new Date().toLocaleString()
+            };
 
-resetHistoryBtn.addEventListener(clickEvent, resetHistory);
-drawBtn.addEventListener(clickEvent, function(e) {
-    if (clickEvent === 'touchstart') e.preventDefault(); 
-    performDivination();
-});
-    function init() {
-        resetAllCardsToBack();
-        updateHistoryUI();
+            renderCardFront(cardPast, res.past);
+            renderCardFront(cardPresent, res.present);
+            renderCardFront(cardFuture, res.future);
+
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    cardPast.classList.add('flipped');
+                    cardPresent.classList.add('flipped');
+                    cardFuture.classList.add('flipped');
+                    
+                    historyData.unshift(res);
+                    if(historyData.length > 10) historyData.pop();
+                    localStorage.setItem('tarotHistory', JSON.stringify(historyData));
+                    updateHistoryUI();
+                }, 100);
+            });
+        }, 300);
     }
-    init();
+
+    function updateHistoryUI() {
+        historyList.innerHTML = historyData.map(item => `
+            <div class="history-item">
+                <small>${item.time}</small><br>
+                ${item.past.name} | ${item.present.name} | ${item.future.name}
+            </div>
+        `).join('');
+    }
+
+    function resetHistory() {
+        if(confirm('确定要清空所有记录吗？')) {
+            historyData = [];
+            localStorage.removeItem('tarotHistory');
+            updateHistoryUI();
+        }
+    }
+
+    // 兼容 iPad 触控
+    const clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+    drawBtn.addEventListener(clickEvent, (e) => {
+        if(e.type === 'touchstart') e.preventDefault();
+        performDivination();
+    });
+
+    resetHistoryBtn.addEventListener(clickEvent, (e) => {
+        if(e.type === 'touchstart') e.preventDefault();
+        resetHistory();
+    });
+
+    updateHistoryUI();
 </script>
 </body>
 </html>
