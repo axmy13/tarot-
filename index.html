@@ -11,215 +11,84 @@
             --text-color: #e0e0e0;
             --card-back-bg: #1c1c3c;
             --card-front-bg: #fff;
-            --glow-color: rgba(212, 175, 55, 0.4);
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
             touch-action: manipulation;
         }
 
-        header {
-            text-align: center;
-            padding: 25px 0;
-            width: 100%;
-        }
+        header { text-align: center; padding: 20px 0; }
+        h1 { font-size: 2rem; color: var(--accent-gold); margin: 0; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        .subtitle { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; }
 
-        h1 {
-            font-size: 2.2rem;
-            color: var(--accent-gold);
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-            margin: 0;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        /* 每日一语区域 */
         #dailyQuote {
-            width: 90%;
-            max-width: 700px;
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid var(--accent-gold);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
-            font-style: italic;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%; max-width: 600px; background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--accent-gold); padding: 12px; border-radius: 8px;
+            margin: 15px 0; text-align: center; font-style: italic; font-size: 0.9rem;
         }
 
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1000px;
-            perspective: 2000px;
-            margin-bottom: 30px;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
+            max-width: 1000px; perspective: 1500px; margin-bottom: 20px;
         }
 
-        .card-container {
-            width: 160px;
-            height: 280px;
-            position: relative;
-        }
-
-        /* 卡片标签 */
-        .card-label {
-            position: absolute;
-            top: -25px;
-            width: 100%;
-            text-align: center;
-            color: var(--accent-gold);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .card-container { width: 100px; height: 180px; position: relative; }
+        .card-label { position: absolute; top: -22px; width: 100%; text-align: center; color: var(--accent-gold); font-size: 0.8rem; font-weight: bold; }
 
         .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            position: relative; width: 100%; height: 100%;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
         }
 
-        /* 翻牌状态 */
-        .card-inner.flipped {
-            transform: rotateY(180deg);
-        }
+        .card-inner.flipped { transform: rotateY(180deg); }
 
-        /* 卡片共有样式 */
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            border: 2px solid var(--accent-gold);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            box-sizing: border-box;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 10px; border: 2px solid var(--accent-gold);
+            display: flex; flex-direction: column; align-items: center; padding: 10px; box-sizing: border-box;
         }
 
-        /* 3. 视觉与排版优化：纯代码版“灵数矩阵”Logo */
-        .card-back {
-            background-color: var(--card-back-bg);
-            justify-content: center;
-            background-image: linear-gradient(45deg, rgba(212,175,55,0.1) 25%, transparent 25%),
-                              linear-gradient(-45deg, rgba(212,175,55,0.1) 25%, transparent 25%);
-            background-size: 10px 10px;
-        }
+        .card-back { background-color: var(--card-back-bg); justify-content: center; }
+        .logo-matrix { color: var(--accent-gold); font-size: 2.5rem; }
 
-        .logo-matrix {
-            color: var(--accent-gold);
-            font-size: 3rem;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px var(--accent-gold);
-        }
-
-        /* 卡片正面样式 */
         .card-front {
-            background-color: var(--card-front-bg);
-            color: #24243e;
-            transform: rotateY(180deg);
-            justify-content: flex-start;
-            overflow-y: auto;
+            background-color: var(--card-front-bg); color: #24243e; transform: rotateY(180deg);
+            justify-content: flex-start; overflow-y: auto;
         }
 
-        .card-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            color: #302b63;
-        }
+        .card-name { font-size: 1.1rem; font-weight: bold; margin: 5px 0; color: #302b63; }
+        .card-desc { font-size: 0.75rem; line-height: 1.5; text-align: left; margin-top: 5px; }
 
-        .card-keywords {
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-
-        .card-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        /* 4. 动画细节：闪光效果 */
         @keyframes flash {
             0% { box-shadow: 0 0 5px var(--accent-gold); }
-            50% { box-shadow: 0 0 50px white; }
-            100% { box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            50% { box-shadow: 0 0 30px #fff; }
+            100% { box-shadow: none; }
         }
+        .card-inner.flipped .card-front { animation: flash 0.6s ease-out; }
 
-        .card-inner.flipped .card-front {
-            animation: flash 0.6s ease-out;
-        }
-
-        /* 按钮与记录区域保持原样 */
-        .controls {
-            margin: 20px 0;
-            display: flex;
-            gap: 15px;
-        }
-
+        .controls { margin: 15px 0; display: flex; gap: 10px; }
         button {
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            background: transparent;
-            color: var(--accent-gold);
-            border: 2px solid var(--accent-gold);
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        button:active {
-            transform: scale(0.95);
-            background: rgba(212, 175, 55, 0.1);
+            padding: 10px 20px; font-size: 0.9rem; background: transparent; color: var(--accent-gold);
+            border: 2px solid var(--accent-gold); border-radius: 25px; cursor: pointer;
         }
 
         #history {
-            width: 90%;
-            max-width: 700px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 90%; max-width: 600px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px; padding: 15px; margin-bottom: 30px; font-size: 0.85rem;
         }
+        .history-item { border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 10px 0; }
 
-        .history-item {
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 15px 0;
-        }
-
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            .card-container { width: 100px; height: 180px; }
-            h1 { font-size: 1.8rem; }
-            .card-name { font-size: 1.2rem; }
-            .card-desc { font-size: 0.8rem; }
+        @media (min-width: 600px) {
+            .card-container { width: 160px; height: 280px; }
+            .card-name { font-size: 1.4rem; }
+            .card-desc { font-size: 0.95rem; }
+            .card-label { font-size: 1rem; top: -28px; }
         }
     </style>
 </head>
@@ -265,16 +134,15 @@
 </div>
 
 <div id="history">
-    <h3 style="color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid var(--accent-gold); padding-bottom: 10px;">占卜记录 (仅存本地)</h3>
+    <h3 style="color: var(--accent-gold); margin-top: 0; font-size: 1rem;">占卜记录</h3>
     <div id="historyList"></div>
 </div>
 
 <script>
-    // 1. 扩充解说辞：辛言老师深度解析版文案
     const tarotDeck = [
-        { name: "愚者", keywords: "冒险、纯真、无限可能", desc: "愚者象征着一段全新旅程的开始。此刻请放下所有束缚与恐惧，以纯真的心拥抱未知。不论结果如何，这份勇气本身就是最大的收获。相信直觉，大胆向前迈出第一步吧。" },
-        { name: "魔术师", keywords: "创造力、行动、意志力", desc: "你拥有将想法转化为现实的一切资源和能力。魔术师提醒你，现在是行动的时刻。整合你的智慧、情感和物质，运用专注的意志力去创造你想要的生活。一切皆在掌握。" },
-        { name: "女祭司", keywords: "直觉、神秘、内在智慧", desc: "女祭司引导你转向内在世界。喧嚣中，请保持静默，倾听直觉的声音。有些答案不需要向外寻找，它们就深藏在你的潜意识中。此刻，比起行动，更需要的是观察、感悟与信任内在的神性。" },
+        { name: "愚者", desc: "愚者象征着一段全新旅程的开始。此刻请放下所有束缚与恐惧，以纯真的心拥抱未知。不论结果如何，这份勇气本身就是最大的收获。相信直觉，大胆向前迈出第一步吧。" },
+        { name: "魔术师", desc: "你拥有将想法转化为现实的一切资源和能力。魔术师提醒你，现在是行动的时刻。整合你的智慧、情感和物质，运用专注的意志力去创造你想要的生活。一切皆在掌握。" },
+        { name: "女祭司", desc: "女祭司引导你转向内在世界。喧嚣中，请保持静默，倾听直觉的声音。有些答案不需要向外寻找，它们就深藏在你的潜意识中。此刻，比起行动，更需要的是观察、感悟与信任内在智慧。" },
         { name: "皇后", desc: "皇后的出现预示着富足与滋养。这不仅是物质上的丰收，更是心灵的满足。请去感受自然的韵律，滋养你的身体与灵魂，让内在的女性能量自然流露。享受当下的美好，让爱自然流动。" },
         { name: "皇帝", desc: "皇帝象征着秩序、结构与权威。此刻需要你建立规则，运用理性和自律来掌控局面。这是一个承担责任、确立目标的时刻。以坚定的意志，稳扎稳打地构建你的梦想蓝图。" },
         { name: "教皇", desc: "教皇代表着传统、信仰与精神指引。这可能意味着你需要寻求导师的建议，或遵循成熟的规范。这也是一个学习、传道和与群体保持和谐的时刻。在传统智慧中找到前行的力量。" },
@@ -296,19 +164,7 @@
         { name: "世界", desc: "世界代表着圆满、成就与一个阶段的完美结束。你已成功达到了目标，感到充实和满足。这是一个庆祝、圆满和开始新循环的时刻。成就已成，世界在你脚下。圆满，无懈可击。" }
     ];
 
-    // 2. 每日一语：忘忧智慧金句
-    const dailyQuotes = [
-        "静心思考，答案自然浮现。",
-        "此刻的迷茫，是智慧升级的前提。",
-        "允许一切发生，接受一切改变。",
-        "真正的力量，源自内心的柔韧。",
-        "爱是唯一的答案，恐惧只是幻象。",
-        "每一个结束，都是新旅程的开始。",
-        "相信直觉，它是灵魂的窃窃私语。",
-        "当下的你，已经足够好。",
-        "智慧，在静默中涌现。",
-        "向内寻求，你拥有一切资源。"
-    ];
+    const dailyQuotes = ["静心思考，答案自然浮现。", "此刻的迷茫，是智慧升级的前提。", "允许一切发生，接受一切改变。", "真正的力量，源自内心的柔韧。", "每一个结束，都是新旅程的开始。", "相信直觉，它是灵魂的窃窃私语。"];
 
     const cardPast = document.getElementById('cardPast');
     const cardPresent = document.getElementById('cardPresent');
@@ -320,40 +176,24 @@
 
     let historyData = JSON.parse(localStorage.getItem('tarotHistory')) || [];
 
-    function drawRandomCard() {
-        return tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
-    }
-
     function renderCardFront(element, cardData) {
-        const front = element.querySelector('.card-front');
-        front.innerHTML = `
+        element.querySelector('.card-front').innerHTML = `
             <div class="card-name">${cardData.name}</div>
-            <div class="card-keywords">(${cardData.keywords || ''})</div>
             <div class="card-desc">${cardData.desc}</div>
         `;
     }
 
-    function resetAllCards() {
+    function performDivination() {
         cardPast.classList.remove('flipped');
         cardPresent.classList.remove('flipped');
         cardFuture.classList.remove('flipped');
-    }
-
-    // 更新每日一语
-    function updateDailyQuote() {
         quoteText.innerText = dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
-    }
-
-    function performDivination() {
-        resetAllCards();
-        updateDailyQuote();
         
-        // 增加延迟，优化 iPad 动画加载
         setTimeout(() => {
             const res = {
-                past: drawRandomCard(),
-                present: drawRandomCard(),
-                future: drawRandomCard(),
+                past: tarotDeck[Math.floor(Math.random() * tarotDeck.length)],
+                present: tarotDeck[Math.floor(Math.random() * tarotDeck.length)],
+                future: tarotDeck[Math.floor(Math.random() * tarotDeck.length)],
                 time: new Date().toLocaleString()
             };
 
@@ -361,40 +201,29 @@
             renderCardFront(cardPresent, res.present);
             renderCardFront(cardFuture, res.future);
 
-            // 4. 动画细节：强制触发重绘，使闪光效果生效
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     cardPast.classList.add('flipped');
                     cardPresent.classList.add('flipped');
                     cardFuture.classList.add('flipped');
-                    
                     historyData.unshift(res);
                     if(historyData.length > 10) historyData.pop();
                     localStorage.setItem('tarotHistory', JSON.stringify(historyData));
                     updateHistoryUI();
-                }, 100); 
+                }, 100);
             });
-        }, 300); // 增加反应时间
+        }, 300);
     }
 
     function updateHistoryUI() {
         historyList.innerHTML = historyData.map(item => `
             <div class="history-item">
-                <small style="color:rgba(212,175,55,0.7)">${item.time}</small><br>
+                <small style="color:rgba(212,175,55,0.6)">${item.time}</small><br>
                 <strong>${item.past.name} | ${item.present.name} | ${item.future.name}</strong>
             </div>
         `).join('');
     }
 
-    function resetHistory() {
-        if(confirm('辛言老师提醒：清空记录后将无法找回。确定要继续吗？')) {
-            historyData = [];
-            localStorage.removeItem('tarotHistory');
-            updateHistoryUI();
-        }
-    }
-
-    // iPad 触控与点击兼容
     const clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
     drawBtn.addEventListener(clickEvent, (e) => {
         if(e.type === 'touchstart') e.preventDefault();
@@ -403,11 +232,11 @@
 
     resetHistoryBtn.addEventListener(clickEvent, (e) => {
         if(e.type === 'touchstart') e.preventDefault();
-        resetHistory();
+        if(confirm('确定要清空记录吗？')) {
+            historyData = []; localStorage.removeItem('tarotHistory'); updateHistoryUI();
+        }
     });
 
-    // 初始化
-    updateDailyQuote();
     updateHistoryUI();
 </script>
 </body>
