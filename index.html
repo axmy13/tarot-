@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>解憂占卜站 | 靈境塔羅</title>
+    
     <style>
         :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
-        body { margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        
-        /* ✅ 修正處：url('Cover.jpg') 匹配你的大寫檔名 */
+        body { 
+            margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; 
+            background-color: var(--primary-bg); color: var(--text-color);
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ✅ 這裡已經改回全小寫 'cover.jpg'，完全對應你的 GitHub 檔案 */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(5, 5, 16, 0.7), rgba(5, 5, 16, 0.7)), url('Cover.jpg') no-repeat center center;
-            background-size: cover; z-index: -1; opacity: 0.5; 
+            background: linear-gradient(rgba(5, 5, 16, 0.7), rgba(5, 5, 16, 0.7)), url('cover.jpg') no-repeat center center;
+            background-size: cover; z-index: -1; opacity: 0.6; 
         }
 
         header { text-align: center; padding: 30px 0 10px; z-index: 2; }
@@ -35,23 +41,48 @@
     </style>
 </head>
 <body>
+
 <div class="bg-overlay"></div>
-<header><h1>解憂占卜站</h1><div class="subtitle">✨ 辛言老師 🔮 靈境塔羅 ✨</div></header>
+
+<header>
+    <h1>解憂占卜站</h1>
+    <div class="subtitle">✨ 辛言老師 🔮 靈境塔羅 ✨</div>
+</header>
+
 <div class="container">
     <img src="logo.png" class="logo-img" alt="解憂占卜站">
-    <div id="dailyQuote"><span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span></div>
-    <div class="cards-area" id="cardsArea">
-        <div class="card-box"><div class="card-label">過去 | Past</div><div id="p-name" class="card-name"></div><div id="p-desc" class="card-desc"></div></div>
-        <div class="card-box"><div class="card-label">現在 | Present</div><div id="n-name" class="card-name"></div><div id="n-desc" class="card-desc"></div></div>
-        <div class="card-box"><div class="card-label">未來 | Future</div><div id="f-name" class="card-name"></div><div id="f-desc" class="card-desc"></div></div>
+    
+    <div id="dailyQuote">
+        <span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span>
     </div>
+
+    <div class="cards-area" id="cardsArea">
+        <div class="card-box">
+            <div class="card-label">過去 | Past</div>
+            <div id="p-name" class="card-name"></div>
+            <div id="p-desc" class="card-desc"></div>
+        </div>
+        <div class="card-box">
+            <div class="card-label">現在 | Present</div>
+            <div id="n-name" class="card-name"></div>
+            <div id="n-desc" class="card-desc"></div>
+        </div>
+        <div class="card-box">
+            <div class="card-label">未來 | Future</div>
+            <div id="f-name" class="card-name"></div>
+            <div id="f-desc" class="card-desc"></div>
+        </div>
+    </div>
+
     <div class="controls">
         <button id="drawBtn" onclick="drawCards()">✨ 開啟啟示 ✨</button>
         <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運</button>
         <button id="resetBtn" style="display:none; font-size: 0.7rem; border: none; opacity: 0.5; color: #fff;" onclick="location.reload()">重新占卜</button>
     </div>
 </div>
+
 <footer>CYBER-ZEN ORACLE © 2026</footer>
+
 <script>
     const tarotDeck = [
         { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。<br><b>🔮 建議：</b> 信任你的直覺。大膽躍下吧，宇宙會接住你。" },
@@ -67,7 +98,7 @@
         { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一的永恆。轉機已至。<br><b>🔮 建議：</b> 順應潮流而非對抗。幸運往往藏在意外的轉折裡。" },
         { name: "正義", desc: "<b>✨ 啟示：</b> 因果律的體現。客觀、冷靜且公正地評估。<br><b>🔮 建議：</b> 對自己的選擇負責。平衡終會恢復。" },
         { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界。暫時的停滯是為了覺醒。<br><b>🔮 建議：</b> 不要急於行動。透過臣服與等待見證新視野。" },
-        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。徹底的蛻變。<br><b>🔮 建議：</b> 勇敢告別過去。唯有結束才能讓新生命進入。" },
+        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。徹底的蛻變。<br><b>🔮 建議：</b> 勇敢告別過去。唯有結束與釋放才能讓新生命進入。" },
         { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。<br><b>🔮 建議：</b> 保持耐心。情緒的平穩是你目前最強大的力量。" },
         { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛。你被自己的慾望或恐懼困住了。<br><b>🔮 建議：</b> 覺察那些看不見的枷鎖。認清真相，你隨時可以選擇自由。" },
         { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒。虛假的安全感被摧毀。<br><b>🔮 建議：</b> 不要抗拒崩塌。這是重建真實基礎的最快方式。" },
