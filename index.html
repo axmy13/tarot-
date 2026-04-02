@@ -35,25 +35,13 @@
         .card-name { font-size: 1.4rem; font-weight: bold; margin: 10px 0; color: var(--accent-gold); }
         .card-desc { font-size: 0.9rem; line-height: 1.8; color: #ddd; text-align: justify; }
 
-        .controls { margin: 40px 0; display: flex; flex-direction: column; gap: 15px; width: 220px; }
-        button { padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
+        .controls { margin: 40px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 220px; }
+        button { width: 100%; padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
         button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
-        .share-btn { 
-            background: #d4af37; color: #000; border: none; display: none; 
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-        }
+        .share-btn { background: #d4af37; color: #000; border: none; display: none; }
 
-        /* YouTube 底部引流樣式 */
         footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
-        .yt-section { margin-bottom: 20px; }
-        .yt-name { color: var(--accent-gold); font-size: 1rem; font-weight: bold; margin-bottom: 8px; }
-        .yt-btn { 
-            display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; 
-            background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; 
-            font-weight: bold; transition: 0.3s; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-        }
-        .yt-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-gold); }
-        .copyright { font-size: 0.7rem; opacity: 0.4; letter-spacing: 1px; margin-top: 20px; }
+        .yt-btn { display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -93,42 +81,40 @@
     <div class="controls">
         <button id="drawBtn" onclick="drawCards()">✨ 開啟靈境牌陣 ✨</button>
         <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運到臉書</button>
-        <button id="resetBtn" style="display:none; font-size: 0.8rem; border: none; opacity: 0.6; color: #fff; background: none; cursor: pointer; text-decoration: underline;" onclick="location.reload()">重新占卜</button>
+        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer;" onclick="window.location.reload()">重新占卜</button>
     </div>
 </div>
 
 <footer>
-    <div class="yt-section">
-        <div class="yt-name">🔮 辛言老師 | 靈境塔羅</div>
-        <a href="https://www.youtube.com/@axmy31" target="_blank" class="yt-btn">▶ 訂閱 YouTube 頻道</a>
-    </div>
-    <div class="copyright">CYBER-ZEN ORACLE © 2026</div>
+    <div style="color: var(--accent-gold); font-weight: bold;">🔮 辛言老師 | 靈境塔羅</div>
+    <a href="https://www.youtube.com/@axmy31" target="_blank" class="yt-btn">▶ 訂閱 YouTube 頻道</a>
+    <div style="font-size: 0.7rem; opacity: 0.4; margin-top: 20px;">CYBER-ZEN ORACLE © 2026</div>
 </footer>
 
 <script>
     const tarotDeck = [
-        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。<br><b>🔮 建議：</b> 信任你的直覺。大膽躍下吧，宇宙會接住你。" },
-        { name: "魔術師", desc: "<b>✨ 啟示：</b> 你正處於能量的巔峰。你手邊已經握有一切成功的工具。<br><b>🔮 建議：</b> 不要再猶豫，現在就是將靈感轉化為現實的時刻。" },
-        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。現在是觀察夢境與直覺的時刻。<br><b>🔮 建議：</b> 保持沉默。在行動之前，先讓智慧在心中沉澱。" },
-        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。你孕育的計畫正在茁壯成長。<br><b>🔮 建議：</b> 去感受自然與愛。允許自己享受生活的美好。" },
-        { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威的象徵。你需要理性的規劃與穩定的結構。<br><b>🔮 建議：</b> 展現你的自律。現在需要的是邏輯與掌控。" },
-        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。遵循成熟的規範。<br><b>🔮 建議：</b> 聆聽前輩的經驗。群體的力量會給你帶來安全感。" },
-        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧的關係。<br><b>🔮 建議：</b> 聽從心底最真實的聲音。選擇與內在一致。" },
-        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利。雖然有衝突，但你全速衝向目標。<br><b>🔮 建議：</b> 保持專注與紀律。掌控好你的情緒之韁繩。" },
-        { name: "力量", desc: "<b>✨ 啟示：</b> 內在勇氣大於力量。勇氣在於溫柔的堅持。<br><b>🔮 建議：</b> 用愛與耐心去感化阻礙。接納自己的陰影。" },
-        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理。提著智慧的明燈。<br><b>🔮 建議：</b> 暫時遠離塵囂。獨處能讓你認清現狀。" },
-        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一的永恆。轉機已至。<br><b>🔮 建議：</b> 順應潮流而非對抗。幸運藏在意外的轉折裡。" },
-        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律的體現。客觀、冷靜且公正地評估。<br><b>🔮 建議：</b> 對自己的選擇負責。平衡終會恢復。" },
-        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界。暫時的停滯是為了覺醒。<br><b>🔮 建議：</b> 不要急於行動。臣服與等待見證新視野。" },
-        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。蛻變。<br><b>🔮 建議：</b> 勇敢告別過去。唯有結束才能讓新生命進入。" },
-        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。<br><b>🔮 建議：</b> 保持耐心。情緒平穩是你目前最強大的力量。" },
-        { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛。你被自己的慾望或恐懼困住了。<br><b>🔮 建議：</b> 覺察那些看不見的枷鎖。認清真相，你隨時可以選擇自由。" },
-        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒。虛假安全感被摧毀。<br><b>🔮 建議：</b> 不要抗拒崩塌。這是重建真實基礎的最快方式。" },
-        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望的暖流。黑暗後的黎明。<br><b>🔮 建議：</b> 保持信心。宇宙眷顧你，分享你的靈感與愛。" },
-        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象與不安。並非表面看起來的樣子。<br><b>🔮 建議：</b> 穿透迷霧。安撫你內在那個受驚的孩子。" },
-        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與純粹成功。一切充滿活力。<br><b>🔮 建議：</b> 盡情閃耀！分享快樂，這是被祝福的時光。" },
-        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚與重獲新生。總結過去。<br><b>🔮 建議：</b> 寬恕自己他人。聽從那份神聖召喚。" },
-        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局。世界就在你腳下。<br><b>🔮 建議：</b> 慶祝你的成就！同時準備好迎接新的循環。" }
+        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下擔憂，純粹地擁抱未知。" },
+        { name: "魔術師", desc: "<b>✨ 啟示：</b> 你已握有一切成功的工具。" },
+        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。" },
+        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。" },
+        { name: "皇帝", desc: "<b>✨ 啟示：</b> 需要理性的規劃與穩定。" },
+        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。" },
+        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧。" },
+        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利，衝向目標。" },
+        { name: "力量", desc: "<b>✨ 啟示：</b> 勇氣在於溫柔的堅持。" },
+        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理，獨處覺醒。" },
+        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一永恆，轉機已至。" },
+        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律體現，客觀評估。" },
+        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界，等待覺醒。" },
+        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有終結，新生的序幕。" },
+        { name: "節制", desc: "<b>✨ 啟示：</b> 尋求完美的平衡與調和。" },
+        { name: "惡魔", desc: "<b>✨ 啟示：</b> 認清慾望或恐懼的枷鎖。" },
+        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒，重建真實。" },
+        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望，黑暗後的黎明。" },
+        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象，穿透迷霧。" },
+        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與純粹的成功。" },
+        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚，重獲新生。" },
+        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局，世界在腳下。" }
     ];
 
     function drawCards() {
@@ -137,17 +123,24 @@
         const cardsArea = document.getElementById('cardsArea');
         const shareBtn = document.getElementById('shareBtn');
         const resetBtn = document.getElementById('resetBtn');
+
         drawBtn.style.display = 'none';
         quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
+
         setTimeout(() => {
-            let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
-            let selected = shuffled.slice(0, 3);
+            // 隨機洗牌並取前三張
+            const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+
+            // 填充內容
             document.getElementById('p-name').innerText = selected[0].name;
             document.getElementById('p-desc').innerHTML = selected[0].desc;
             document.getElementById('n-name').innerText = selected[1].name;
             document.getElementById('n-desc').innerHTML = selected[1].desc;
             document.getElementById('f-name').innerText = selected[2].name;
             document.getElementById('f-desc').innerHTML = selected[2].desc;
+
+            // 顯示區域
             quoteText.innerHTML = "啟示已顯現。願智慧指引你的方向。";
             cardsArea.style.display = 'flex';
             shareBtn.style.display = 'block';
@@ -157,4 +150,8 @@
 
     function shareToFB() {
         const url = window.location.href;
-        window.open(`https://www.facebook
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    }
+</script>
+</body>
+</html>
