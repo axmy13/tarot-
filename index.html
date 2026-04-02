@@ -6,7 +6,7 @@
     <title>解憂占卜站 | 靈境塔羅</title>
 
     <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
-    <meta property="og:description" content="當下即是啟示。抽一張塔羅牌，感受宇宙的指引與能量。✨">
+    <meta property="og:description" content="當下即是啟示。抽一張塔羅牌，感受宇宙的指引與能量。">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://axmy13.github.io/tarot-/logo.png">
 
@@ -15,75 +15,84 @@
     <style>
         html, body {
             margin: 0; padding: 0; background: #000; color: #ffd700;
-            font-family: 'Cinzel', serif; height: 100%; overflow: hidden;
+            font-family: 'Cinzel', serif; height: 100%; overflow-x: hidden;
             display: flex; justify-content: center; align-items: center;
         }
 
         canvas { position: fixed; top: 0; left: 0; z-index: 1; }
 
         .container {
-            position: relative; z-index: 2; text-align: center; padding: 30px;
-            
-            /* --- ✅ ✅ ✅ ✅ ✅ 修正這裡：改為倉庫裡的 cover.jpg --- */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('cover.jpg') no-repeat center center;
-            /* -------------------------------------------------------- */
-            
+            position: relative; z-index: 2; text-align: center; padding: 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('cover.jpg') no-repeat center center;
             background-size: cover; backdrop-filter: blur(5px);
             border-radius: 20px; border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-            max-width: 90%; width: 400px;
+            max-width: 95%; width: 450px; min-height: 500px;
             display: flex; flex-direction: column; align-items: center;
             transition: all 0.5s ease;
         }
 
         .logo-img {
-            width: 80px; height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px #ffd700);
+            width: 60px; /* 縮小 Logo 避免遮擋 */
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 8px #ffd700);
         }
 
         .status {
-            font-size: 18px; letter-spacing: 2px;
-            margin: 20px 0; min-height: 1.5em;
-            color: #fff; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-size: 16px; letter-spacing: 2px;
+            margin: 10px 0; color: #fff;
         }
 
-        .card-result { display: none; margin-top: 10px; animation: fadeIn 1s ease; }
+        /* 三張牌佈局 */
+        .cards-container {
+            display: none; /* 初始隱藏 */
+            width: 100%;
+            justify-content: space-around;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        .card-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .card-item:nth-child(2) { animation-delay: 0.3s; }
+        .card-item:nth-child(3) { animation-delay: 0.6s; }
+
+        .card-pos { font-size: 10px; color: #aaa; margin-bottom: 5px; }
+        .card-name { font-size: 16px; font-weight: bold; color: #ffd700; margin-bottom: 5px; }
+        .card-desc { font-size: 12px; line-height: 1.4; color: #eee; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .card-name {
-            font-size: 32px; font-weight: 700;
-            margin: 10px 0; color: #ffd700;
-            text-shadow: 0 0 15px #ffd700;
-        }
-
-        .card-desc {
-            font-size: 15px; line-height: 1.6;
-            color: #eee; margin: 15px 0; padding: 0 10px;
-        }
-
         .btn {
             background: transparent; border: 1px solid #ffd700;
-            color: #ffd700; padding: 12px 30px;
-            font-family: 'Cinzel', serif; font-size: 14px;
+            color: #ffd700; padding: 10px 20px;
+            font-family: 'Cinzel', serif; font-size: 13px;
             cursor: pointer; border-radius: 50px;
             transition: all 0.3s; margin: 10px;
-            width: 80%; text-decoration: none; display: inline-block;
+            width: 80%; text-decoration: none;
         }
 
         .btn:hover { background: #ffd700; color: #000; box-shadow: 0 0 20px #ffd700; }
 
         .share-btn {
             background: linear-gradient(45deg, #ffd700, #b8860b);
-            color: #000; border: none; font-weight: bold;
+            color: #000; border: none; font-weight: bold; margin-top: 20px;
         }
 
         footer {
-            position: absolute; bottom: 20px; font-size: 10px;
+            position: absolute; bottom: 10px; font-size: 9px;
             letter-spacing: 2px; opacity: 0.5; z-index: 2;
         }
     </style>
@@ -94,15 +103,30 @@
     <div class="container">
         <img src="logo.png" alt="Logo" class="logo-img">
         
-        <div id="setup-view">
-            <div class="status">Awaiting Inspiration</div>
-            <button class="btn" onclick="drawCard()">DRAW | 抽取啟示</button>
+        <div id="status-text" class="status">Awaiting Inspiration</div>
+
+        <button id="draw-btn" class="btn" onclick="drawThreeCards()">DRAW | 獲取三陣啟示</button>
+
+        <div id="cards-view" class="cards-container">
+            <div class="card-item">
+                <div class="card-pos">過去 | Past</div>
+                <div class="card-name" id="p-name"></div>
+                <div class="card-desc" id="p-desc"></div>
+            </div>
+            <div class="card-item">
+                <div class="card-pos">現在 | Present</div>
+                <div class="card-name" id="n-name"></div>
+                <div class="card-desc" id="n-desc"></div>
+            </div>
+            <div class="card-item">
+                <div class="card-pos">未來 | Future</div>
+                <div class="card-name" id="f-name"></div>
+                <div class="card-desc" id="f-desc"></div>
+            </div>
         </div>
 
-        <div id="result-view" class="card-result">
-            <div class="card-name" id="cardName">---</div>
-            <div class="card-desc" id="cardDesc"></div>
-            <button class="btn" onclick="location.reload()">RE-DRAW | 重新抽取</button>
+        <div id="after-draw" style="display:none; width:100%;">
+            <button class="btn" onclick="location.reload()">RE-DRAW | 重新占卜</button>
             <button class="btn share-btn" onclick="shareToFB()">SHARE BLESSING | 分享好運</button>
         </div>
     </div>
@@ -110,45 +134,54 @@
     <footer>CYBER-ZEN ORACLE © 2026</footer>
 
     <script>
-        const cards = [
-            { name: "The Sun", desc: "「太陽代表成功、快樂與活力。你的前方充滿光明，保持自信與熱情，一切願望都將達成。」" },
-            { name: "The Star", desc: "「星星象徵希望與靈感。在迷茫中，請相信內心的導航，宇宙正指引你走向寧寧與豐盛。」" },
-            { name: "The Moon", desc: "「月亮提醒你傾聽直覺。雖然前方看似模糊，但那是靈魂成長的契機，放下面具，面對真實的自我。」" },
-            { name: "Strength", desc: "「勇氣不在於力量的大小，而是在於意志的堅定。用溫柔去化解衝突，你擁有掌控局面的內在力量。」" },
-            { name: "The World", desc: "「世界預示著一個階段的完美結束。你已經準備好邁向更高的次元，享受這份圓滿與自由吧。」" },
-            { name: "The Magician", desc: "「魔術師象徵創造力與開端。你握有一切必要的資源，現在就是將想法轉化為現實的最佳時機。」" }
+        const tarotDeck = [
+            { name: "太陽", desc: "充滿希望與成功的能量。" },
+            { name: "星星", desc: "指引迷途的靈魂尋找方向。" },
+            { name: "月亮", desc: "挖掘直覺，面對隱藏的恐懼。" },
+            { name: "力量", desc: "以柔克剛，內在意志的展現。" },
+            { name: "世界", desc: "階段性的圓滿與新的旅程。" },
+            { name: "魔術師", desc: "萬事俱備，行動的時刻已到。" },
+            { name: "隱士", desc: "內省與智慧的深度探索。" },
+            { name: "命運之輪", desc: "順應變化，轉機即將現身。" }
         ];
 
-        function drawCard() {
-            const setupView = document.getElementById('setup-view');
-            const resultView = document.getElementById('result-view');
-            
-            // 抽取時背景淡化，增加期待感
-            document.querySelector('.container').style.opacity = '0.5';
+        function drawThreeCards() {
+            const statusText = document.getElementById('status-text');
+            const drawBtn = document.getElementById('draw-btn');
+            const cardsView = document.getElementById('cards-view');
+            const afterDraw = document.getElementById('after-draw');
+
+            drawBtn.style.display = 'none';
+            statusText.innerText = "Connecting to your frequency...";
 
             setTimeout(() => {
-                const card = cards[Math.floor(Math.random() * cards.length)];
-                setupView.style.display = 'none';
-                resultView.style.display = 'block';
-                document.getElementById('cardName').innerText = card.name;
-                document.getElementById('cardDesc').innerText = card.desc;
-                document.querySelector('.container').style.opacity = '1';
+                // 隨機選三張不重複的牌
+                const shuffled = tarotDeck.sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, 3);
+
+                // 填入結果
+                document.getElementById('p-name').innerText = selected[0].name;
+                document.getElementById('p-desc').innerText = selected[0].desc;
+                document.getElementById('n-name').innerText = selected[1].name;
+                document.getElementById('n-desc').innerText = selected[1].desc;
+                document.getElementById('f-name').innerText = selected[2].name;
+                document.getElementById('f-desc').innerText = selected[2].desc;
+
+                statusText.innerText = "The Oracle has spoken.";
+                cardsView.style.display = 'flex';
+                afterDraw.style.display = 'block';
             }, 1500);
         }
 
         function shareToFB() {
             const url = window.location.href;
-            const currentCard = document.getElementById('cardName').innerText;
-            const currentDesc = document.getElementById('cardDesc').innerText;
-            const text = "✨ 我抽到了靈境塔羅【" + currentCard + "】！\n" + currentDesc + "\n👉 點擊開啟，領取你的專屬啟示！";
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
         }
 
-        // 星空背景特效
+        // 星空特效
         const canvas = document.getElementById('stars');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
         function initCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -162,23 +195,17 @@
                 });
             }
         }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#ffd700';
             particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-                p.y -= p.speed;
-                if (p.y < 0) p.y = canvas.height;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+                p.y -= p.speed; if (p.y < 0) p.y = canvas.height;
             });
             requestAnimationFrame(animate);
         }
-
         window.addEventListener('resize', initCanvas);
-        initCanvas();
-        animate();
+        initCanvas(); animate();
     </script>
 </body>
 </html>
