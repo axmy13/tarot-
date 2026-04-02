@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>靈境塔羅 - 解憂占卜站</title>
     
-    <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
-    <meta property="og:description" content="閉上雙眼，誠心感應。三牌陣將為你揭示過去、現在與未來的指引。✨">
-    <meta property="og:image" content="https://axmy13.github.io/tarot-/logo.png">
+    <meta property="og:title" content="🔮 靈境塔羅｜解憂占卜站：領取你的專屬啟示">
+    <meta property="og:description" content="【閉上雙眼，誠心感應】現在的困惑，在牌陣中自有解答。這份來自宇宙的指引，將為你揭示過去、現在與未來的走向。✨ 辛言老師誠心推薦。">
+    <meta property="og:image" content="https://axmy13.github.io/tarot-/cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
 
     <style>
         :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
-        body { margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        body { margin: 0; padding: 0; font-family: 'PingFang SC', 'Microsoft JhengHei', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -27,6 +30,7 @@
         .logo-img { width: 70px; height: auto; margin-top: 20px; filter: drop-shadow(0 0 10px var(--accent-gold)); }
 
         #dailyQuote { width: 85%; background: rgba(212, 175, 55, 0.05); border-left: 3px solid var(--accent-gold); padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center; font-size: 0.95rem; line-height: 1.6; color: #fff; }
+        
         .cards-area { display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%; }
         .card-box { width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; box-sizing: border-box; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideUp 0.8s ease forwards; }
 
@@ -37,11 +41,13 @@
 
         .controls { margin: 40px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 220px; }
         button { width: 100%; padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
-        button:hover { background: var(--accent-gold); color: #000; }
-        .share-btn { background: #d4af37; color: #000; border: none; display: none; }
+        button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
+        
+        .share-btn { background: #d4af37; color: #000; border: none; display: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
 
         footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
-        .yt-btn { display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 10px; }
+        .yt-btn { display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 10px; transition: 0.3s; }
+        .yt-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent-gold); }
     </style>
 </head>
 <body>
@@ -57,7 +63,7 @@
     <img src="logo.png" class="logo-img" alt="解憂占卜站">
     
     <div id="dailyQuote">
-        <span id="quoteText">請靜心合眼，默唸你的問題...<br>當你感覺準備好時，開啟牌陣。</span>
+        <span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span>
     </div>
 
     <div class="cards-area" id="cardsArea">
@@ -79,46 +85,44 @@
     </div>
 
     <div class="controls">
-        <button id="drawBtn" onclick="drawCards()">✨ 開啟靈境牌陣 ✨</button>
-        <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運到臉書</button>
-        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 10px;" onclick="window.location.reload()">重新占卜</button>
+        <button id="drawBtn" onclick="drawCards()">✨ 開啟啟示 ✨</button>
+        <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運</button>
+        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 10px; opacity: 0.6;" onclick="window.location.reload()">重新占卜</button>
     </div>
 </div>
 
 <footer>
-    <div style="color: var(--accent-gold); font-weight: bold;">🔮 辛言老師 | 靈境塔羅</div>
+    <div style="color: var(--accent-gold); font-weight: bold; font-size: 1.1rem;">🔮 辛言老師 | 靈境塔羅</div>
     <a href="https://www.youtube.com/@axmy31" target="_blank" class="yt-btn">▶ 訂閱 YouTube 頻道</a>
-    <div style="font-size: 0.7rem; opacity: 0.4; margin-top: 20px;">CYBER-ZEN ORACLE © 2026</div>
+    <div style="font-size: 0.7rem; opacity: 0.4; margin-top: 25px; letter-spacing: 1px;">CYBER-ZEN ORACLE © 2026</div>
 </footer>
 
 <script>
-    // 先定義牌庫
     const tarotDeck = [
-        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。" },
-        { name: "魔術師", desc: "<b>✨ 啟示：</b> 你正處於能量的巔峰。你手邊已經握有一切成功的工具。" },
-        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。現在是觀察夢境與直覺的時刻。" },
-        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。你孕育的計畫正在茁壯成長。" },
-        { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威的象徵。你需要理性的規劃與穩定的結構。" },
-        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。遵循成熟的規範。" },
-        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧的關係。" },
-        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利。雖然有衝突，但你全速衝向目標。" },
-        { name: "力量", desc: "<b>✨ 啟示：</b> 內在勇氣大於力量。勇氣在於溫柔的堅持。" },
-        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理。提著智慧的明燈。" },
-        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一的永恆。轉機已至。" },
-        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律的體現。客觀、冷靜且公正地評估。" },
-        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界。暫時的停滯是為了覺醒。" },
-        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。蛻變。" },
-        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。" },
-        { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛。你被自己的慾望或恐懼困住了。" },
-        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒。虛假安全感被摧毀。" },
-        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望的暖流。黑暗後的黎明。" },
-        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象與不安。並非表面看起來的樣子。" },
-        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與純粹成功。一切充滿活力。" },
-        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚與重獲新生。總結過去。" },
-        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局。世界就在你腳下。" }
+        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下擔憂，純粹地擁抱未知。<br><b>🔮 建議：</b> 信任直覺，大膽躍下吧。" },
+        { name: "魔術師", desc: "<b>✨ 啟示：</b> 能量巔峰，你已握有一切工具。<br><b>🔮 建議：</b> 現在就是將靈感轉化的時刻。" },
+        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在靜默處，觀察直覺。<br><b>🔮 建議：</b> 行動前，先讓智慧在心中沉澱。" },
+        { name: "皇后", desc: "<b>✨ 啟示：</b> 豐盛與母性，計畫正在茁壯。<br><b>🔮 建議：</b> 去感受愛，享受生活的美好。" },
+        { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威，需要理性規劃。<br><b>🔮 建議：</b> 展現自律，掌控好邏輯節奏。" },
+        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統指引，遵循規範。<br><b>🔮 建議：</b> 聆聽前輩經驗，群體會帶來安全感。" },
+        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧。<br><b>🔮 建議：</b> 聽從心底真實聲音，選擇一致。" },
+        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利，全速衝向目標。<br><b>🔮 建議：</b> 保持專注，掌控好情緒之韁。" },
+        { name: "力量", desc: "<b>✨ 啟示：</b> 內在勇氣大於力量，溫柔堅持。<br><b>🔮 建議：</b> 用耐心感化阻礙，接納陰影。" },
+        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理，提著智慧明燈。<br><b>🔮 建議：</b> 暫時遠離塵囂，獨處讓你認清現狀。" },
+        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一永恆，轉機已至。<br><b>🔮 建議：</b> 順應潮流，幸運藏在轉折裡。" },
+        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律體現，客觀冷靜評估。<br><b>🔮 建議：</b> 對選擇負責，平衡終會恢復。" },
+        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界，暫時停滯。<br><b>🔮 建議：</b> 不要急於行動，臣服與等待。" },
+        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有終結，新生的序幕。<br><b>🔮 建議：</b> 勇敢告別過去，讓新生命進入。" },
+        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和，尋求平衡。<br><b>🔮 建議：</b> 保持耐心，平穩是你最強的力量。" },
+        { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛，認清恐懼枷鎖。<br><b>🔮 建議：</b> 覺察影子，你隨時可以選擇自由。" },
+        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒，虛假被摧毀。<br><b>🔮 建議：</b> 不要抗拒崩塌，這是重建的開始。" },
+        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望，黑暗後的黎明。<br><b>🔮 建議：</b> 保持信心，分享你的靈感與愛。" },
+        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象，不安的迷霧。<br><b>🔮 建議：</b> 穿透表象，安撫內在受驚的孩子。" },
+        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與成功，充滿活力。<br><b>🔮 建議：</b> 盡情閃耀！分享快樂與成果。" },
+        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚，總結過去重獲新生。<br><b>🔮 建議：</b> 寬恕自己，聽從神聖的召喚。" },
+        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局，世界就在腳下。<br><b>🔮 建議：</b> 慶祝成就，準備迎接新的循環。" }
     ];
 
-    // 翻牌功能
     function drawCards() {
         try {
             const drawBtn = document.getElementById('drawBtn');
@@ -127,15 +131,12 @@
             const shareBtn = document.getElementById('shareBtn');
             const resetBtn = document.getElementById('resetBtn');
 
-            // 1. 先顯示等待文字
             drawBtn.style.display = 'none';
             quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
 
-            // 2. 隨機抽取
             const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 3);
 
-            // 3. 延時顯示結果
             setTimeout(() => {
                 document.getElementById('p-name').innerText = selected[0].name;
                 document.getElementById('p-desc').innerHTML = selected[0].desc;
@@ -148,9 +149,8 @@
                 cardsArea.style.display = 'flex';
                 shareBtn.style.display = 'block';
                 resetBtn.style.display = 'inline-block';
-            }, 1000);
+            }, 1200);
         } catch (e) {
-            alert("抽牌過程出現一點小干擾，請重新整理頁面再試一次！");
             console.error(e);
         }
     }
