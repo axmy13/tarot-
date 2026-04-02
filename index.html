@@ -37,7 +37,7 @@
 
         .controls { margin: 40px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 220px; }
         button { width: 100%; padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
-        button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
+        button:hover { background: var(--accent-gold); color: #000; }
         .share-btn { background: #d4af37; color: #000; border: none; display: none; }
 
         footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
@@ -81,7 +81,7 @@
     <div class="controls">
         <button id="drawBtn" onclick="drawCards()">✨ 開啟靈境牌陣 ✨</button>
         <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運到臉書</button>
-        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer;" onclick="window.location.reload()">重新占卜</button>
+        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 10px;" onclick="window.location.reload()">重新占卜</button>
     </div>
 </div>
 
@@ -92,60 +92,67 @@
 </footer>
 
 <script>
+    // 先定義牌庫
     const tarotDeck = [
-        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下擔憂，純粹地擁抱未知。" },
-        { name: "魔術師", desc: "<b>✨ 啟示：</b> 你已握有一切成功的工具。" },
-        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。" },
-        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。" },
-        { name: "皇帝", desc: "<b>✨ 啟示：</b> 需要理性的規劃與穩定。" },
-        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。" },
-        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧。" },
-        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利，衝向目標。" },
-        { name: "力量", desc: "<b>✨ 啟示：</b> 勇氣在於溫柔的堅持。" },
-        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理，獨處覺醒。" },
-        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一永恆，轉機已至。" },
-        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律體現，客觀評估。" },
-        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界，等待覺醒。" },
-        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有終結，新生的序幕。" },
-        { name: "節制", desc: "<b>✨ 啟示：</b> 尋求完美的平衡與調和。" },
-        { name: "惡魔", desc: "<b>✨ 啟示：</b> 認清慾望或恐懼的枷鎖。" },
-        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒，重建真實。" },
-        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望，黑暗後的黎明。" },
-        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象，穿透迷霧。" },
-        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與純粹的成功。" },
-        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚，重獲新生。" },
-        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局，世界在腳下。" }
+        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。" },
+        { name: "魔術師", desc: "<b>✨ 啟示：</b> 你正處於能量的巔峰。你手邊已經握有一切成功的工具。" },
+        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。現在是觀察夢境與直覺的時刻。" },
+        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。你孕育的計畫正在茁壯成長。" },
+        { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威的象徵。你需要理性的規劃與穩定的結構。" },
+        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。遵循成熟的規範。" },
+        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧的關係。" },
+        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利。雖然有衝突，但你全速衝向目標。" },
+        { name: "力量", desc: "<b>✨ 啟示：</b> 內在勇氣大於力量。勇氣在於溫柔的堅持。" },
+        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理。提著智慧的明燈。" },
+        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一的永恆。轉機已至。" },
+        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律的體現。客觀、冷靜且公正地評估。" },
+        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界。暫時的停滯是為了覺醒。" },
+        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。蛻變。" },
+        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。" },
+        { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛。你被自己的慾望或恐懼困住了。" },
+        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒。虛假安全感被摧毀。" },
+        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望的暖流。黑暗後的黎明。" },
+        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象與不安。並非表面看起來的樣子。" },
+        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與純粹成功。一切充滿活力。" },
+        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚與重獲新生。總結過去。" },
+        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局。世界就在你腳下。" }
     ];
 
+    // 翻牌功能
     function drawCards() {
-        const drawBtn = document.getElementById('drawBtn');
-        const quoteText = document.getElementById('quoteText');
-        const cardsArea = document.getElementById('cardsArea');
-        const shareBtn = document.getElementById('shareBtn');
-        const resetBtn = document.getElementById('resetBtn');
+        try {
+            const drawBtn = document.getElementById('drawBtn');
+            const quoteText = document.getElementById('quoteText');
+            const cardsArea = document.getElementById('cardsArea');
+            const shareBtn = document.getElementById('shareBtn');
+            const resetBtn = document.getElementById('resetBtn');
 
-        drawBtn.style.display = 'none';
-        quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
+            // 1. 先顯示等待文字
+            drawBtn.style.display = 'none';
+            quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
 
-        setTimeout(() => {
-            // 隨機洗牌並取前三張
+            // 2. 隨機抽取
             const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 3);
 
-            // 填充內容
-            document.getElementById('p-name').innerText = selected[0].name;
-            document.getElementById('p-desc').innerHTML = selected[0].desc;
-            document.getElementById('n-name').innerText = selected[1].name;
-            document.getElementById('n-desc').innerHTML = selected[1].desc;
-            document.getElementById('f-name').innerText = selected[2].name;
-            document.getElementById('f-desc').innerHTML = selected[2].desc;
+            // 3. 延時顯示結果
+            setTimeout(() => {
+                document.getElementById('p-name').innerText = selected[0].name;
+                document.getElementById('p-desc').innerHTML = selected[0].desc;
+                document.getElementById('n-name').innerText = selected[1].name;
+                document.getElementById('n-desc').innerHTML = selected[1].desc;
+                document.getElementById('f-name').innerText = selected[2].name;
+                document.getElementById('f-desc').innerHTML = selected[2].desc;
 
-            // 顯示區域
-            quoteText.innerHTML = "啟示已顯現。願智慧指引你的方向。";
-            cardsArea.style.display = 'flex';
-            shareBtn.style.display = 'block';
-            resetBtn.style.display = 'inline-block';
-        }, 1500);
+                quoteText.innerHTML = "啟示已顯現。願智慧指引你的方向。";
+                cardsArea.style.display = 'flex';
+                shareBtn.style.display = 'block';
+                resetBtn.style.display = 'inline-block';
+            }, 1000);
+        } catch (e) {
+            alert("抽牌過程出現一點小干擾，請重新整理頁面再試一次！");
+            console.error(e);
+        }
     }
 
     function shareToFB() {
