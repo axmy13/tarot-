@@ -7,23 +7,15 @@
     
     <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
     <meta property="og:description" content="閉上雙眼，誠心感應。三牌陣將為你揭示過去、現在與未來的指引。✨">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://axmy13.github.io/tarot-/">
     <meta property="og:image" content="https://axmy13.github.io/tarot-/cover.jpg">
+
     <style>
         :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
+        body { margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        body { 
-            margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; 
-            background-color: var(--primary-bg); color: var(--text-color);
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* 這裡設定背景圖為 Cover.jpg (確保大小寫匹配) */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url('Cover.jpg') no-repeat center center;
+            background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url('cover.jpg') no-repeat center center;
             background-size: cover; z-index: -1; opacity: 0.5; 
         }
 
@@ -31,52 +23,32 @@
         h1 { font-size: 1.8rem; color: var(--accent-gold); margin: 0; letter-spacing: 3px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
         .subtitle { font-size: 0.8rem; opacity: 0.7; margin-top: 5px; }
 
-        .container { 
-            width: 95%; max-width: 800px; display: flex; flex-direction: column; align-items: center; z-index: 2;
-        }
-
-        /* 網頁內的金蓮花 Logo */
+        .container { width: 95%; max-width: 800px; display: flex; flex-direction: column; align-items: center; z-index: 2; }
         .logo-img { width: 70px; height: auto; margin-top: 20px; filter: drop-shadow(0 0 10px var(--accent-gold)); }
 
-        #dailyQuote { 
-            width: 85%; background: rgba(212, 175, 55, 0.05); 
-            border-left: 3px solid var(--accent-gold); padding: 15px; 
-            border-radius: 8px; margin: 25px 0; text-align: center; 
-            font-size: 0.95rem; line-height: 1.6; color: #fff;
-        }
+        #dailyQuote { width: 85%; background: rgba(212, 175, 55, 0.05); border-left: 3px solid var(--accent-gold); padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center; font-size: 0.95rem; line-height: 1.6; color: #fff; }
+        .cards-area { display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%; }
+        .card-box { width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; box-sizing: border-box; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideUp 0.8s ease forwards; }
 
-        .cards-area { 
-            display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%;
-        }
-
-        .card-box {
-            width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px;
-            padding: 20px; box-sizing: border-box; text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideUp 0.8s ease forwards;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         .card-label { color: var(--accent-gold); font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; opacity: 0.8; }
         .card-name { font-size: 1.4rem; font-weight: bold; margin: 10px 0; color: var(--accent-gold); }
         .card-desc { font-size: 0.9rem; line-height: 1.8; color: #ddd; text-align: justify; }
 
         .controls { margin: 40px 0; display: flex; flex-direction: column; gap: 15px; width: 220px; }
-        button { 
-            padding: 14px; font-size: 1rem; background: transparent; 
-            color: var(--accent-gold); border: 1.5px solid var(--accent-gold); 
-            border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold;
-            letter-spacing: 2px;
-        }
+        button { padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
         button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
         .share-btn { background: var(--accent-gold); color: #000; border: none; display: none; }
 
-        footer { margin: 40px 0 20px; font-size: 0.7rem; opacity: 0.3; letter-spacing: 1px; }
+        /* ✅ YouTube 底部區域設定 */
+        footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
+        .yt-btn { 
+            display: inline-block; padding: 8px 18px; font-size: 0.85rem; color: var(--accent-gold); 
+            text-decoration: none; border: 1px solid var(--accent-gold); border-radius: 30px; 
+            margin: 15px 0; transition: 0.3s; font-weight: bold;
+        }
+        .yt-btn:hover { background: rgba(212, 175, 55, 0.1); }
+        .copyright { font-size: 0.65rem; opacity: 0.3; letter-spacing: 1px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -120,14 +92,18 @@
     </div>
 </div>
 
-<footer>CYBER-ZEN ORACLE © 2026</footer>
+<footer>
+    <div style="color: var(--accent-gold); font-size: 0.9rem; font-weight: bold;">🔮 辛言老師 | 靈境塔羅 🔮</div>
+    <a href="https://www.youtube.com/@你的頻道ID" target="_blank" class="yt-btn">訂閱老師看更多占卜</a>
+    <div class="copyright">CYBER-ZEN ORACLE © 2026</div>
+</footer>
 
 <script>
     const tarotDeck = [
         { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。<br><b>🔮 建議：</b> 信任你的直覺。大膽躍下吧，宇宙會接住你。" },
         { name: "魔術師", desc: "<b>✨ 啟示：</b> 你正處於能量的巔峰。你手邊已經握有一切成功的工具。<br><b>🔮 建議：</b> 不要再猶豫，現在就是將靈感轉化為現實的時刻。" },
         { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在內心的靜默處。現在是觀察夢境與直覺的時刻。<br><b>🔮 建議：</b> 保持沉默。在行動之前，先讓智慧在心中沉澱。" },
-        { name: "皇后", desc: "<b>✨ 啟示：</b> 豐盛與母性的能量。你孕育的計畫正在茁壯成長。<br><b>🔮 建議：</b> 去感受自然與愛。允許自己享受生活的美好。" },
+        { name: "皇后", desc: "<b>✨ 啟示：</b> 這是豐盛與母性的能量。你孕育的計畫正在茁壯成長。<br><b>🔮 建議：</b> 去感受自然與愛。允許自己享受生活的美好。" },
         { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威的象徵。你需要理性的規劃與穩定的結構。<br><b>🔮 建議：</b> 展現你的自律。現在需要的是邏輯與掌控。" },
         { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統與導師的指引。遵循成熟的規範。<br><b>🔮 建議：</b> 聆聽前輩的經驗。群體的力量會給你帶來安全感。" },
         { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧的關係。<br><b>🔮 建議：</b> 聽從心底最真實的聲音。選擇與內在一致。" },
@@ -138,7 +114,7 @@
         { name: "正義", desc: "<b>✨ 啟示：</b> 因果律的體現。客觀、冷靜且公正地評估。<br><b>🔮 建議：</b> 對自己的選擇負責。平衡終會恢復。" },
         { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界。暫時的停滯是為了覺醒。<br><b>🔮 建議：</b> 不要急於行動。臣服與等待見證新視野。" },
         { name: "死神", desc: "<b>✨ 啟示：</b> 舊有的終結，新生的序幕。蛻變。<br><b>🔮 建議：</b> 勇敢告別過去。唯有結束才能讓新生命進入。" },
-        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。<br><b>🔮 建議：</b> 保持耐心。情緒平穩是你目前最強強大力量。" },
+        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和。尋求完美的平衡。<br><b>🔮 建議：</b> 保持耐心。情緒平穩是你目前最強大的力量。" },
         { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛。你被自己的慾望或恐懼困住了。<br><b>🔮 建議：</b> 覺察那些看不見的枷鎖。認清真相，你隨時可以選擇自由。" },
         { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒。虛假安全感被摧毀。<br><b>🔮 建議：</b> 不要抗拒崩塌。這是重建真實基礎的最快方式。" },
         { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望的暖流。黑暗後的黎明。<br><b>🔮 建議：</b> 保持信心。宇宙眷顧你，分享你的靈感與愛。" },
