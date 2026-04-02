@@ -7,7 +7,7 @@
     
     <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
     <meta property="og:description" content="閉上雙眼，誠心感應。三牌陣將為你揭示過去、現在與未來的指引。✨">
-    <meta property="og:image" content="https://axmy13.github.io/tarot-/cover.jpg">
+    <meta property="og:image" content="https://axmy13.github.io/tarot-/logo.png">
 
     <style>
         :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
@@ -38,17 +38,22 @@
         .controls { margin: 40px 0; display: flex; flex-direction: column; gap: 15px; width: 220px; }
         button { padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
         button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
-        .share-btn { background: var(--accent-gold); color: #000; border: none; display: none; }
-
-        /* ✅ YouTube 底部區域設定 */
-        footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
-        .yt-btn { 
-            display: inline-block; padding: 8px 18px; font-size: 0.85rem; color: var(--accent-gold); 
-            text-decoration: none; border: 1px solid var(--accent-gold); border-radius: 30px; 
-            margin: 15px 0; transition: 0.3s; font-weight: bold;
+        .share-btn { 
+            background: #d4af37; color: #000; border: none; display: none; 
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
         }
-        .yt-btn:hover { background: rgba(212, 175, 55, 0.1); }
-        .copyright { font-size: 0.65rem; opacity: 0.3; letter-spacing: 1px; margin-top: 10px; }
+
+        /* YouTube 底部引流樣式 */
+        footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
+        .yt-section { margin-bottom: 20px; }
+        .yt-name { color: var(--accent-gold); font-size: 1rem; font-weight: bold; margin-bottom: 8px; }
+        .yt-btn { 
+            display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; 
+            background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; 
+            font-weight: bold; transition: 0.3s; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .yt-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-gold); }
+        .copyright { font-size: 0.7rem; opacity: 0.4; letter-spacing: 1px; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -64,7 +69,7 @@
     <img src="logo.png" class="logo-img" alt="解憂占卜站">
     
     <div id="dailyQuote">
-        <span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span>
+        <span id="quoteText">請靜心合眼，默唸你的問題...<br>當你感覺準備好時，開啟牌陣。</span>
     </div>
 
     <div class="cards-area" id="cardsArea">
@@ -86,15 +91,17 @@
     </div>
 
     <div class="controls">
-        <button id="drawBtn" onclick="drawCards()">✨ 開啟啟示 ✨</button>
-        <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運</button>
-        <button id="resetBtn" style="display:none; font-size: 0.7rem; border: none; opacity: 0.5; color: #fff;" onclick="location.reload()">重新占卜</button>
+        <button id="drawBtn" onclick="drawCards()">✨ 開啟靈境牌陣 ✨</button>
+        <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運到臉書</button>
+        <button id="resetBtn" style="display:none; font-size: 0.8rem; border: none; opacity: 0.6; color: #fff; background: none; cursor: pointer; text-decoration: underline;" onclick="location.reload()">重新占卜</button>
     </div>
 </div>
 
 <footer>
-    <div style="color: var(--accent-gold); font-size: 0.9rem; font-weight: bold;">🔮 辛言老師 | 靈境塔羅 🔮</div>
-    <a href="https://www.youtube.com/@你的頻道ID" target="_blank" class="yt-btn">訂閱老師看更多占卜</a>
+    <div class="yt-section">
+        <div class="yt-name">🔮 辛言老師 | 靈境塔羅</div>
+        <a href="https://www.youtube.com/@axmy31" target="_blank" class="yt-btn">▶ 訂閱 YouTube 頻道</a>
+    </div>
     <div class="copyright">CYBER-ZEN ORACLE © 2026</div>
 </footer>
 
@@ -133,7 +140,7 @@
         drawBtn.style.display = 'none';
         quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
         setTimeout(() => {
-            let shuffled = tarotDeck.sort(() => 0.5 - Math.random());
+            let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
             let selected = shuffled.slice(0, 3);
             document.getElementById('p-name').innerText = selected[0].name;
             document.getElementById('p-desc').innerHTML = selected[0].desc;
@@ -150,8 +157,4 @@
 
     function shareToFB() {
         const url = window.location.href;
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-    }
-</script>
-</body>
-</html>
+        window.open(`https://www.facebook
