@@ -6,7 +6,7 @@
     <title>解憂占卜站 | 靈境塔羅</title>
 
     <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
-    <meta property="og:description" content="當下即是啟示。抽一張塔羅牌，感受宇宙的指引與能量。">
+    <meta property="og:description" content="當下即是啟示。抽一張塔羅牌，感受宇宙的指引與能量。✨">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://axmy13.github.io/tarot-/logo.png">
 
@@ -14,66 +14,41 @@
 
     <style>
         html, body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: #ffd700;
-            font-family: 'Cinzel', serif;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0; padding: 0; background: #000; color: #ffd700;
+            font-family: 'Cinzel', serif; height: 100%; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; }
 
         .container {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 30px;
-            /* 這裡設定網頁內的封面圖為 cover.jpg */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('cover.png') no-repeat center center;
-            background-size: cover;
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            position: relative; z-index: 2; text-align: center; padding: 30px;
+            
+            /* --- ✅ ✅ ✅ ✅ ✅ 修正這裡：改為倉庫裡的 cover.jpg --- */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('cover.jpg') no-repeat center center;
+            /* -------------------------------------------------------- */
+            
+            background-size: cover; backdrop-filter: blur(5px);
+            border-radius: 20px; border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-            max-width: 90%;
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 90%; width: 400px;
+            display: flex; flex-direction: column; align-items: center;
             transition: all 0.5s ease;
         }
 
         .logo-img {
-            width: 80px;
-            height: auto;
+            width: 80px; height: auto;
             margin-bottom: 15px;
             filter: drop-shadow(0 0 10px #ffd700);
         }
 
         .status {
-            font-size: 18px;
-            letter-spacing: 2px;
-            margin: 20px 0;
-            min-height: 1.5em;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-size: 18px; letter-spacing: 2px;
+            margin: 20px 0; min-height: 1.5em;
+            color: #fff; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        .card-result {
-            display: none;
-            margin-top: 10px;
-            animation: fadeIn 1s ease;
-        }
+        .card-result { display: none; margin-top: 10px; animation: fadeIn 1s ease; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -81,57 +56,35 @@
         }
 
         .card-name {
-            font-size: 32px;
-            font-weight: 700;
-            margin: 10px 0;
-            color: #ffd700;
+            font-size: 32px; font-weight: 700;
+            margin: 10px 0; color: #ffd700;
             text-shadow: 0 0 15px #ffd700;
         }
 
         .card-desc {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #eee;
-            margin: 15px 0;
-            padding: 0 10px;
+            font-size: 15px; line-height: 1.6;
+            color: #eee; margin: 15px 0; padding: 0 10px;
         }
 
         .btn {
-            background: transparent;
-            border: 1px solid #ffd700;
-            color: #ffd700;
-            padding: 12px 30px;
-            font-family: 'Cinzel', serif;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s;
-            margin: 10px;
-            width: 80%;
-            text-decoration: none;
-            display: inline-block;
+            background: transparent; border: 1px solid #ffd700;
+            color: #ffd700; padding: 12px 30px;
+            font-family: 'Cinzel', serif; font-size: 14px;
+            cursor: pointer; border-radius: 50px;
+            transition: all 0.3s; margin: 10px;
+            width: 80%; text-decoration: none; display: inline-block;
         }
 
-        .btn:hover {
-            background: #ffd700;
-            color: #000;
-            box-shadow: 0 0 20px #ffd700;
-        }
+        .btn:hover { background: #ffd700; color: #000; box-shadow: 0 0 20px #ffd700; }
 
         .share-btn {
             background: linear-gradient(45deg, #ffd700, #b8860b);
-            color: #000;
-            border: none;
-            font-weight: bold;
+            color: #000; border: none; font-weight: bold;
         }
 
         footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 10px;
-            letter-spacing: 2px;
-            opacity: 0.5;
-            z-index: 2;
+            position: absolute; bottom: 20px; font-size: 10px;
+            letter-spacing: 2px; opacity: 0.5; z-index: 2;
         }
     </style>
 </head>
@@ -159,31 +112,36 @@
     <script>
         const cards = [
             { name: "The Sun", desc: "「太陽代表成功、快樂與活力。你的前方充滿光明，保持自信與熱情，一切願望都將達成。」" },
-            { name: "The Star", desc: "「星星象徵希望與靈感。在迷茫中，請相信內心的導航，宇宙正指引你走向寧靜與豐盛。」" },
+            { name: "The Star", desc: "「星星象徵希望與靈感。在迷茫中，請相信內心的導航，宇宙正指引你走向寧寧與豐盛。」" },
             { name: "The Moon", desc: "「月亮提醒你傾聽直覺。雖然前方看似模糊，但那是靈魂成長的契機，放下面具，面對真實的自我。」" },
             { name: "Strength", desc: "「勇氣不在於力量的大小，而是在於意志的堅定。用溫柔去化解衝突，你擁有掌控局面的內在力量。」" },
             { name: "The World", desc: "「世界預示著一個階段的完美結束。你已經準備好邁向更高的次元，享受這份圓滿與自由吧。」" },
-            { name: "The Magician", desc: "「魔術師象徵創造力與開端。你手中握有一切必要的資源，現在就是將想法轉化為現實的最佳時機。」" }
+            { name: "The Magician", desc: "「魔術師象徵創造力與開端。你握有一切必要的資源，現在就是將想法轉化為現實的最佳時機。」" }
         ];
 
         function drawCard() {
-            const btn = document.querySelector('.btn');
-            const status = document.querySelector('.status');
-            btn.style.display = 'none';
-            status.innerText = "Connecting to Spirit...";
+            const setupView = document.getElementById('setup-view');
+            const resultView = document.getElementById('result-view');
+            
+            // 抽取時背景淡化，增加期待感
+            document.querySelector('.container').style.opacity = '0.5';
 
             setTimeout(() => {
                 const card = cards[Math.floor(Math.random() * cards.length)];
-                document.getElementById('setup-view').style.display = 'none';
-                document.getElementById('result-view').style.display = 'block';
+                setupView.style.display = 'none';
+                resultView.style.display = 'block';
                 document.getElementById('cardName').innerText = card.name;
                 document.getElementById('cardDesc').innerText = card.desc;
+                document.querySelector('.container').style.opacity = '1';
             }, 1500);
         }
 
         function shareToFB() {
             const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            const currentCard = document.getElementById('cardName').innerText;
+            const currentDesc = document.getElementById('cardDesc').innerText;
+            const text = "✨ 我抽到了靈境塔羅【" + currentCard + "】！\n" + currentDesc + "\n👉 點擊開啟，領取你的專屬啟示！";
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
         }
 
         // 星空背景特效
