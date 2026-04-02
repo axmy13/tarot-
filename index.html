@@ -4,128 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>解憂占卜站 | 靈境塔羅</title>
-    
-    <meta property="og:title" content="解憂占卜站 | 領取你的專屬塔羅啟示">
-    <meta property="og:description" content="閉上雙眼，誠心感應。三牌陣將為你揭示過去、現在與未來的指引。✨">
-    <meta property="og:image" content="https://axmy13.github.io/tarot-/logo.png">
-
     <style>
         :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
+        body { margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        body { 
-            margin: 0; padding: 0; font-family: 'PingFang SC', sans-serif; 
-            background-color: var(--primary-bg); color: var(--text-color);
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* 這裡設定「手拿三張牌」那張圖為背景，並調得更透明、更神祕 */
+        /* ✅ 修正處：url('Cover.jpg') 匹配你的大寫檔名 */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(5, 5, 16, 0.8), rgba(5, 5, 16, 0.8)), url('cover.jpg') no-repeat center center;
-            background-size: cover; z-index: -1; opacity: 0.3; /* 透明度調低，不亂 */
+            background: linear-gradient(rgba(5, 5, 16, 0.7), rgba(5, 5, 16, 0.7)), url('Cover.jpg') no-repeat center center;
+            background-size: cover; z-index: -1; opacity: 0.5; 
         }
 
         header { text-align: center; padding: 30px 0 10px; z-index: 2; }
         h1 { font-size: 1.8rem; color: var(--accent-gold); margin: 0; letter-spacing: 3px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
         .subtitle { font-size: 0.8rem; opacity: 0.7; margin-top: 5px; }
-
-        .container { 
-            width: 95%; max-width: 800px; display: flex; flex-direction: column; align-items: center; z-index: 2;
-        }
-
-        /* 這裡顯示「金蓮花」Logo */
-        .logo-img { 
-            width: 80px; height: auto; margin-top: 20px;
-            filter: drop-shadow(0 0 15px var(--accent-gold)); 
-        }
-
-        #dailyQuote { 
-            width: 85%; background: rgba(212, 175, 55, 0.05); 
-            border-left: 3px solid var(--accent-gold); padding: 15px; 
-            border-radius: 8px; margin: 25px 0; text-align: center; 
-            font-size: 0.95rem; line-height: 1.6; color: #fff;
-        }
-
-        .cards-area { 
-            display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%;
-        }
-
-        .card-box {
-            width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px;
-            padding: 20px; box-sizing: border-box; text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideUp 0.8s ease forwards;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .container { width: 95%; max-width: 800px; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        .logo-img { width: 80px; height: auto; margin-top: 20px; filter: drop-shadow(0 0 15px var(--accent-gold)); }
+        #dailyQuote { width: 85%; background: rgba(212, 175, 55, 0.05); border-left: 3px solid var(--accent-gold); padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center; font-size: 0.95rem; line-height: 1.6; color: #fff; }
+        .cards-area { display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%; }
+        .card-box { width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; box-sizing: border-box; animation: slideUp 0.8s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         .card-label { color: var(--accent-gold); font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; opacity: 0.8; }
         .card-name { font-size: 1.4rem; font-weight: bold; margin: 10px 0; color: var(--accent-gold); }
         .card-desc { font-size: 0.9rem; line-height: 1.8; color: #ddd; text-align: justify; }
-
         .controls { margin: 40px 0; display: flex; flex-direction: column; gap: 15px; width: 220px; }
-        button { 
-            padding: 14px; font-size: 1rem; background: transparent; 
-            color: var(--accent-gold); border: 1.5px solid var(--accent-gold); 
-            border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold;
-            letter-spacing: 2px;
-        }
+        button { padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
         button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
         .share-btn { background: var(--accent-gold); color: #000; border: none; display: none; }
-
         footer { margin: 40px 0 20px; font-size: 0.7rem; opacity: 0.3; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-
 <div class="bg-overlay"></div>
-
-<header>
-    <h1>解憂占卜站</h1>
-    <div class="subtitle">✨ 辛言老師 🔮 靈境塔羅 ✨</div>
-</header>
-
+<header><h1>解憂占卜站</h1><div class="subtitle">✨ 辛言老師 🔮 靈境塔羅 ✨</div></header>
 <div class="container">
     <img src="logo.png" class="logo-img" alt="解憂占卜站">
-    
-    <div id="dailyQuote">
-        <span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span>
-    </div>
-
+    <div id="dailyQuote"><span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span></div>
     <div class="cards-area" id="cardsArea">
-        <div class="card-box">
-            <div class="card-label">過去 | Past</div>
-            <div id="p-name" class="card-name"></div>
-            <div id="p-desc" class="card-desc"></div>
-        </div>
-        <div class="card-box">
-            <div class="card-label">現在 | Present</div>
-            <div id="n-name" class="card-name"></div>
-            <div id="n-desc" class="card-desc"></div>
-        </div>
-        <div class="card-box">
-            <div class="card-label">未來 | Future</div>
-            <div id="f-name" class="card-name"></div>
-            <div id="f-desc" class="card-desc"></div>
-        </div>
+        <div class="card-box"><div class="card-label">過去 | Past</div><div id="p-name" class="card-name"></div><div id="p-desc" class="card-desc"></div></div>
+        <div class="card-box"><div class="card-label">現在 | Present</div><div id="n-name" class="card-name"></div><div id="n-desc" class="card-desc"></div></div>
+        <div class="card-box"><div class="card-label">未來 | Future</div><div id="f-name" class="card-name"></div><div id="f-desc" class="card-desc"></div></div>
     </div>
-
     <div class="controls">
         <button id="drawBtn" onclick="drawCards()">✨ 開啟啟示 ✨</button>
         <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運</button>
         <button id="resetBtn" style="display:none; font-size: 0.7rem; border: none; opacity: 0.5; color: #fff;" onclick="location.reload()">重新占卜</button>
     </div>
 </div>
-
 <footer>CYBER-ZEN ORACLE © 2026</footer>
-
 <script>
-    // 這裡保留你剛才說很吸引讀者的詳細牌意
     const tarotDeck = [
         { name: "愚者", desc: "<b>✨ 啟示：</b> 放下所有的預設與擔憂，像孩子一樣純粹地擁抱未知。<br><b>🔮 建議：</b> 信任你的直覺。大膽躍下吧，宇宙會接住你。" },
         { name: "魔術師", desc: "<b>✨ 啟示：</b> 你正處於能量的巔峰。你手邊已經握有一切成功的工具。<br><b>🔮 建議：</b> 不要再猶豫，現在就是將靈感轉化為現實的時刻。" },
@@ -157,21 +84,17 @@
         const cardsArea = document.getElementById('cardsArea');
         const shareBtn = document.getElementById('shareBtn');
         const resetBtn = document.getElementById('resetBtn');
-
         drawBtn.style.display = 'none';
         quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
-
         setTimeout(() => {
             let shuffled = tarotDeck.sort(() => 0.5 - Math.random());
             let selected = shuffled.slice(0, 3);
-
             document.getElementById('p-name').innerText = selected[0].name;
             document.getElementById('p-desc').innerHTML = selected[0].desc;
             document.getElementById('n-name').innerText = selected[1].name;
             document.getElementById('n-desc').innerHTML = selected[1].desc;
             document.getElementById('f-name').innerText = selected[2].name;
             document.getElementById('f-desc').innerHTML = selected[2].desc;
-
             quoteText.innerHTML = "啟示已顯現。願智慧指引你的方向。";
             cardsArea.style.display = 'flex';
             shareBtn.style.display = 'block';
@@ -184,6 +107,5 @@
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
     }
 </script>
-
 </body>
 </html>
