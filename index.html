@@ -15,7 +15,7 @@
         :root { --bg: #0a1128; --gold: #d4af37; --card-bg: #ffffff; --text: #f4f4f4; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* 頂部視覺圖區域 */
+        /* 頂部視覺圖 */
         .hero-image { width: 100%; max-width: 500px; margin-top: 20px; border-radius: 15px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
         
         header { text-align: center; padding: 20px; }
@@ -25,21 +25,21 @@
         /* 牌陣佈局 */
         .tarot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0; }
         .card-slot { text-align: center; }
-        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 10px; }
-        .card-content { background: var(--card-bg); color: #222; border-radius: 12px; padding: 20px; min-height: 250px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s; }
-        .card-name { font-size: 1.2rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 12px; padding-bottom: 5px; }
-        .card-meaning { font-size: 0.9rem; line-height: 1.6; text-align: left; margin-bottom: 15px; }
-        .card-advice { font-size: 0.85rem; color: #b71c1c; font-weight: bold; text-align: left; border-top: 1px dashed #ddd; padding-top: 10px; }
+        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+        .card-content { background: var(--card-bg); color: #222; border-radius: 12px; padding: 20px; min-height: 280px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .card-name { font-size: 1.25rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 12px; padding-bottom: 8px; }
+        .card-meaning { font-size: 0.95rem; line-height: 1.6; text-align: left; margin-bottom: 15px; }
+        .card-advice { font-size: 0.9rem; color: #b71c1c; font-weight: bold; text-align: left; border-top: 1px dashed #ddd; padding-top: 10px; }
 
         .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 40px; }
-        button { padding: 12px 25px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-main { background: var(--gold); color: #000; font-size: 1.1rem; }
+        button { padding: 12px 25px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-main { background: var(--gold); color: #000; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
         .btn-sec { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--gold); }
         
         .log-section { width: 100%; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 20px; margin-bottom: 50px; }
         .log-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; border-left: 4px solid var(--gold); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
         @media (max-width: 768px) { .tarot-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -66,23 +66,36 @@
     </div>
 
     <div class="log-section">
-        <div style="color:var(--gold); margin-bottom:15px;">占卜記錄</div>
+        <div style="color:var(--gold); margin-bottom:15px; font-weight: bold;">占卜記錄</div>
         <div id="logs"></div>
     </div>
 </div>
 
 <script>
+// 補全完整的 22 張大阿爾卡納牌組數據
 const tarotDeck = [
-    {n:"星星", m:"代表希望與療癒。你正找回內心的平靜，過去的創傷正在癒合。", a:"保持信心，讓靈感引導你，曙光就在前方。"},
-    {n:"皇后", m:"象徵富足與滋養。這是一個充滿創造力與生命力的時期，會有實質的收穫。", a:"學會享受當下的美好，慷慨地分享你的愛。"},
-    {n:"世界", m:"代表圓滿與達成。一個階段的完美結束，你感到前所未有的充實。", a:"慶祝你的成就，準備迎接更高層次的挑戰。"},
-    {n:"力量", m:"代表內在勇氣。不需要暴力的壓制，用耐心與溫柔去克服難關。", a:"以柔克剛，保持耐性，你比想像中更強大。"},
-    {n:"魔術師", m:"象徵掌控與資源。你手中已握有解決問題的所有關鍵鑰匙。", a:"現在是將想法付諸行動的最佳時機。"},
-    {n:"女祭司", m:"代表直覺。某些真相隱藏在表象下，需要你靜心感悟。", a:"信任你的直覺，聽從內心深處的聲音。"},
-    {n:"教皇", m:"代表傳統與指引。你可能需要尋求權威或長輩的專業建議。", a:"遵循既定的準則，虛心學習，尋求智慧的引導。"},
-    {n:"戀人", m:"象徵選擇與和諧。你正站在重要的分叉路口，需要平衡理智與情感。", a:"做出符合你真心的選擇，珍惜重要的夥伴關係。"},
-    {n:"戰車", m:"代表勝利與意志。憑藉堅強的鬥志，你必能克服萬難達到目標。", a:"保持專注，控制好情緒，勇往直前。"}
-    // 這裡可以繼續添加更多牌項...
+    {n:"愚者", m:"代表冒險與純真。你正處於一個全新階段的起點，充滿無限可能。", a:"大膽邁出第一步，不要被恐懼束縛。"},
+    {n:"魔術師", m:"象徵創造力與掌控。你擁有解決問題所需的所有資源與才華。", a:"現在是將想法付諸行動的最佳時機。"},
+    {n:"女祭司", m:"代表直覺與內在智慧。某些真相隱藏在表象之下，需靜心感悟。", a:"信任你的直覺，聽從內心深處的聲音。"},
+    {n:"皇后", m:"象徵富足與滋養。這是充滿生命力的時期，情感或事業將迎來果實。", a:"學會享受當下的美好，給予自己更多慈愛。"},
+    {n:"皇帝", m:"代表穩定與秩序。目前需要強大的意志力和組織能力來掌控局面。", a:"制定清晰的計劃，展現你的領導力。"},
+    {n:"教皇", m:"代表傳統與指引。你可能需要尋求導師或專業體系的協助。", a:"遵循既定的準則，尋求智慧的建議。"},
+    {n:"戀人", m:"象徵選擇與和諧。你正站在重要的分叉路口，需要平衡理智與情感。", a:"做出符合你真心的選擇，珍惜夥伴關係。"},
+    {n:"戰車", m:"代表勝利與行動。憑藉堅強的鬥志，你必能克服萬難達到目標。", a:"保持專注，控制好情緒，勇往直前。"},
+    {n:"力量", m:"象徵勇氣與韌性。真正的力量並非暴力，而是溫柔與耐心。", a:"以柔克剛，保持耐心，你比想像中更強大。"},
+    {n:"隱士", m:"代表內省與智慧。現在是向內探索的時刻，暫時遠離塵囂。", a:"給自己一點獨處時間，釐清未來的方向。"},
+    {n:"命運之輪", m:"象徵改變與機緣。生活即將迎來轉機，好運正悄然降臨。", a:"順應時勢的變化，抓住轉瞬即逝的機會。"},
+    {n:"正義", m:"代表平衡與誠實。過去的付出現在將會得到應有的回報或結論。", a:"行事公平正直，客觀承擔應有的責任。"},
+    {n:"倒吊人", m:"象徵換位思考。暫時的停滯是在醞釀更大的智慧。", a:"換一個角度看問題，學會放手與等待。"},
+    {n:"死神", m:"代表結束與新生。舊事物必須離去，才能為新機會騰出空間。", a:"勇敢告別過去，擁抱即將到來的蛻變。"},
+    {n:"節制", m:"象徵平衡與融合。你需要整合不同元素，尋找生活的中庸之道。", a:"保持適度，在溝通與行動中尋求協調。"},
+    {n:"惡魔", m:"代表束縛與慾望。你可能被執念或不健康的習慣所困擾。", a:"正視你的慾望，找回心靈的自由與主導權。"},
+    {n:"高塔", m:"象徵劇變與覺醒。突來的衝擊打破了虛偽假象，是重建的開始。", a:"接受不可抗拒的改變，從廢墟中重建自我。"},
+    {n:"星星", m:"代表希望與療癒。這是一個平靜時刻，指引你找回內心願景。", a:"保持信心，讓靈感引導你，曙光就在前方。"},
+    {n:"月亮", m:"象徵潛意識與迷茫。不安可能遮蔽真相，請警惕隱藏的威脅。", a:"穿透迷霧，信任直覺，等待光明回歸。"},
+    {n:"太陽", m:"代表成功與活力。正向能量正在照耀你，努力將大放異彩。", a:"盡情展現自我，分享你的光芒與喜悅。"},
+    {n:"審判", m:"象徵覺醒與評判。一個重要的轉折點已到，需對過往做出結算。", a:"誠實面對自我，開始嶄新的生活。"},
+    {n:"世界", m:"代表圓滿與成就。你已成功達成目標，感到充實與滿足。", a:"慶祝這份完美，準備開啟下一個循環。"}
 ];
 
 function draw() {
@@ -91,7 +104,11 @@ function draw() {
 
     picks.forEach((card, i) => {
         const el = document.getElementById(`c${i+1}`);
-        el.innerHTML = `<div class="card-name">${card.n}</div><div class="card-meaning">${card.m}</div><div class="card-advice">💡 建議：${card.a}</div>`;
+        el.innerHTML = `
+            <div class="card-name">${card.n}</div>
+            <div class="card-meaning">${card.m}</div>
+            <div class="card-advice">💡 建議：${card.a}</div>
+        `;
         el.style.display = 'block';
     });
 
