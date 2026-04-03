@@ -3,162 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>靈境塔羅 - 解憂占卜站</title>
+    <title>解憂占卜站 | 靈境塔羅</title>
     
-    <meta property="og:title" content="🔮 靈境塔羅｜解憂占卜站：領取你的專屬啟示">
-    <meta property="og:description" content="【閉上雙眼，誠心感應】現在的困惑，在牌陣中自有解答。這份來自宇宙的指引，將為你揭示過去、現在與未來的走向。✨ 辛言老師誠心推薦。">
+    <meta property="og:title" content="🔮 解憂占卜站｜靈境塔羅：領取你的專屬啟示">
+    <meta property="og:description" content="【閉上雙眼，誠心感應】此刻的困惑，在牌陣中自有解答。這份來自宇宙的指引，將為你照亮前路。">
+    <meta property="og:url" content="https://axmy13.github.io/tarot-/">
     <meta property="og:image" content="https://axmy13.github.io/tarot-/cover.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
 
     <style>
-        :root { --primary-bg: #050510; --accent-gold: #d4af37; --text-color: #e0e0e0; }
-        body { margin: 0; padding: 0; font-family: 'PingFang SC', 'Microsoft JhengHei', sans-serif; background-color: var(--primary-bg); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --bg: #0a1128; --gold: #d4af37; --card-bg: #ffffff; --text: #f4f4f4; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        header { text-align: center; padding: 40px 20px; }
+        h1 { color: var(--gold); letter-spacing: 5px; margin: 0; font-size: 2.2rem; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+        .container { width: 92%; max-width: 900px; }
         
-        .bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url('cover.jpg') no-repeat center center;
-            background-size: cover; z-index: -1; opacity: 0.5; 
-        }
+        /* 三欄佈局 */
+        .tarot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 35px 0; }
+        .card-slot { text-align: center; }
+        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; }
+        .card-content { background: var(--card-bg); color: #222; border-radius: 12px; padding: 20px; min-height: 260px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s ease-out; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
+        .card-name { font-size: 1.3rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 12px; padding-bottom: 8px; }
+        .card-meaning { font-size: 0.95rem; line-height: 1.7; text-align: left; margin-bottom: 15px; }
+        .card-advice { font-size: 0.9rem; color: #b71c1c; font-weight: bold; text-align: left; border-top: 1px dashed #ddd; padding-top: 10px; }
 
-        header { text-align: center; padding: 30px 0 10px; z-index: 2; }
-        h1 { font-size: 1.8rem; color: var(--accent-gold); margin: 0; letter-spacing: 3px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-        .subtitle { font-size: 0.8rem; opacity: 0.7; margin-top: 5px; }
-
-        .container { width: 95%; max-width: 800px; display: flex; flex-direction: column; align-items: center; z-index: 2; }
-        .logo-img { width: 70px; height: auto; margin-top: 20px; filter: drop-shadow(0 0 10px var(--accent-gold)); }
-
-        #dailyQuote { width: 85%; background: rgba(212, 175, 55, 0.05); border-left: 3px solid var(--accent-gold); padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center; font-size: 0.95rem; line-height: 1.6; color: #fff; }
+        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        button { padding: 12px 28px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-main { background: var(--gold); color: #000; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
+        .btn-sec { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--gold); }
+        button:hover { transform: translateY(-2px); opacity: 0.9; }
         
-        .cards-area { display: none; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; width: 100%; }
-        .card-box { width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; box-sizing: border-box; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideUp 0.8s ease forwards; }
+        .log-section { width: 100%; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 25px; margin-bottom: 50px; }
+        .log-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 10px; font-size: 0.9rem; border-left: 4px solid var(--gold); }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .card-label { color: var(--accent-gold); font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; opacity: 0.8; }
-        .card-name { font-size: 1.4rem; font-weight: bold; margin: 10px 0; color: var(--accent-gold); }
-        .card-desc { font-size: 0.9rem; line-height: 1.8; color: #ddd; text-align: justify; }
-
-        .controls { margin: 40px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; width: 220px; }
-        button { width: 100%; padding: 14px; font-size: 1rem; background: transparent; color: var(--accent-gold); border: 1.5px solid var(--accent-gold); border-radius: 40px; cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px; }
-        button:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px var(--accent-gold); }
-        
-        .share-btn { background: #d4af37; color: #000; border: none; display: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
-
-        footer { margin: 60px 0 40px; text-align: center; z-index: 2; width: 100%; }
-        .yt-btn { display: inline-block; padding: 10px 22px; font-size: 0.9rem; color: #000; background-color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 10px; transition: 0.3s; }
-        .yt-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent-gold); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .tarot-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div class="bg-overlay"></div>
-
 <header>
     <h1>解憂占卜站</h1>
-    <div class="subtitle">✨ 辛言老師 🔮 靈境塔羅 ✨</div>
+    <div style="color:var(--gold); opacity: 0.9; font-size: 1rem; margin-top:10px;">✨ 辛言老師推薦 ｜ 靈境塔羅 ✨</div>
 </header>
 
 <div class="container">
-    <img src="logo.png" class="logo-img" alt="解憂占卜站">
-    
-    <div id="dailyQuote">
-        <span id="quoteText">請靜心，在腦海中想著你的問題...<br>感覺對了，就點擊下方按鈕。</span>
+    <div class="tarot-grid">
+        <div class="card-slot"><div class="slot-label">【過去】</div><div id="c1" class="card-content"></div></div>
+        <div class="card-slot"><div class="slot-label">【現在】</div><div id="c2" class="card-content"></div></div>
+        <div class="card-slot"><div class="slot-label">【未來】</div><div id="c3" class="card-content"></div></div>
     </div>
 
-    <div class="cards-area" id="cardsArea">
-        <div class="card-box">
-            <div class="card-label">過去 | Past</div>
-            <div id="p-name" class="card-name"></div>
-            <div id="p-desc" class="card-desc"></div>
-        </div>
-        <div class="card-box">
-            <div class="card-label">現在 | Present</div>
-            <div id="n-name" class="card-name"></div>
-            <div id="n-desc" class="card-desc"></div>
-        </div>
-        <div class="card-box">
-            <div class="card-label">未來 | Future</div>
-            <div id="f-name" class="card-name"></div>
-            <div id="f-desc" class="card-desc"></div>
-        </div>
+    <div class="btn-group">
+        <button class="btn-main" onclick="draw()">✨ 啟動靈境牌陣 ✨</button>
+        <button class="btn-sec" onclick="shareToFB()">臉書分享</button>
+        <button class="btn-sec" onclick="location.reload()">重新感應</button>
     </div>
 
-    <div class="controls">
-        <button id="drawBtn" onclick="drawCards()">✨ 開啟啟示 ✨</button>
-        <button id="shareBtn" class="share-btn" onclick="shareToFB()">🙏 分享好運</button>
-        <button id="resetBtn" style="display:none; color: #fff; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 10px; opacity: 0.6;" onclick="window.location.reload()">重新占卜</button>
+    <div class="log-section">
+        <div style="color:var(--gold); margin-bottom:15px; font-weight: bold;">占卜記錄</div>
+        <div id="logs"></div>
     </div>
 </div>
 
-<footer>
-    <div style="color: var(--accent-gold); font-weight: bold; font-size: 1.1rem;">🔮 辛言老師 | 靈境塔羅</div>
-    <a href="https://www.youtube.com/@axmy31" target="_blank" class="yt-btn">▶ 訂閱 YouTube 頻道</a>
-    <div style="font-size: 0.7rem; opacity: 0.4; margin-top: 25px; letter-spacing: 1px;">CYBER-ZEN ORACLE © 2026</div>
-</footer>
-
 <script>
-    const tarotDeck = [
-        { name: "愚者", desc: "<b>✨ 啟示：</b> 放下擔憂，純粹地擁抱未知。<br><b>🔮 建議：</b> 信任直覺，大膽躍下吧。" },
-        { name: "魔術師", desc: "<b>✨ 啟示：</b> 能量巔峰，你已握有一切工具。<br><b>🔮 建議：</b> 現在就是將靈感轉化的時刻。" },
-        { name: "女祭司", desc: "<b>✨ 啟示：</b> 答案在靜默處，觀察直覺。<br><b>🔮 建議：</b> 行動前，先讓智慧在心中沉澱。" },
-        { name: "皇后", desc: "<b>✨ 啟示：</b> 豐盛與母性，計畫正在茁壯。<br><b>🔮 建議：</b> 去感受愛，享受生活的美好。" },
-        { name: "皇帝", desc: "<b>✨ 啟示：</b> 秩序與權威，需要理性規劃。<br><b>🔮 建議：</b> 展現自律，掌控好邏輯節奏。" },
-        { name: "教皇", desc: "<b>✨ 啟示：</b> 尋求傳統指引，遵循規範。<br><b>🔮 建議：</b> 聆聽前輩經驗，群體會帶來安全感。" },
-        { name: "戀人", desc: "<b>✨ 啟示：</b> 關於價值觀的選擇與和諧。<br><b>🔮 建議：</b> 聽從心底真實聲音，選擇一致。" },
-        { name: "戰車", desc: "<b>✨ 啟示：</b> 意志力的勝利，全速衝向目標。<br><b>🔮 建議：</b> 保持專注，掌控好情緒之韁。" },
-        { name: "力量", desc: "<b>✨ 啟示：</b> 內在勇氣大於力量，溫柔堅持。<br><b>🔮 建議：</b> 用耐心感化阻礙，接納陰影。" },
-        { name: "隱士", desc: "<b>✨ 啟示：</b> 向內探求真理，提著智慧明燈。<br><b>🔮 建議：</b> 暫時遠離塵囂，獨處讓你認清現狀。" },
-        { name: "命運之輪", desc: "<b>✨ 啟示：</b> 變化是唯一永恆，轉機已至。<br><b>🔮 建議：</b> 順應潮流，幸運藏在轉折裡。" },
-        { name: "正義", desc: "<b>✨ 啟示：</b> 因果律體現，客觀冷靜評估。<br><b>🔮 建議：</b> 對選擇負責，平衡終會恢復。" },
-        { name: "倒吊人", desc: "<b>✨ 啟示：</b> 換個角度看世界，暫時停滯。<br><b>🔮 建議：</b> 不要急於行動，臣服與等待。" },
-        { name: "死神", desc: "<b>✨ 啟示：</b> 舊有終結，新生的序幕。<br><b>🔮 建議：</b> 勇敢告別過去，讓新生命進入。" },
-        { name: "節制", desc: "<b>✨ 啟示：</b> 煉金術般的調和，尋求平衡。<br><b>🔮 建議：</b> 保持耐心，平穩是你最強的力量。" },
-        { name: "惡魔", desc: "<b>✨ 啟示：</b> 執著與束縛，認清恐懼枷鎖。<br><b>🔮 建議：</b> 覺察影子，你隨時可以選擇自由。" },
-        { name: "高塔", desc: "<b>✨ 啟示：</b> 劇變帶來的覺醒，虛假被摧毀。<br><b>🔮 建議：</b> 不要抗拒崩塌，這是重建的開始。" },
-        { name: "星星", desc: "<b>✨ 啟示：</b> 療癒與希望，黑暗後的黎明。<br><b>🔮 建議：</b> 保持信心，分享你的靈感與愛。" },
-        { name: "月亮", desc: "<b>✨ 啟示：</b> 潛意識的幻象，不安的迷霧。<br><b>🔮 建議：</b> 穿透表象，安撫內在受驚的孩子。" },
-        { name: "太陽", desc: "<b>✨ 啟示：</b> 生命喜悅與成功，充滿活力。<br><b>🔮 建議：</b> 盡情閃耀！分享快樂與成果。" },
-        { name: "審判", desc: "<b>✨ 啟示：</b> 靈魂召喚，總結過去重獲新生。<br><b>🔮 建議：</b> 寬恕自己，聽從神聖的召喚。" },
-        { name: "世界", desc: "<b>✨ 啟示：</b> 圓滿大結局，世界就在腳下。<br><b>🔮 建議：</b> 慶祝成就，準備迎接新的循環。" }
-    ];
+// 核心塔羅數據庫：包含牌名、深度解說與建議
+const tarotDeck = [
+    {n:"愚者 (The Fool)", m:"代表冒險與純真。你正處於一個全新階段的起點，雖然前路未知，但充滿無限可能。", a:"大膽邁出第一步，不要被過去的恐懼束縛。"},
+    {n:"魔術師 (The Magician)", m:"象徵創造力與掌控。你擁有解決問題所需的所有資源、技能與才華。", a:"現在是將想法付諸行動的最佳時機，果斷執行。"},
+    {n:"女祭司 (The High Priestess)", m:"代表直覺與內在智慧。某些真相隱藏在表象之下，需要你靜下心來感悟。", a:"信任你的直覺，減少外部干擾，聽從內心的聲音。"},
+    {n:"皇后 (The Empress)", m:"象徵富足、滋養與豐收。這是充滿創造力與生命力的時期，情感或事業將迎來果實。", a:"學會享受當下的美好，給予自己和他人更多的慈愛。"},
+    {n:"皇帝 (The Emperor)", m:"代表穩定、權力與秩序。目前需要強大的意志力和組織能力來掌控局面。", a:"制定清晰的計劃，展現領導力，建立穩定的結構。"},
+    {n:"教皇 (The Hierophant)", m:"代表傳統、信仰與指引。你可能需要尋求長輩、導師或傳統體系的協助。", a:"遵循既定的準則，尋求智慧的建議，保持學習的心態。"},
+    {n:"戀人 (The Lovers)", m:"象徵選擇、和諧與價值觀。你正站在重要的分叉路口，需要平衡理智與情感。", a:"做出符合你真心的選擇，珍惜身邊重要的夥伴關係。"},
+    {n:"戰車 (The Chariot)", m:"代表勝利、意志與行動。雖然面臨衝突，但憑藉堅強的鬥志，你必能克服萬難。", a:"保持專注，控制好情緒的韁繩，勇往直前。"},
+    {n:"力量 (Strength)", desc:"象徵內在勇氣與韌性。真正的力量並非暴力，而是用溫柔與耐心去化解困難。", a:"以柔克剛，保持耐心，用你的堅韌去感化他人。"},
+    {n:"隱士 (The Hermit)", m:"代表內省、孤獨與智慧。現在是向內探索的時刻，暫時遠離塵囂會讓你更清醒。", a:"給自己一點獨處的時間，反思過去，釐清未來的方向。"},
+    {n:"命運之輪 (Wheel of Fortune)", m:"象徵改變與機緣。生活即將迎來新的轉機，好運正悄然降臨。", a:"順應時勢的變化，抓住轉瞬即逝的機會，保持樂觀。"},
+    {n:"正義 (Justice)", m:"代表平衡、誠實與因果。你過去的付出現在將會得到應有的回報或結論。", a:"行事公平正直，客觀分析利弊，承擔應有的責任。"},
+    {n:"倒吊人 (The Hanged Man)", m:"象徵換位思考與犧牲。暫時的停滯並非退步，而是在醞釀更大的智慧。", a:"換一個角度看問題，學會放手，等待最佳的轉變契機。"},
+    {n:"死神 (Death)", m:"代表結束與新生。舊的事物必須離去，才能為新的機會騰出空間。不要害怕改變。", a:"勇敢告別不再適合你的過去，擁抱即將到來的蛻變。"},
+    {n:"節制 (Temperance)", m:"象徵平衡、融合與協調。你需要整合不同的元素，尋找生活中的黃金分割點。", a:"保持適度，不要極端，在溝通與行動中尋求最大公約數。"},
+    {n:"惡魔 (The Devil)", m:"代表束縛、慾望與陰影。你可能被某種執念或不健康的習慣所困擾。", a:"正視你的慾望，擺脫不必要的依賴，找回心靈的自由。"},
+    {n:"高塔 (The Tower)", m:"象徵劇變與覺醒。突如其來的衝擊雖然痛苦，但它打破了虛偽的假象。", a:"接受不可抗拒的改變，從廢墟中重建更堅固的自我。"},
+    {n:"星星 (The Star)", m:"代表希望、靈感與療癒。這是一個平靜的時刻，指引你找回內心的願景。", a:"保持信心，讓靈感引導你，未來的曙光就在前方。"},
+    {n:"月亮 (The Moon)", m:"象徵潛意識與迷茫。不安與幻想可能遮蔽了真相，請警惕隱藏的威脅。", a:"穿透迷霧，信任直覺但不盲從，等待光明的回歸。"},
+    {n:"太陽 (The Sun)", m:"代表成功、喜悅與活力。正向的能量正在照耀你，所有的努力都將大放異彩。", a:"盡情展現自我，保持童心，與他人分享你的光芒。"},
+    {n:"審判 (Judgement)", m:"象徵覺醒與評判。一個重要的決定或轉折點已到，你需要對過往做出結算。", a:"誠實面對自我，聽從天啟的召喚，開始嶄新的生活。"},
+    {n:"世界 (The World)", m:"代表圓滿、成就與合一。你已成功達成目標，感到前所未有的充實與滿足。", a:"慶祝這份完美，感謝所有的相遇，準備開啟下一個循環。"}
+];
 
-    function drawCards() {
-        try {
-            const drawBtn = document.getElementById('drawBtn');
-            const quoteText = document.getElementById('quoteText');
-            const cardsArea = document.getElementById('cardsArea');
-            const shareBtn = document.getElementById('shareBtn');
-            const resetBtn = document.getElementById('resetBtn');
+function draw() {
+    // 隨機抽選三張牌
+    let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
+    let picks = shuffled.slice(0, 3);
 
-            drawBtn.style.display = 'none';
-            quoteText.innerHTML = "✨ 正在與宇宙頻率連結中... ✨";
+    picks.forEach((card, i) => {
+        const el = document.getElementById(`c${i+1}`);
+        el.innerHTML = `
+            <div class="card-name">${card.n}</div>
+            <div class="card-meaning">${card.m}</div>
+            <div class="card-advice">💡 建議：${card.a}</div>
+        `;
+        el.style.display = 'block';
+    });
 
-            const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 3);
+    // 紀錄 Log
+    const timeStr = new Date().toLocaleTimeString();
+    const logStr = `<div class="log-item"><strong>${timeStr}</strong> - ${picks.map(p=>p.n.split(' ')[0]).join(' | ')}</div>`;
+    document.getElementById('logs').insertAdjacentHTML('afterbegin', logStr);
+}
 
-            setTimeout(() => {
-                document.getElementById('p-name').innerText = selected[0].name;
-                document.getElementById('p-desc').innerHTML = selected[0].desc;
-                document.getElementById('n-name').innerText = selected[1].name;
-                document.getElementById('n-desc').innerHTML = selected[1].desc;
-                document.getElementById('f-name').innerText = selected[2].name;
-                document.getElementById('f-desc').innerHTML = selected[2].desc;
-
-                quoteText.innerHTML = "啟示已顯現。願智慧指引你的方向。";
-                cardsArea.style.display = 'flex';
-                shareBtn.style.display = 'block';
-                resetBtn.style.display = 'inline-block';
-            }, 1200);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    function shareToFB() {
-        const url = window.location.href;
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-    }
+function shareToFB() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
 </script>
 </body>
 </html>
