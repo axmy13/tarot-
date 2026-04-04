@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>解憂占卜站 | 靈境塔羅</title>
+    <title>辛言解憂站 | 靈境塔羅</title>
     <style>
         :root { --bg: #0a1128; --gold: #d4af37; --card-bg: #ffffff; --text: #f4f4f4; --accent: #b71c1c; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* HUD 寬度優化為 720px */
+        /* HUD 720px 最佳顯示寬度 */
         .container { width: 94%; max-width: 720px; }
         
+        /* 頂部品牌導航欄 - 解決讀者停留在單頁問題 */
+        nav { display: flex; justify-content: space-around; padding: 15px 0; border-bottom: 1px solid rgba(212,175,55,0.3); width: 100%; background: rgba(10, 17, 40, 0.9); position: sticky; top: 0; z-index: 100; }
+        nav a { color: var(--gold); text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { opacity: 0.7; }
+
         .hero-image { width: 100%; border-radius: 12px; margin-top: 15px; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
         header { text-align: center; padding: 20px; }
-        h1 { color: var(--gold); letter-spacing: 5px; font-size: 2rem; margin: 5px 0; }
-        .quote-box { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 0.95rem; color: var(--gold); line-height: 1.6; }
+        h1 { color: var(--gold); letter-spacing: 5px; font-size: 1.8rem; margin: 5px 0; }
+        .quote-box { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 0.95rem; color: var(--gold); line-height: 1.6; text-align: center; }
 
         .tarot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
-        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 8px; font-size: 1rem; text-align: center; }
+        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; text-align: center; }
         
         .card-content { background: var(--card-bg); color: #222; border-radius: 12px; padding: 18px; min-height: 400px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s ease; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .card-name { font-size: 1.35rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 12px; padding-bottom: 8px; text-align: center; }
@@ -31,7 +36,7 @@
         .btn-main { background: var(--gold); color: #000; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
         .btn-sec { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--gold); }
 
-        /* 占卜記錄區 */
+        /* 占卜記錄區 - 自動清理邏輯展示 */
         .log-section { width: 100%; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 20px; margin-bottom: 60px; }
         .log-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; border-left: 4px solid var(--gold); animation: fadeIn 0.5s ease; }
 
@@ -41,12 +46,20 @@
 </head>
 <body>
 
+<nav>
+    <div class="container" style="display: flex; justify-content: space-around;">
+        <a href="https://www.facebook.com/profile.php?id=61582018845158">🏠 辛言解憂站</a>
+        <a href="https://axmy13.github.io/tarot-/">🔮 靈境塔羅</a>
+        <a href="https://axmy13.github.io/my-oracle/">✨ 更多測算</a>
+    </div>
+</nav>
+
 <div class="container">
-    <img src="cover.jpg" alt="辛言老師·靈境塔羅" class="hero-image">
+    <img src="cover.jpg" alt="辛言老師·解憂站" class="hero-image">
     
     <header>
-        <h1>解憂占卜站</h1>
-        <div id="daily-quote" class="quote-box">🔮 點擊下方按鈕，領取你的今日啟示。</div>
+        <h1>辛言解憂站</h1>
+        <div id="daily-quote" class="quote-box">🔮 點擊按鈕，啟動你的能量場。</div>
     </header>
 
     <div id="result-area" class="tarot-grid">
@@ -61,7 +74,7 @@
     </div>
 
     <div class="log-section">
-        <div style="color:var(--gold); margin-bottom:10px; font-weight:bold;">📜 最近 5 次占卜記錄</div>
+        <div style="color:var(--gold); margin-bottom:10px; font-weight:bold;">📜 最近 5 次測算記錄</div>
         <div id="logs"></div>
     </div>
 </div>
@@ -69,42 +82,42 @@
 <script>
 const tarotDeck = [
     {n:"0. 愚者", l:"愛情：一段輕鬆無壓力的關係，或即將邂逅新對象。", w:"事業：新計劃的起點，適合創業，警惕衝動。", m:"財運：有意外小財，適合學習理財知識。", a:"大膽邁出第一步，不要被恐懼束縛。"},
-    {n:"1. 魔術師", l:"愛情：溝通順暢，能用智慧解決伴侶間的矛盾。", w:"事業：才華橫溢，適合面試或推進核心項目。", m:"財運：技能變現好時機，創意回報豐厚。", a:"善用資源，現在就是行動的最佳時刻。"},
-    {n:"2. 女祭司", l:"愛情：精神交流大於物質，需聆聽內心直覺。", w:"事業：宜靜不宜動，適合研究或幕後策劃。", m:"財運：財富增長穩定，適合長期理財規劃。", a:"信任直覺，真相隱藏在寂靜之中。"},
-    {n:"3. 皇后", l:"愛情：充滿愛與滋養，關係成熟穩定，利於備孕。", w:"事業：項目進入豐收期，適合團隊協作與創意。", m:"財運：物質生活優渥，有貴人相助，品質提升。", a:"感受大地的恩賜，分享你的愛與豐足。"},
-    {n:"4. 皇帝", l:"愛情：關係穩定但略顯僵化，注意不要過於強勢。", w:"事業：權威性提升，有晉升機會，需建立紀律。", m:"財運：正財運強，財富來自事業穩定發展。", a:"制定清晰的計劃，展現你的領導力。"},
-    {n:"5. 教皇", l:"愛情：傳統且受認可的關係，利於談婚論嫁。", w:"事業：得到導師指引，適合加入大型機構。", m:"財運：財富來自正途，適合諮詢專業顧問。", a:"遵循既定準則，虛心向長者學習。"},
-    {n:"6. 戀人", l:"愛情：如膠似漆，單身者有望脫單，面臨選擇。", w:"事業：合夥運佳，溝通是成功的關鍵。", m:"財運：適合合資，但警惕情感因素影響判斷。", a:"跟隨內心指引做決定，平衡理智與情感。"},
+    {n:"1. 魔術師", l:"愛情：溝通順暢，能用智慧解決伴侶矛盾。", w:"事業：才華橫溢，適合推進核心項目。", m:"財運：技能變現好時機，創意回報豐厚。", a:"善用資源，現在就是行動的最佳時刻。"},
+    {n:"2. 女祭司", l:"愛情：精神交流大於物質，需聆聽直覺。", w:"事業：宜靜不宜動，適合研究或幕後策劃。", m:"財運：財富增長穩定，適合長期理財。", a:"信任直覺，真相隱藏在寂靜之中。"},
+    {n:"3. 皇后", l:"愛情：關係成熟穩定，利於感情升溫與備孕。", w:"事業：環境和諧，項目進入豐收期。", m:"財運：物質生活優渥，有貴人相助提升品質。", a:"感受大地的恩賜，分享你的愛與豐足。"},
+    {n:"4. 皇帝", l:"愛情：關係穩定但略顯僵化，避免過於強勢。", w:"事業：權威提升，有晉升機會，需建立紀律。", m:"財運：正財運強，財富來自事業穩定發展。", a:"制定清晰的計劃，展現你的領導力。"},
+    {n:"5. 教皇", l:"愛情：傳統且受認可的關係，利於談婚論嫁。", w:"事業：得到導師指引，適合學習或考證。", m:"財運：財富來自正途，適合諮詢專業顧問。", a:"遵循既定準則，虛心向長者學習。"},
+    {n:"6. 戀人", l:"愛情：如膠似漆，單身者有望脫單。", w:"事業：合夥運佳，溝通是成功的關鍵。", m:"財運：適合合資，但警惕情感因素影響判斷。", a:"跟隨內心指引做決定，平衡理智與情感。"},
     {n:"7. 戰車", l:"愛情：進展迅速，需拿出決心克服阻礙。", w:"事業：競爭激烈但勝算大，適合開拓市場。", m:"財運：多勞多得，財富來自遠方或貿易。", a:"保持專注，用意志力克服內心衝突。"},
-    {n:"8. 力量", l:"愛情：溫柔能化解剛強，包容能讓關係更進一步。", w:"事業：展現內在韌性，能馴服複雜人事。", m:"財運：對財務掌控力增強，能理性應對支出。", a:"以柔克剛，耐心是克服困難的終極武器。"},
-    {n:"9. 隱士", l:"愛情：進入冷靜期，需要空間去反思感情意義。", w:"事業：適合獨自鑽研技術，遠離辦公室政治。", m:"財運：財運平平，宜節流不宜開源。", a:"給自己一點獨處時間，向內探索答案。"},
-    {n:"10. 命運之輪", l:"愛情：緣分天註定，關係即將迎來宿命轉折。", w:"事業：面臨突發轉機，需隨機應變，順勢而為。", m:"財運：財運起伏大，抓住轉瞬即逝的機會。", a:"順應時勢變化，好運正悄然降臨。"},
+    {n:"8. 力量", l:"愛情：溫柔能化解剛強，包容能讓關係進步。", w:"事業：展現內在韌性，能馴服複雜的人事。", m:"財運：對財務掌控力增強，能理性應對支出。", a:"以柔克剛，耐心是克服困難的終極武器。"},
+    {n:"9. 隱士", l:"愛情：進入冷靜期，需要空間去反思情感。", w:"事業：適合獨自鑽研技術，遠離辦公室政治。", m:"財運：財運平平，宜節流不宜開源。", a:"給自己一點獨處時間，向內探索答案。"},
+    {n:"10. 命運之輪", l:"愛情：緣分天註定，關係即將迎來宿命轉折。", w:"事業：面臨突發轉機，需隨機應變。", m:"財運：財運起伏大，抓住轉瞬即逝的機會。", a:"順應時勢變化，好運正悄然降臨。"},
     {n:"11. 正義", l:"愛情：關係平等理智，需誠實面對彼此。", w:"事業：法律或合同簽署順利，付出將得回報。", m:"財運：收支平衡，正直行事能帶來穩定。", a:"客觀分析現狀，承擔應有的責任。"},
-    {n:"12. 倒吊人", l:"愛情：處於停滯期，需換位思考，暫時等待。", w:"事業：面臨瓶頸，適合充實自我而非盲目突圍。", m:"財運：財政緊縮，建議靜觀其變，不宜決策。", a:"換個角度看問題，學會放手與等待。"},
-    {n:"13. 死神", l:"愛情：關係終結或徹底轉變，告別過去才能新生。", w:"事業：項目結束或面臨轉型，不要害怕失去。", m:"財運：財政大洗牌，斷捨離不必要的開支。", a:"勇敢告別過去，擁抱變革後的開始。"},
-    {n:"14. 節制", l:"愛情：溝通和諧，雙方能體諒，關係穩定增長。", w:"事業：適合跨部門協作，在利益間尋求平衡。", m:"財運：管理得當，適合穩健中長期投資。", a:"保持適度與平衡，在溝通中尋求共識。"},
-    {n:"15. 惡魔", l:"愛情：充滿誘惑與佔有慾，警惕不健康依賴。", w:"事業：野心大壓力也大，小心職場誘惑。", m:"財運：有偏財運，但需警惕陷阱或過度開支。", a:"正視你的執念，擺脫束縛，找回自由。"},
+    {n:"12. 倒吊人", l:"愛情：處於停滯期，需換位思考，暫時等待。", w:"事業：面臨瓶頸，適合充實自我而非突圍。", m:"財運：財政緊縮，建議靜觀其變，不宜決策。", a:"換個角度看問題，學會放手與等待。"},
+    {n:"13. 死神", l:"愛情：關係終結或徹底轉變，告別過去。", w:"事業：項目結束或面臨轉型，不要害怕失去。", m:"財運：財政大洗牌，斷捨離不必要的開支。", a:"勇敢告別過去，擁抱變革後的開始。"},
+    {n:"14. 節制", l:"愛情：溝通和諧，雙方體諒，關係穩定。", w:"事業：適合跨部門協作，尋求利益平衡。", m:"財運：管理得當，適合穩健中長期投資。", a:"保持適度與平衡，在溝通中尋求共識。"},
+    {n:"15. 惡魔", l:"愛情：充滿誘惑與佔有慾，警惕不健康依賴。", w:"事業：野心大壓力也大，小心職場誘惑。", m:"財運：有偏財運，但需警惕陷阱或過度支出。", a:"正視你的執念，擺脫束縛，找回自由。"},
     {n:"16. 高塔", l:"愛情：突發變故打破假象，迫使面對現實。", w:"事業：面臨組織調整或危機，是重建契機。", m:"財運：注意突發財務損失，保守避險為主。", a:"接受不可抗拒的改變，從廢墟中重建。"},
     {n:"17. 星星", l:"愛情：希望與療癒，過去傷口癒合，憧憬未來。", w:"事業：創意靈感迸發，才華將獲認可。", m:"財運：狀況好轉，有長期增長潛力。", a:"保持信心與熱忱，宇宙正在眷顧你。"},
-    {n:"18. 月亮", l:"愛情：內心迷茫不安，警惕隱藏的情感危機。", w:"事業：前路不明朗，充滿不確定性，警惕小人。", m:"財運：不宜盲目投資，嚴格控預算。", a:"穿透迷霧，信任直覺，等待光明回歸。"},
-    {n:"19. 太陽", l:"愛情：充滿熱情喜悅，單身者有望大放異彩。", w:"事業：名利雙收，項目圓滿，影響力提升。", m:"財運：財運亨通，投資獲利，物質保障。", a:"展現你的光芒，分享你的喜悅與成功。"},
-    {n:"20. 審判", l:"愛情：轉折點或舊情復燃，需對過往做裁決。", w:"事業：生涯面臨覺醒，努力被看見，轉行良機。", m:"財運：糾紛得解，資產狀況迎來明朗結算。", a:"誠實面對自我，開啟全新的生活篇章。"},
+    {n:"18. 月亮", l:"愛情：內心迷茫不安，警惕情感危機。", w:"事業：前路不明朗，充滿不確定性。", m:"財運：不宜盲目投資，嚴格控預算。", a:"穿透迷霧，信任直覺，等待光明回歸。"},
+    {n:"19. 太陽", l:"愛情：充滿熱情喜悅，單身者有望脫單。", w:"事業：名利雙收，項目圓滿，影響力提升。", m:"財運：財運亨通，投資獲利，物質保障。", a:"展現你的光芒，分享你的喜悅與成功。"},
+    {n:"20. 審判", l:"愛情：轉折點或舊情復燃，需裁決。 ", w:"事業：生涯面臨覺醒，努力被看見，轉行良機。", m:"財運：糾紛得解，資產狀況迎來明朗結算。", a:"誠實面對自我，開啟全新的生活篇章。"},
     {n:"21. 世界", l:"愛情：圓滿與合一，穩定且充實的感情狀態。", w:"事業：項目圓滿收官，準備開啟更高循環。", m:"財運：財富達到滿意階段，生活無虞。", a:"慶祝當下圓滿，準備迎接更高的挑戰。"}
 ];
 
+// 高頻顯化金句 - 整合吸引力法則
 const healingQuotes = [
-    "此時的迷茫，是智慧升級的前提。",
+    "✨ 宇宙訂單確認中：你所嚮往的，正全速向你奔來。",
     "起心動念，皆有定數；順勢而為，自有安排。",
     "心若不動，風又奈何；你若盛開，清風自來。",
-    "放慢腳步，靈魂才能跟上你的速度。",
-    "所有的安靜都在醞釀驚喜。"
+    "我現在正處於與宇宙頻率共振的高能量狀態。",
+    "所有的安靜都在醞釀驚喜，信任你的潛意識。"
 ];
 
 function draw() {
     let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
     let picks = shuffled.slice(0, 3);
     
-    // 更新顯示卡片
     picks.forEach((card, i) => {
         const el = document.getElementById(`c${i+1}`);
         el.innerHTML = `
@@ -117,19 +130,17 @@ function draw() {
         el.style.display = 'block';
     });
 
-    // 1. 自動滾動到結果
+    // 解決覆蓋問題：自動平滑滾動到結果
     document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
 
-    // 2. 更新每日一語
-    document.getElementById('daily-quote').innerText = "每日一語：" + healingQuotes[Math.floor(Math.random()*healingQuotes.length)];
+    // 更新金句
+    document.getElementById('daily-quote').innerText = healingQuotes[Math.floor(Math.random()*healingQuotes.length)];
 
-    // 3. 方案 A：插入記錄並清理（僅保留 5 條）
+    // 自動清理記錄邏輯 (保留最新 5 條)
     const logContainer = document.getElementById('logs');
     const timeStr = new Date().toLocaleTimeString();
-    const newLog = `<div class="log-item"><strong>${timeStr}</strong> - ${picks.map(p=>p.n).join(' | ')}</div>`;
+    logContainer.insertAdjacentHTML('afterbegin', `<div class="log-item"><strong>${timeStr}</strong> - ${picks.map(p=>p.n).join(' | ')}</div>`);
     
-    logContainer.insertAdjacentHTML('afterbegin', newLog);
-
     const currentLogs = logContainer.getElementsByClassName('log-item');
     if (currentLogs.length > 5) {
         logContainer.removeChild(currentLogs[currentLogs.length - 1]);
