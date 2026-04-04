@@ -4,115 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>解憂占卜站 | 靈境塔羅</title>
-    
-    <meta property="og:title" content="🔮 解憂占卜站｜靈境塔羅：領取你的專屬啟示">
-    <meta property="og:description" content="【閉上雙眼，誠心感應】此刻的困惑，在牌陣中自有解答。這份來自宇宙的指引，將為你照亮前路。">
-    <meta property="og:url" content="https://axmy13.github.io/tarot-/">
-    <meta property="og:image" content="https://axmy13.github.io/tarot-/cover.jpg">
-    <meta property="og:type" content="website">
-
     <style>
         :root { --bg: #0a1128; --gold: #d4af37; --card-bg: #ffffff; --text: #f4f4f4; --accent: #b71c1c; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', 'Microsoft JhengHei', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        
-        .hero-image { width: 100%; max-width: 550px; margin-top: 20px; border-radius: 12px; box-shadow: 0 0 25px rgba(212,175,55,0.3); }
-        header { text-align: center; padding: 25px 20px; }
-        h1 { color: var(--gold); letter-spacing: 6px; margin: 0; font-size: 2.2rem; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-        .quote { color: var(--gold); font-style: italic; font-size: 0.95rem; margin-top: 15px; opacity: 0.9; }
-
-        .container { width: 94%; max-width: 1000px; }
-        
-        .tarot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0; }
-        .card-slot { text-align: center; }
-        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; letter-spacing: 2px; }
-        
-        .card-content { background: var(--card-bg); color: #222; border-radius: 15px; padding: 22px; min-height: 420px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s ease-out; box-shadow: 0 12px 30px rgba(0,0,0,0.6); text-align: left; }
-        .card-name { font-size: 1.4rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 15px; padding-bottom: 10px; text-align: center; }
-        
-        .dim { margin-bottom: 14px; font-size: 0.92rem; line-height: 1.6; }
-        .dim b { color: var(--accent); display: block; margin-bottom: 3px; border-left: 3px solid var(--accent); padding-left: 8px; }
-        .card-advice { font-size: 0.9rem; color: #1b5e20; font-weight: bold; border-top: 1px dashed #ccc; padding-top: 12px; margin-top: 10px; }
-
-        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 50px; }
-        button { padding: 14px 30px; border-radius: 35px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.05rem; }
-        .btn-main { background: var(--gold); color: #000; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { width: 94%; max-width: 720px; }
+        .hero-image { width: 100%; border-radius: 12px; margin-top: 15px; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+        header { text-align: center; padding: 20px; }
+        h1 { color: var(--gold); letter-spacing: 5px; font-size: 2rem; margin: 5px 0; }
+        .quote-box { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 0.95rem; color: var(--gold); line-height: 1.6; }
+        .tarot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .slot-label { color: var(--gold); font-weight: bold; margin-bottom: 8px; font-size: 1rem; text-align: center; }
+        .card-content { background: var(--card-bg); color: #222; border-radius: 12px; padding: 18px; min-height: 400px; border: 2px solid var(--gold); display: none; animation: fadeIn 0.8s ease; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .card-name { font-size: 1.35rem; font-weight: bold; color: #1a237e; border-bottom: 2px solid var(--gold); margin-bottom: 12px; padding-bottom: 8px; text-align: center; }
+        .dim { margin-bottom: 12px; font-size: 0.95rem; line-height: 1.6; }
+        .dim b { color: var(--accent); display: block; border-left: 3px solid var(--accent); padding-left: 7px; margin-bottom: 3px; }
+        .advice { font-size: 0.9rem; color: #1b5e20; font-weight: bold; border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px; }
+        .btn-group { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
+        button { padding: 12px 28px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; font-size: 1.05rem; }
+        .btn-main { background: var(--gold); color: #000; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
         .btn-sec { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--gold); }
-        
-        .log-section { width: 100%; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 30px; margin-bottom: 60px; }
-        .log-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem; border-left: 5px solid var(--gold); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; } }
-        @media (max-width: 850px) { .tarot-grid { grid-template-columns: 1fr; } .card-content { min-height: auto; } }
+        .log-section { width: 100%; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 20px; margin-bottom: 60px; }
+        .log-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; border-left: 4px solid var(--gold); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
+        @media (max-width: 768px) { .tarot-grid { grid-template-columns: 1fr; } .card-content { min-height: auto; } }
     </style>
 </head>
 <body>
-
-<img src="cover.jpg" alt="解憂占卜站" class="hero-image">
-
-<header>
-    <h1>解憂占卜站</h1>
-    <div id="daily-quote" class="quote">每日一語：此時的迷茫，是智慧升級的前提。</div>
-</header>
-
 <div class="container">
-    <div class="tarot-grid">
+    <img src="cover.jpg" alt="辛言老師·靈境塔羅" class="hero-image">
+    <header>
+        <h1>解憂占卜站</h1>
+        <div id="daily-quote" class="quote-box">🔮 點擊下方按鈕，領取你的今日啟示。</div>
+    </header>
+    <div id="result-area" class="tarot-grid">
         <div class="card-slot"><div class="slot-label">【過去】</div><div id="c1" class="card-content"></div></div>
         <div class="card-slot"><div class="slot-label">【現在】</div><div id="c2" class="card-content"></div></div>
         <div class="card-slot"><div class="slot-label">【未來】</div><div id="c3" class="card-content"></div></div>
     </div>
-
     <div class="btn-group">
         <button class="btn-main" onclick="draw()">✨ 啟動靈境牌陣 ✨</button>
-        <button class="btn-sec" onclick="shareFB()">臉書分享</button>
-        <button class="btn-sec" onclick="location.reload()">重新感應</button>
+        <button class="btn-sec" onclick="shareToFB()">分享到臉書</button>
     </div>
-
     <div class="log-section">
-        <div style="color:var(--gold); margin-bottom:15px; font-weight: bold; font-size: 1.1rem;">🔮 占卜記錄</div>
+        <div style="color:var(--gold); margin-bottom:10px; font-weight:bold;">📜 占卜記錄</div>
         <div id="logs"></div>
     </div>
 </div>
 
 <script>
-// 22張大阿爾卡納全維度數據
 const tarotDeck = [
-    {n:"愚者", l:"愛情：一段輕鬆無壓力的關係，或即將邂逅讓你心跳加速的新對象。", w:"事業：正處於新計劃的起點，適合創業或跳槽，但需警惕盲目衝動。", m:"財運：有意外小財，但不宜大額投資，目前適合學習理財知識。", a:"大膽邁出第一步，不要被過去的恐懼束縛。"},
-    {n:"魔術師", l:"愛情：溝通順暢，魅力十足，能用智慧解決伴侶間的矛盾與誤會。", w:"事業：才華橫溢的時期，能掌控全局，非常適合面試或推進新項目。", m:"財運：點石成金的運勢，通過個人技能或創意能獲得豐厚回報。", a:"善用你手中的資源，現在就是將想法付諸行動的最佳時刻。"},
-    {n:"女祭司", l:"愛情：精神交流大於物質，可能存在暗戀，需更有耐心地聆聽內心。", w:"事業：宜靜不宜動，適合研究、策劃等後勤工作，多觀察少表態。", m:"財運：財富增長緩慢但穩定，適合長期理財規劃，遠離投機行為。", a:"信任你的直覺，真相往往隱藏在寂靜的直覺之中。"},
-    {n:"皇后", l:"愛情：充滿愛與滋養，關係成熟穩定，非常利於備孕或提升家庭幸福感。", w:"事業：環境和諧，項目進入豐收期，適合團隊協作與創意產出。", m:"財運：物質生活優渥，有貴人相助，生活品質將得到顯著提升。", a:"感受大地的恩賜，慷慨地分享你的愛與豐足。"},
-    {n:"皇帝", l:"愛情：關係穩定但略顯僵化，需注意不要將工作中的強勢帶入感情。", w:"事業：權威性提升，有晉升機會，需建立嚴密的組織與紀律感。", m:"財運：正財運強，財富來自於穩定的事業發展與長期的資產積累。", a:"制定清晰的計劃，展現你的決斷力與領導力。"},
-    {n:"教皇", l:"愛情：傳統且受認可的關係，利於談婚論嫁或修復長輩認可的感情。", w:"事業：能得到權威人士或導師的指引，適合加入大型機構或考證培訓。", m:"財運：財富來自正途，適合諮詢專業顧問，不宜冒險嘗試偏財。", a:"遵循既定的準則，虛心向有經驗的長者學習。"},
-    {n:"戀人", l:"愛情：如膠似漆，單身者有望脫單，面臨重要的情感承諾與選擇。", w:"事業：合夥運極佳，溝通與合作是成功的關鍵，需注意團隊和諧。", m:"財運：適合與人合資，但需警惕因情感衝動而導致的金錢判斷失誤。", a:"跟隨內心的指引做決定，在理智與情感間尋求平衡。"},
-    {n:"戰車", l:"愛情：關係進展迅速，可能面臨異地挑戰，需拿出決心去克服阻礙。", w:"事業：競爭激烈但勝算極大，適合開拓市場或解決棘手的歷史問題。", m:"財運：多勞多得，財富往往來自遠方、貿易或交通相關行業。", a:"保持高度專注，用意志力克服內心的衝突與猶豫。"},
-    {n:"力量", l:"愛情：溫柔能化解剛強，用包容與耐心引導伴侶，關係將更上一層樓。", w:"事業：展現強大的內在韌性，能馴服複雜的人事，贏得同事尊重。", m:"財運：對財務的掌控力增強，能理性應對債務壓力或大額開支。", a:"以柔克剛，耐心是你化解當前困境的終極武器。"},
-    {n:"隱士", l:"愛情：進入冷靜期或獨處期，需要空間去反思這段感情的真實意義。", w:"事業：適合獨自鑽研技術或進行深度思考，遠離辦公室政治。", m:"財運：財運平平，宜節流不宜開源，守住現有的資產即是勝利。", a:"給自己一點獨處的時間，向內探索才能找到真正的答案。"},
-    {n:"命運之輪", l:"愛情：緣分天註定，可能會遇到宿命般的相遇，關係即將迎來轉折。", w:"事業：面臨突如其來的轉機或新機會，需隨機應變，順勢而為。", m:"財運：財運起伏較大，有意外驚喜，需抓住轉瞬即逝的投資機會。", a:"順應時勢的變化，保持樂觀，好運正悄然降臨。"},
-    {n:"正義", l:"愛情：關係平等且理智，需要誠實地面對彼此，做出公正的決定。", w:"事業：法律事務或合同簽署順利，過去的付出將得到應有的回報。", m:"財運：收支平衡，行事公平正直能帶來長遠的財務穩定。", a:"客觀分析現狀，承擔應有的責任，行事需公平正直。"},
-    {n:"倒吊人", l:"愛情：感情處於停滯或犧牲期，需換位思考，暫時的等待是為了更好。", w:"事業：面臨瓶頸或需要暫時退讓，此時適合充實自我而非盲目突圍。", m:"財運：財政緊縮，建議靜觀其變，不要在迷茫時做任何重大決策。", a:"換一個角度看問題，學會放手，等待最佳的轉變契機。"},
-    {n:"死神", l:"愛情：一段關係的終結或徹底轉變，告別不再適合的人才能迎來新生。", w:"事業：面臨轉型或舊項目的結束，不要害怕失去，新的機會正在孕育。", m:"財運：財政大洗牌，斷捨離不必要的開支，重整你的資產結構。", a:"勇敢告別過去，擁抱蛻變，結束是為了更完美的開始。"},
-    {n:"節制", l:"愛情：溝通和諧，情感融合，雙方能夠互相體諒，關係穩定增長。", w:"事業：適合跨部門協作或跨界整合，在不同利益間尋求最大公約數。", m:"財運：收支管理得當，財富緩慢積累，適合穩健的中長期投資。", a:"保持適度與平衡，在溝通中尋求共識，切忌走向極端。"},
-    {n:"惡魔", l:"愛情：充滿誘惑與佔有慾，需警惕不健康的依賴關係或爛桃花。", w:"事業：野心勃勃但壓力巨大，小心職場誘惑或陷入不正當的競爭。", m:"財運：雖然有偏財運，但需警惕因貪婪而陷入債務陷阱或合同糾紛。", a:"正視你的執念，擺脫不必要的束縛，找回靈魂的自由。"},
-    {n:"高塔", l:"愛情：突如其來的變故或爭吵，打破了原有的假象，迫使你面對現實。", w:"事業：面臨組織架構調整或突發危機，雖然痛苦，卻是推倒重建的契機。", m:"財運：注意突發性的財務損失，此時應以保守避險為第一要務。", a:"接受不可抗拒的改變，從廢墟中重建更真實、更堅固的自我。"},
-    {n:"星星", l:"愛情：充滿希望與療癒，過去的傷口正在癒合，對未來充滿美好憧憬。", w:"事業：創意靈感迸發，你的才華將得到認可，目標逐漸清晰明朗。", m:"財運：財務狀況好轉，有長期增長的潛力，適合追求長遠目標。", a:"保持信心與熱忱，曙光就在前方，宇宙正在眷顧你。"},
-    {n:"月亮", l:"愛情：內心感到不安與迷茫，需分清真實與幻象，警惕隱藏的情感危機。", w:"事業：前路不明朗，充滿不確定性，需警惕小人干擾或信息不對稱。", m:"財運：不宜進行任何不熟悉的投資，隱形開支增加，需嚴格控預算。", a:"穿透迷霧，信任直覺但不盲從，等待光明的重新回歸。"},
-    {n:"太陽", l:"愛情：充滿熱情與喜悅，單身者有望大放異彩，情侶間關係公開透明。", w:"事業：名利雙收的時刻，項目獲得圓滿成功，你的影響力大幅提升。", m:"財運：財運亨通，投資獲利，生活充滿活力與物質保障。", a:"盡情展現你的光芒，保持童心與熱忱，與他人分享喜悅。"},
-    {n:"審判", l:"愛情：關係迎來重要的轉折點或舊情復燃，需要對過往做出最終裁決。", w:"事業：職業生涯面臨重大覺醒，過去的努力被看見，是轉行或躍升之時。", m:"財運：財務糾紛得到公正解決，資產狀況迎來明朗的結算與更新。", a:"誠實面對自我，聽從內心的召喚，開啟全新的生活篇章。"},
-    {n:"世界", l:"愛情：關係達到圓滿與合一，這是一段令人羨慕的穩定且充實的感情。", w:"事業：項目圓滿收官，達成預期目標，準備開啟更高層次的全新循環。", m:"財運：財富達到一個滿意的階段，資產配置趨於完美，生活無虞。", a:"慶祝當下的圓滿，感謝所有的相遇，準備迎接更高的挑戰。"}
+    {n:"0. 愚者", l:"愛情：一段輕鬆無壓力的關係，或即將邂逅新對象。", w:"事業：新計劃的起點，適合創業，但需警惕盲目衝動。", m:"財運：有意外小財，目前適合學習理財知識。", a:"大膽邁出第一步，不要被恐懼束縛。"},
+    {n:"1. 魔術師", l:"愛情：溝通順暢，能用智慧解決伴侶間的矛盾。", w:"事業：才華橫溢，適合面試或推進核心項目。", m:"財運：技能變現的好時機，創意產業回報豐厚。", a:"善用資源，現在就是行動的最佳時刻。"},
+    {n:"2. 女祭司", l:"愛情：精神交流大於物質，需聆聽內心的直覺。", w:"事業：宜靜不宜動，適合研究或幕後策劃。", m:"財運：財富增長穩定，適合長期理財規劃。", a:"信任直覺，真相隱藏在寂靜之中。"},
+    {n:"3. 皇后", l:"愛情：充滿愛與滋養，關係成熟穩定，利於備孕。", w:"事業：環境和諧，項目進入豐收期，適合團隊協作。", m:"財運：物質生活優渥，有貴人相助，生活品質提升。", a:"感受大地的恩賜，分享你的愛與豐足。"},
+    {n:"4. 皇帝", l:"愛情：關係穩定但略顯僵化，需注意不要過於強勢。", w:"事業：權威性提升，有晉升機會，需建立紀律感。", m:"財運：正財運強，財富來自事業穩定發展。", a:"制定清晰的計劃，展現你的領導力。"},
+    {n:"5. 教皇", l:"愛情：傳統且受認可的關係，利於談婚論嫁。", w:"事業：得到導師指引，適合加入大型機構或考證。", m:"財運：財富來自正途，適合諮詢專業顧問。", a:"遵循既定準則，虛心向長者學習。"},
+    {n:"6. 戀人", l:"愛情：如膠似漆，單身者有望脫單，面臨重要選擇。", w:"事業：合夥運佳，溝通是成功的關鍵。", m:"財運：適合合資，但警惕情感因素影響判斷。", a:"跟隨內心指引做決定，平衡理智與情感。"},
+    {n:"7. 戰車", l:"愛情：進展迅速，需拿出決心克服阻礙。", w:"事業：競爭激烈但勝算大，適合開拓市場。", m:"財運：多勞多得，財富來自遠方或貿易。", a:"保持專注，用意志力克服內心衝突。"},
+    {n:"8. 力量", l:"愛情：溫柔能化解剛強，包容能讓關係更進一步。", w:"事業：展現內在韌性，能馴服複雜的人事關係。", m:"財運：對財務掌控力增強，能理性應對支出。", a:"以柔克剛，耐心是克服困難的終極武器。"},
+    {n:"9. 隱士", l:"愛情：進入冷靜期，需要空間去反思感情意義。", w:"事業：適合獨自鑽研技術，遠離辦公室政治。", m:"財運：財運平平，宜節流不宜開源，守住資產。", a:"給自己一點獨處時間，向內探索答案。"},
+    {n:"10. 命運之輪", l:"愛情：緣分天註定，關係即將迎來宿命轉折。", w:"事業：面臨突發轉機，需隨機應變，順勢而為。", m:"財運：財運起伏大，需抓住轉瞬即逝的機會。", a:"順應時勢變化，好運正悄然降臨。"},
+    {n:"11. 正義", l:"愛情：關係平等理智，需誠實面對彼此。", w:"事業：法律或合同簽署順利，付出將得回報。", m:"財運：收支平衡，正直行事能帶來財務穩定。", a:"客觀分析現狀，承擔應有的責任。"},
+    {n:"12. 倒吊人", l:"愛情：處於停滯期，需換位思考，暫時等待。", w:"事業：面臨瓶頸，適合充實自我而非盲目突圍。", m:"財運：財政緊縮，建議靜觀其變，不宜重大決策。", a:"換個角度看問題，學會放手與等待。"},
+    {n:"13. 死神", l:"愛情：關係終結或徹底轉變，告別過去才能新生。", w:"事業：項目結束或面臨轉型，不要害怕失去。", m:"財運：財政大洗牌，斷捨離不必要的開支。", a:"勇敢告別過去，擁抱變革後的開始。"},
+    {n:"14. 節制", l:"愛情：溝通和諧，雙方能體諒，關係穩定增長。", w:"事業：適合跨部門協作，在利益間尋求平衡。", m:"財運：收支管理得當，適合穩健中長期投資。", a:"保持適度與平衡，在溝通中尋求共識。"},
+    {n:"15. 惡魔", l:"愛情：充滿誘惑與佔有慾，警惕不健康依賴。", w:"事業：野心大壓力也大，小心職場誘惑或不當競爭。", m:"財運：有偏財運，但需警惕陷阱或過度開支。", a:"正視你的執念，擺脫束縛，找回自由。"},
+    {n:"16. 高塔", l:"愛情：突發變故打破假象，迫使面對現實。", w:"事業：面臨組織調整或危機，是重建的契機。", m:"財運：注意突發財務損失，應以保守避險為主。", a:"接受不可抗拒的改變，從廢墟中重建自我。"},
+    {n:"17. 星星", l:"愛情：希望與療癒，過去傷口癒合，憧憬未來。", w:"事業：創意靈感迸發，才華將獲認可，目標清晰。", m:"財運：狀況好轉，有長期增長潛力。", a:"保持信心與熱忱，宇宙正在眷顧你。"},
+    {n:"18. 月亮", l:"愛情：內心迷茫不安，需警惕隱藏的情感危機。", w:"事業：前路不明朗，充滿不確定性，警惕小人。", m:"財運：不宜進行不熟投資，嚴格控預算。", a:"穿透迷霧，信任直覺，等待光明回歸。"},
+    {n:"19. 太陽", l:"愛情：充滿熱情喜悅，單身者有望大放異彩。", w:"事業：名利雙收，項目圓滿，影響力提升。", m:"財運：財運亨通，投資獲利，生活充滿活力。", a:"展現你的光芒，分享你的喜悅與成功。"},
+    {n:"20. 審判", l:"愛情：轉折點或舊情復燃，需對過往做出裁決。", w:"事業：生涯面臨覺醒，努力被看見，轉行良機。", m:"財運：糾紛得解，資產狀況迎來明朗結算。", a:"誠實面對自我，開啟全新的生活篇章。"},
+    {n:"21. 世界", l:"愛情：圓滿與合一，穩定且充實的感情狀態。", w:"事業：項目圓滿收官，準備開啟更高層次的循環。", m:"財運：財富達到滿意階段，生活無虞。", a:"慶祝當下圓滿，準備迎接更高的挑戰。"}
 ];
 
 const healingQuotes = [
     "此時的迷茫，是智慧升級的前提。",
     "起心動念，皆有定數；順勢而為，自有安排。",
-    "宇宙不曾虧待努力的人，所有的安靜都在醞釀驚喜。",
+    "心若不動，風又奈何；你若盛開，清風自來。",
     "放慢腳步，靈魂才能跟上你的速度。",
-    "心若不動，風又奈何；你若盛開，清風自來。"
+    "宇宙不曾虧待努力的人，所有的安靜都在醞釀驚喜。"
 ];
 
 function draw() {
-    // 隨機抽選 3 張牌
     let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
     let picks = shuffled.slice(0, 3);
-
     picks.forEach((card, i) => {
         const el = document.getElementById(`c${i+1}`);
         el.innerHTML = `
@@ -120,24 +95,17 @@ function draw() {
             <div class="dim"><b>❤️ 愛情發展</b>${card.l}</div>
             <div class="dim"><b>💼 事業運勢</b>${card.w}</div>
             <div class="dim"><b>💰 財運指引</b>${card.m}</div>
-            <div class="card-advice">💡 建議：${card.a}</div>
+            <div class="advice">💡 建議：${card.a}</div>
         `;
         el.style.display = 'block';
     });
-
-    // 更新每日一語
+    document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('daily-quote').innerText = "每日一語：" + healingQuotes[Math.floor(Math.random()*healingQuotes.length)];
-
-    // 紀錄 Log
-    const timeStr = new Date().toLocaleString('zh-TW');
-    const logStr = `<div class="log-item"><strong>${timeStr}</strong> - ${picks.map(p=>p.n).join(' | ')}</div>`;
-    document.getElementById('logs').insertAdjacentHTML('afterbegin', logStr);
-    
-    // 自動滾動到結果
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    const timeStr = new Date().toLocaleTimeString();
+    document.getElementById('logs').insertAdjacentHTML('afterbegin', `<div class="log-item"><strong>${timeStr}</strong> - ${picks.map(p=>p.n).join(' | ')}</div>`);
 }
 
-function shareFB() {
+function shareToFB() {
     const url = encodeURIComponent(window.location.href);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
 }
