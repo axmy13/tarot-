@@ -6,39 +6,36 @@
     <title>辛言解憂站 | 靈境塔羅</title>
     <style>
         :root { --bg: #050a1a; --gold: #d4af37; --card-back: #111; --text: #f4f4f4; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', 'Microsoft JhengHei', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .container { width: 92%; max-width: 500px; padding-bottom: 40px; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        .container { width: 92%; max-width: 500px; padding-bottom: 50px; }
         
-        /* 導航修復 */
-        nav { display: flex; justify-content: space-around; padding: 12px 0; border-bottom: 1px solid rgba(212,175,55,0.2); width: 100%; background: rgba(5, 10, 26, 0.95); position: sticky; top: 0; z-index: 999; }
-        nav a { color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: bold; padding: 5px 10px; }
+        nav { display: flex; justify-content: space-around; padding: 15px 0; border-bottom: 1px solid rgba(212,175,55,0.2); width: 100%; background: rgba(5, 10, 26, 0.95); position: sticky; top: 0; z-index: 1000; }
+        nav a { color: var(--gold); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
 
-        header { text-align: center; padding: 15px 0; }
-        h1 { color: var(--gold); letter-spacing: 3px; font-size: 1.5rem; margin: 0; }
-        .quote-box { font-size: 0.8rem; color: #aaa; margin: 8px 0; height: 1.2rem; }
+        header { text-align: center; padding: 20px 0; }
+        h1 { color: var(--gold); letter-spacing: 3px; font-size: 1.6rem; margin: 0; }
+        .hint-text { font-size: 0.85rem; color: #888; margin-top: 10px; height: 1.2rem; }
 
-        /* 卡牌佈局 - 確保三張並排不溢出 */
-        .tar-grid { display: flex; justify-content: space-between; gap: 6px; margin: 15px 0; }
-        .card-slot { flex: 1; perspective: 1000px; text-align: center; }
-        .slot-tag { color: var(--gold); font-size: 0.7rem; margin-bottom: 6px; opacity: 0.8; }
+        .tarot-area { display: flex; justify-content: space-between; gap: 8px; margin: 20px 0; }
+        .card-slot { flex: 1; perspective: 1000px; }
+        .slot-name { color: var(--gold); font-size: 0.75rem; margin-bottom: 8px; text-align: center; font-weight: bold; }
 
-        .card-inner { position: relative; width: 100%; aspect-ratio: 2/3.4; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d; cursor: pointer; }
-        .is-flipped { transform: rotateY(180deg); }
-        .is-reversed { transform: rotateY(180deg) rotateZ(180deg); }
+        .card-inner { position: relative; width: 100%; aspect-ratio: 2/3.5; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
+        .card-inner.flipped { transform: rotateY(180deg); }
+        .card-inner.reversed { transform: rotateY(180deg) rotateZ(180deg); }
 
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 6px; border: 1px solid var(--gold); box-sizing: border-box; }
-        .card-front { background: var(--card-back) url('logo.png') no-repeat center center; background-size: 55%; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
-        .card-back { background: #fff; color: #222; transform: rotateY(180deg); display: flex; flex-direction: column; padding: 6px; text-align: left; box-shadow: 0 4px 12px rgba(212,175,55,0.15); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; border: 1px solid var(--gold); box-sizing: border-box; }
+        .card-front { background: var(--card-back) url('logo.png') no-repeat center center; background-size: 60%; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .card-back { background: #fff; color: #222; transform: rotateY(180deg); display: flex; flex-direction: column; padding: 10px; box-shadow: 0 4px 15px rgba(212,175,55,0.2); overflow: hidden; }
         
-        .c-name { font-size: 0.75rem; font-weight: bold; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 2px; margin-bottom: 4px; text-align: center; line-height: 1.2; }
-        .c-txt { font-size: 0.6rem; line-height: 1.3; flex-grow: 1; overflow: hidden; }
-        .c-txt b { color: #b71c1c; display: block; margin-top: 3px; font-size: 0.55rem; }
-        .c-adv { font-size: 0.55rem; color: #1b5e20; border-top: 1px dashed #ddd; padding-top: 3px; margin-top: 3px; font-weight: bold; }
+        .c-title { font-size: 0.85rem; font-weight: bold; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 4px; margin-bottom: 6px; text-align: center; }
+        .c-desc { font-size: 0.65rem; line-height: 1.4; flex-grow: 1; text-align: left; }
+        .c-desc b { color: #b71c1c; display: block; margin-top: 4px; border-left: 2px solid #b71c1c; padding-left: 5px; }
+        .c-tip { font-size: 0.6rem; color: #1b5e20; border-top: 1px dashed #ccc; padding-top: 5px; margin-top: 5px; font-weight: bold; }
 
-        /* 按鈕優化 */
-        .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px; }
-        .btn-main { background: linear-gradient(135deg, #d4af37, #f2d06b); color: #000; border: none; padding: 12px 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 85%; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
-        .btn-sub { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 8px 0; border-radius: 25px; font-size: 0.8rem; width: 60%; cursor: pointer; }
+        .controls { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 25px; }
+        #drawBtn { background: linear-gradient(135deg, #d4af37, #f2d06b); color: #000; border: none; padding: 15px 0; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; width: 85%; box-shadow: 0 5px 20px rgba(212,175,55,0.4); -webkit-tap-highlight-color: transparent; }
+        .share-btn { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 10px 0; border-radius: 30px; font-size: 0.9rem; width: 65%; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -51,44 +48,45 @@
 <div class="container">
     <header>
         <h1>靈境塔羅</h1>
-        <div id="hint" class="quote-box">🔮 靜心感應，啟動你的能量場。</div>
+        <div id="statusHint" class="hint-text">🔮 靜心感應，點擊按鈕啟動牌陣。</div>
     </header>
 
-    <div class="tar-grid">
+    <div class="tarot-area">
         <div class="card-slot">
-            <div class="slot-tag">【過去】</div>
-            <div class="card-inner" id="card0" onclick="handleFlip(0)">
+            <div class="slot-name">【過去】</div>
+            <div class="card-inner" id="card0">
                 <div class="card-front"></div>
                 <div class="card-back" id="face0"></div>
             </div>
         </div>
         <div class="card-slot">
-            <div class="slot-tag">【現在】</div>
-            <div class="card-inner" id="card1" onclick="handleFlip(1)">
+            <div class="slot-name">【現在】</div>
+            <div class="card-inner" id="card1">
                 <div class="card-front"></div>
                 <div class="card-back" id="face1"></div>
             </div>
         </div>
         <div class="card-slot">
-            <div class="slot-tag">【未來】</div>
-            <div class="card-inner" id="card2" onclick="handleFlip(2)">
+            <div class="slot-name">【未來】</div>
+            <div class="card-inner" id="card2">
                 <div class="card-front"></div>
                 <div class="card-back" id="face2"></div>
             </div>
         </div>
     </div>
 
-    <div class="btn-wrap">
-        <button class="btn-main" onclick="startReading()">✨ 啟動靈境牌陣 ✨</button>
-        <button class="btn-sub" onclick="shareToFB()">分享啟示 · 傳遞好運</button>
+    <div class="controls">
+        <button id="drawBtn">✨ 啟動靈境牌陣 ✨</button>
+        <button class="share-btn" onclick="shareToFB()">分享啟示 · 傳遞好運</button>
     </div>
 </div>
 
 <script>
-const data = [
+// 牌組數據
+const deck = [
     {n:"0. 愚者", u:{l:"邂逅新對象。", w:"啟動新計劃。", m:"意外的小錢。", a:"勇敢踏出舒適區。"}, r:{l:"承諾不靠譜。", w:"規劃欠考慮。", m:"莫衝動消費。", a:"認清現狀再行動。"}},
     {n:"1. 魔術師", u:{l:"溝通很順暢。", w:"展現新才華。", m:"創意可變現。", a:"現在就是好時機。"}, r:{l:"花言巧語多。", w:"執行力不足。", m:"防投資陷阱。", a:"莫被假象所迷惑。"}},
-    {n:"2. 女祭司", u:{l:"精神層交流。", w:"宜觀察待機。", m:"宜靜觀其變。", a:"請信任你的直覺。"}, r:{l:"心存有秘密。", w:"決策太表面。", m:"開支失判斷。", a:"走出自我，多交流。"}},
+    {n:"2. 女祭司", u:{l:"精神層交流。", w:"宜觀察待機。", m:"宜靜觀其變。", a:"請信任你的直覺。"}, r:{l:"心存有秘密。", w:"決策太表面。", m:"開支失判斷。", a:"走出孤立，多交流。"}},
     {n:"3. 皇后", u:{l:"感情很豐盛。", w:"項目收穫期。", m:"生活很優渥。", a:"享受當下的豐盛。"}, r:{l:"感情現倦怠。", w:"資源分配亂。", m:"物慾過於強。", a:"找回內心與自然。"}},
     {n:"4. 皇帝", u:{l:"關係穩如山。", w:"權威獲提升。", m:"正財運勢強。", a:"建立明確的秩序。"}, r:{l:"態度太強勢。", w:"管理出紕漏。", m:"發展遇瓶頸。", a:"放軟姿態更有效。"}},
     {n:"5. 教皇", u:{l:"得長輩認可。", w:"有貴人指引。", m:"聽專業建議。", a:"遵循傳統與智慧。"}, r:{l:"觀念有衝突。", w:"做事太教條。", m:"防訊息誤差。", a:"尋找靈魂的導師。"}},
@@ -103,61 +101,67 @@ const data = [
     {n:"14. 節制", u:{l:"心靈很契合。", w:"協調有良方。", m:"管理很得法。", a:"平衡是成功之道。"}, r:{l:"溝通失平衡。", w:"人際極緊張。", m:"開支無節制。", a:"找回生活的節奏。"},
     {n:"15. 惡魔", u:{l:"慾望糾纏深。", w:"野心大壓大。", m:"偏財防陷阱。", a:"看清心中的執念。"}, r:{l:"感情覺醒時。", w:"走出職陰霾。", m:"財務漸透明。", a:"勇敢剪斷舊枷鎖。"},
     {n:"16. 高塔", u:{l:"突發的分手。", w:"重建的契機。", m:"突發性損失。", a:"崩潰後重生更強。"}, r:{l:"逃避大危機。", w:"內怨易爆發。", m:"損失緩期到。", a:"長痛不如短痛。"},
-    {n:"17. 星星", u:{l:"療癒見希望。", w:"才華獲認可。", m:"長期增長強。", a:"保持心中的純真。"}, r:{l:"希望暫破滅。", w:"創意已枯竭。", m:"預算落了空。", a:"黑暗中尋找微光。"},
+    {n:"17. 星星", u:{l:"療癒見希望。", w:"才華獲認官。", m:"長期增長強。", a:"保持心中的純真。"}, r:{l:"希望暫破滅。", w:"創意已枯竭。", m:"預算落了空。", a:"黑暗中尋找微光。"},
     {n:"18. 月亮", u:{l:"不安且迷茫。", w:"充滿變數期。", m:"嚴控小預算。", a:"真相在迷霧背後。"}, r:{l:"真相大白時。", w:"方向變清晰。", m:"風險受控制。", a:"擁抱直覺與潛意識。"},
     {n:"19. 太陽", u:{l:"熱情喜悅多。", w:"名利獲雙收。", m:"財運極亨通。", a:"展現你的正能量。"}, r:{l:"成功晚一步。", w:"發展暫受挫。", m:"盈餘不如願。", a:"保持陽光的心態。"},
     {n:"20. 審判", u:{l:"舊情復燃結。", w:"努力被看見。", m:"糾紛得解決。", a:"開啟全新的一頁。"}, r:{l:"逃避做決定。", w:"錯失晉升期。", m:"財務糾紛拖。", a:"誠實地面對自我。"},
     {n:"21. 世界", u:{l:"圓滿且合一。", w:"更高的循環。", m:"物質極滿足。", a:"慶祝階段性成功。"}, r:{l:"仍存有缺憾。", w:"欠臨門一腳。", m:"未達預期標。", a:"堅持最後一段路。"}
 ];
 
-let currentCards = [];
+let activeSelection = [];
 
-function startReading() {
-    // 重置所有卡片
-    currentCards = [];
-    for(let i=0; i<3; i++) {
-        const el = document.getElementById(`card${i}`);
-        el.className = "card-inner"; // 清除所有 flip 類
-        document.getElementById(`face${i}`).innerHTML = "";
-    }
+// 初始化事件監聽
+document.addEventListener('DOMContentLoaded', () => {
+    const drawBtn = document.getElementById('drawBtn');
     
-    // 洗牌與選牌
-    let pool = [...data].sort(() => Math.random() - 0.5);
-    let selected = pool.slice(0, 3);
-    
-    selected.forEach(c => {
-        currentCards.push({ ...c, rev: Math.random() < 0.5 });
+    // 啟動按鈕點擊
+    drawBtn.addEventListener('click', () => {
+        // 重置狀態
+        activeSelection = [];
+        for(let i=0; i<3; i++) {
+            const card = document.getElementById(`card${i}`);
+            card.classList.remove('flipped', 'reversed');
+            document.getElementById(`face${i}`).innerHTML = "";
+        }
+        
+        // 隨機抽選
+        let shuffle = [...deck].sort(() => Math.random() - 0.5);
+        let picked = shuffle.slice(0, 3);
+        picked.forEach(p => {
+            activeSelection.push({ ...p, isRev: Math.random() < 0.5 });
+        });
+        
+        document.getElementById('statusHint').innerText = "✨ 感應完成！請點擊卡片翻牌。";
     });
-    
-    document.getElementById('hint').innerText = "✨ 連結成功！請逐一翻開卡片。";
-}
 
-function handleFlip(idx) {
-    if (currentCards.length === 0) {
-        alert("請先點擊啟動按鈕！");
-        return;
-    }
-    
-    const card = currentCards[idx];
-    const el = document.getElementById(`card${idx}`);
-    const face = document.getElementById(`face${idx}`);
-    
-    if (el.classList.contains('is-flipped') || el.classList.contains('is-reversed')) return;
+    // 卡片翻轉點擊
+    [0, 1, 2].forEach(idx => {
+        const cardEl = document.getElementById(`card${idx}`);
+        cardEl.addEventListener('click', () => {
+            if (activeSelection.length === 0) {
+                alert("請先點擊啟動按鈕！");
+                return;
+            }
+            if (cardEl.classList.contains('flipped') || cardEl.classList.contains('reversed')) return;
 
-    const res = card.rev ? card.r : card.u;
-    face.innerHTML = `
-        <div class="c-name">${card.n}${card.rev ? '<br>(逆位)' : '(正位)'}</div>
-        <div class="c-txt">
-            <b>❤️ 愛情</b>${res.l}
-            <b>💼 事業</b>${res.w}
-            <b>💰 財運</b>${res.m}
-        </div>
-        <div class="c-adv">💡 ${res.a}</div>
-    `;
+            const data = activeSelection[idx];
+            const content = data.isRev ? data.r : data.u;
+            
+            document.getElementById(`face${idx}`).innerHTML = `
+                <div class="c-title">${data.n}${data.isRev ? '<br>(逆位)' : '(正位)'}</div>
+                <div class="c-desc">
+                    <b>❤️ 愛情</b>${content.l}
+                    <b>💼 事業</b>${content.w}
+                    <b>💰 財運</b>${content.m}
+                </div>
+                <div class="c-tip">💡 ${content.a}</div>
+            `;
 
-    if (card.rev) el.classList.add('is-reversed');
-    else el.classList.add('is-flipped');
-}
+            if (data.isRev) cardEl.classList.add('reversed');
+            else cardEl.classList.add('flipped');
+        });
+    });
+});
 
 function shareToFB() {
     const u = encodeURIComponent(window.location.href);
