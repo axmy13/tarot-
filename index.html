@@ -6,185 +6,162 @@
     <title>辛言解憂站 | 靈境塔羅</title>
     <style>
         :root { --bg: #050a1a; --gold: #d4af37; --card-back: #111; --text: #f4f4f4; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'PingFang SC', 'Microsoft JhengHei', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        .container { width: 92%; max-width: 500px; padding-bottom: 40px; }
         
-        .container { width: 94%; max-width: 600px; padding-bottom: 50px; }
-        
-        /* 導航欄修復 */
-        nav { display: flex; justify-content: space-around; padding: 15px 0; border-bottom: 1px solid rgba(212,175,55,0.3); width: 100%; background: rgba(5, 10, 26, 0.9); position: sticky; top: 0; z-index: 100; }
-        nav a { color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: bold; }
+        /* 導航修復 */
+        nav { display: flex; justify-content: space-around; padding: 12px 0; border-bottom: 1px solid rgba(212,175,55,0.2); width: 100%; background: rgba(5, 10, 26, 0.95); position: sticky; top: 0; z-index: 999; }
+        nav a { color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: bold; padding: 5px 10px; }
 
-        header { text-align: center; padding: 20px; }
-        h1 { color: var(--gold); letter-spacing: 4px; font-size: 1.6rem; margin: 0; }
-        .quote-box { font-size: 0.85rem; color: #888; margin: 10px 0; min-height: 1.5rem; }
+        header { text-align: center; padding: 15px 0; }
+        h1 { color: var(--gold); letter-spacing: 3px; font-size: 1.5rem; margin: 0; }
+        .quote-box { font-size: 0.8rem; color: #aaa; margin: 8px 0; height: 1.2rem; }
 
-        /* 卡牌區域佈局優化 */
-        .tarot-grid { display: flex; justify-content: space-between; gap: 8px; margin: 20px 0; }
+        /* 卡牌佈局 - 確保三張並排不溢出 */
+        .tar-grid { display: flex; justify-content: space-between; gap: 6px; margin: 15px 0; }
         .card-slot { flex: 1; perspective: 1000px; text-align: center; }
-        .slot-label { color: var(--gold); font-size: 0.75rem; margin-bottom: 8px; font-weight: bold; }
+        .slot-tag { color: var(--gold); font-size: 0.7rem; margin-bottom: 6px; opacity: 0.8; }
 
-        /* 卡牌本體 */
-        .card-inner { position: relative; width: 100%; aspect-ratio: 2/3.5; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
-        .card-inner.is-flipped { transform: rotateY(180deg); }
-        .card-inner.is-reversed { transform: rotateY(180deg) rotateZ(180deg); }
+        .card-inner { position: relative; width: 100%; aspect-ratio: 2/3.4; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d; cursor: pointer; }
+        .is-flipped { transform: rotateY(180deg); }
+        .is-reversed { transform: rotateY(180deg) rotateZ(180deg); }
 
-        /* 牌面與牌背 */
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; border: 1px solid var(--gold); box-sizing: border-box; }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 6px; border: 1px solid var(--gold); box-sizing: border-box; }
+        .card-front { background: var(--card-back) url('logo.png') no-repeat center center; background-size: 55%; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
+        .card-back { background: #fff; color: #222; transform: rotateY(180deg); display: flex; flex-direction: column; padding: 6px; text-align: left; box-shadow: 0 4px 12px rgba(212,175,55,0.15); }
         
-        /* 牌背：使用您的 logo.png */
-        .card-front { background: var(--card-back) url('logo.png') no-repeat center center; background-size: 60%; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        
-        /* 牌面結果：移除多餘留白 */
-        .card-back { background: #fff; color: #222; transform: rotateY(180deg); display: flex; flex-direction: column; padding: 8px; justify-content: flex-start; overflow: hidden; box-shadow: 0 4px 15px rgba(212,175,55,0.2); }
-        
-        .card-title { font-size: 0.8rem; font-weight: bold; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 3px; margin-bottom: 5px; text-align: center; }
-        .card-detail { font-size: 0.65rem; line-height: 1.4; text-align: left; flex-grow: 1; }
-        .card-detail b { color: #b71c1c; display: block; margin-top: 4px; border-left: 2px solid #b71c1c; padding-left: 4px; }
-        .card-advice { font-size: 0.6rem; color: #1b5e20; border-top: 1px dashed #ccc; padding-top: 5px; margin-top: 5px; font-weight: bold; }
+        .c-name { font-size: 0.75rem; font-weight: bold; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 2px; margin-bottom: 4px; text-align: center; line-height: 1.2; }
+        .c-txt { font-size: 0.6rem; line-height: 1.3; flex-grow: 1; overflow: hidden; }
+        .c-txt b { color: #b71c1c; display: block; margin-top: 3px; font-size: 0.55rem; }
+        .c-adv { font-size: 0.55rem; color: #1b5e20; border-top: 1px dashed #ddd; padding-top: 3px; margin-top: 3px; font-weight: bold; }
 
-        .btn-group { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 30px 0; }
-        .btn-main { background: var(--gold); color: #000; border: none; padding: 15px 50px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 20px rgba(212,175,55,0.4); width: 80%; }
-        .btn-sec { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 10px 30px; border-radius: 30px; font-size: 0.9rem; cursor: pointer; width: 60%; }
-        .btn-main:active { transform: scale(0.95); }
-
-        .log-section { margin-top: 30px; border-top: 1px solid rgba(212,175,55,0.1); padding-top: 15px; }
-        .log-item { font-size: 0.75rem; color: #555; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 3px; }
-
-        @media (max-width: 480px) {
-            .card-title { font-size: 0.7rem; }
-            .card-detail { font-size: 0.6rem; }
-        }
+        /* 按鈕優化 */
+        .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px; }
+        .btn-main { background: linear-gradient(135deg, #d4af37, #f2d06b); color: #000; border: none; padding: 12px 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 85%; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
+        .btn-sub { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 8px 0; border-radius: 25px; font-size: 0.8rem; width: 60%; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="container" style="display: flex; justify-content: space-around; width: 100%;">
-        <a href="https://www.facebook.com/profile.php?id=61582018845158">🏠 辛言解憂站</a>
-        <a href="https://axmy13.github.io/tarot-/">🔮 靈境塔羅</a>
-    </div>
+    <a href="https://axmy13.github.io/my-oracle/">🏠 辛言解憂站</a>
+    <a href="https://axmy13.github.io/tarot-/">🔮 靈境塔羅</a>
 </nav>
 
 <div class="container">
     <header>
         <h1>靈境塔羅</h1>
-        <div id="daily-quote" class="quote-box">🔮 靜心冥想，點擊按鈕開啟感應。</div>
+        <div id="hint" class="quote-box">🔮 靜心感應，啟動你的能量場。</div>
     </header>
 
-    <div class="tarot-grid">
+    <div class="tar-grid">
         <div class="card-slot">
-            <div class="slot-label">過去</div>
-            <div class="card-inner" id="card0" onclick="flipCard(0)">
+            <div class="slot-tag">【過去】</div>
+            <div class="card-inner" id="card0" onclick="handleFlip(0)">
                 <div class="card-front"></div>
-                <div class="card-back" id="content0"></div>
+                <div class="card-back" id="face0"></div>
             </div>
         </div>
         <div class="card-slot">
-            <div class="slot-label">現在</div>
-            <div class="card-inner" id="card1" onclick="flipCard(1)">
+            <div class="slot-tag">【現在】</div>
+            <div class="card-inner" id="card1" onclick="handleFlip(1)">
                 <div class="card-front"></div>
-                <div class="card-back" id="content1"></div>
+                <div class="card-back" id="face1"></div>
             </div>
         </div>
         <div class="card-slot">
-            <div class="slot-label">未來</div>
-            <div class="card-inner" id="card2" onclick="flipCard(2)">
+            <div class="slot-tag">【未來】</div>
+            <div class="card-inner" id="card2" onclick="handleFlip(2)">
                 <div class="card-front"></div>
-                <div class="card-back" id="content2"></div>
+                <div class="card-back" id="face2"></div>
             </div>
         </div>
     </div>
 
-    <div class="btn-group">
-        <button class="btn-main" onclick="draw()">✨ 啟動靈境牌陣 ✨</button>
-        <button class="btn-sec" onclick="shareToFB()">分享啟示 · 傳遞好運</button>
-    </div>
-
-    <div class="log-section">
-        <div style="color:#444; font-size:0.8rem; margin-bottom:10px;">📜 最近測算：</div>
-        <div id="logs"></div>
+    <div class="btn-wrap">
+        <button class="btn-main" onclick="startReading()">✨ 啟動靈境牌陣 ✨</button>
+        <button class="btn-sub" onclick="shareToFB()">分享啟示 · 傳遞好運</button>
     </div>
 </div>
 
 <script>
-const tarotDeck = [
-    {n:"0. 愚者", up:{l:"新對象邂逅。", w:"創業好時機。", m:"有意外小財。", a:"大膽邁步，莫被恐懼束縛。"}, rev:{l:"承諾不穩定。", w:"規劃欠周詳。", m:"錢財易流失。", a:"認清現實再重新出發。"}},
-    {n:"1. 魔術師", up:{l:"溝通很順暢。", w:"才華獲顯露。", m:"創意可變現。", a:"善用資源，現在就行動。"}, rev:{l:"甜言蜜語多。", w:"執行力不足。", m:"財運不穩定。", a:"莫被外在假象所迷惑。"}},
-    {n:"2. 女祭司", up:{l:"精神層交流。", w:"宜靜不宜動。", m:"宜保守理財。", a:"聽從直覺，答案在寂靜中。"}, rev:{l:"心存有秘密。", w:"決策太表面。", m:"開支失判斷。", a:"走出孤立，與現實連結。"}},
-    {n:"3. 皇后", up:{l:"感情很豐盛。", w:"項目收穫期。", m:"生活極優渥。", a:"享受當下，分享愛與美。"}, rev:{l:"感情現倦怠。", w:"資源分配亂。", m:"物慾過於強。", a:"重新找回內心契合感。"}},
-    {n:"4. 皇帝", up:{l:"關係極穩定。", w:"權威獲提升。", m:"正財運勢強。", a:"展現領導力，建立秩序。"}, rev:{l:"態度太強勢。", w:"管理出紕漏。", m:"發展遇瓶頸。", a:"放軟姿態，靈活應對現狀。"}},
-    {n:"5. 教皇", up:{l:"長輩認可愛。", w:"得導師指引。", m:"聽專家意見。", a:"遵循傳統，虛心向長學習。"}, rev:{l:"感情遭反對。", w:"職場太教條。", m:"財務出偏差。", a:"打破常規，尋找靈魂導師。"}},
-    {n:"6. 戀人", up:{l:"浪漫連結強。", w:"合作很愉快。", m:"合夥利生財。", a:"跟隨內心的愛做決定。"}, rev:{l:"感情受考驗。", w:"溝通出缺口。", m:"因情而損財。", a:"保持理智，認清真實需求。"}},
-    {n:"7. 戰車", up:{l:"進展極迅速。", w:"競爭能勝出。", m:"財來自遠方。", a:"專注目標，用意志戰勝。"}, rev:{l:"感情失方向。", w:"動力嚴重缺。", m:"意外開支多。", a:"暫緩前進，找回控制感。"}},
-    {n:"8. 力量", up:{l:"溫柔化矛盾。", w:"以柔克剛強。", m:"理性控支出。", a:"信心是克服困難的金鑰。"}, rev:{l:"耐心已耗盡。", w:"挑戰前退縮。", m:"情緒化消費。", a:"找回內在力量，溫柔對待。"},
-    {n:"9. 隱士", up:{l:"冷靜尋真愛。", w:"鑽研技術強。", m:"宜節流開支。", a:"孤獨是為了更高層的連接。"}, rev:{l:"社交極孤立。", w:"職場訊息閉。", m:"財政陷困難。", a:"走出封閉，與世界建聯繫。"}},
-    {n:"10. 命運輪", up:{l:"宿命緣分到。", w:"抓住新機遇。", m:"意外好收穫。", a:"順應自然，好運即將來臨。"}, rev:{l:"運勢較低迷。", w:"錯失了好機。", m:"避開大風險。", a:"保持定力，靜待輪盤轉動。"},
-    {n:"11. 正義", up:{l:"平等且誠實。", w:"合同簽順利。", m:"收支很平衡。", a:"客觀分析，承擔應有責任。"}, rev:{l:"感情被誤解。", w:"付出不等價。", m:"防法律風險。", a:"修正偏見，找回內心天秤。"},
-    {n:"12. 吊人", up:{l:"換位去思考。", w:"瓶頸沉潛期。", m:"宜觀望理財。", a:"犧牲是為了更遠的回報。"}, rev:{l:"感情無進展。", w:"原地在踏步。", m:"僵局難突破。", a:"停止受害者心態，尋變革。"},
-    {n:"13. 死神", up:{l:"結束舊關係。", w:"轉向新起點。", m:"清理舊負債。", a:"不破不立，勇敢擁抱新生。"}, rev:{l:"恐懼談結束。", w:"抗拒轉型路。", m:"債務在擴大。", a:"放手過去，才能迎接未來。"},
-    {n:"14. 節制", up:{l:"心靈很契合。", w:"協調有良方。", m:"管理很得法。", a:"平衡是通往成功的唯一路。"}, rev:{l:"溝通失平衡。", w:"人際極緊張。", m:"開支無規劃。", a:"找回節奏，避免極端行為。"},
-    {n:"15. 惡魔", up:{l:"慾望糾纏深。", w:"野心大壓大。", m:"偏財防陷阱。", a:"看清執念，找回靈魂自由。"}, rev:{l:"感情覺醒時。", w:"走出職陰霾。", m:"財務逐漸明。", a:"勇敢剪斷枷鎖，重獲掌控。"},
-    {n:"16. 高塔", up:{l:"突發分手事。", w:"重建契機到。", m:"突發性損失。", a:"崩潰是為了在廢墟上重建。"}, rev:{l:"逃避大危機。", w:"內怨易爆發。", m:"損失緩期到。", a:"長痛不如短痛，主動變革。"},
-    {n:"17. 星星", up:{l:"療癒見希望。", w:"才華獲認可。", m:"長期增長強。", a:"保持信心，宇宙在眷顧你。"}, rev:{l:"希望暫破滅。", w:"創意已枯竭。", m:"預算落了空。", a:"黑暗尋微光，莫輕言放棄。"},
-    {n:"18. 月亮", up:{l:"不安且迷茫。", w:"充滿不確定。", m:"嚴控小預算。", a:"真相在迷霧背後，信直覺。"}, rev:{l:"真相大白時。", w:"方向變清晰。", m:"風險受控制。", a:"擁抱潛意識，光芒將回歸。"},
-    {n:"19. 太陽", up:{l:"熱情喜悅多。", w:"名利獲雙收。", m:"財運極亨通。", a:"展現你的光芒，分享成功。"}, rev:{l:"成功晚一步。", w:"發展暫受挫。", m:"盈餘不如願。", a:"保持陽光心態，陰霾是暫時。"},
-    {n:"20. 審判", up:{l:"舊情復燃結。", w:"努力被看見。", m:"糾紛得解決。", a:"誠實面對，開啟全新篇章。"}, rev:{l:"逃避抉擇路。", w:"錯離晉升期。", m:"財務糾紛拖。", a:"不再自欺，這是重生的路。"},
-    {n:"21. 世界", up:{l:"圓滿且合一。", w:"更高新循環。", m:"物質極滿足。", a:"慶祝圓滿，準備下個起點。"}, rev:{l:"仍存有缺憾。", w:"欠臨門一腳。", m:"未達預期標。", a:"堅持最後一段，圓滿在即。"}
+const data = [
+    {n:"0. 愚者", u:{l:"邂逅新對象。", w:"啟動新計劃。", m:"意外的小錢。", a:"勇敢踏出舒適區。"}, r:{l:"承諾不靠譜。", w:"規劃欠考慮。", m:"莫衝動消費。", a:"認清現狀再行動。"}},
+    {n:"1. 魔術師", u:{l:"溝通很順暢。", w:"展現新才華。", m:"創意可變現。", a:"現在就是好時機。"}, r:{l:"花言巧語多。", w:"執行力不足。", m:"防投資陷阱。", a:"莫被假象所迷惑。"}},
+    {n:"2. 女祭司", u:{l:"精神層交流。", w:"宜觀察待機。", m:"宜靜觀其變。", a:"請信任你的直覺。"}, r:{l:"心存有秘密。", w:"決策太表面。", m:"開支失判斷。", a:"走出自我，多交流。"}},
+    {n:"3. 皇后", u:{l:"感情很豐盛。", w:"項目收穫期。", m:"生活很優渥。", a:"享受當下的豐盛。"}, r:{l:"感情現倦怠。", w:"資源分配亂。", m:"物慾過於強。", a:"找回內心與自然。"}},
+    {n:"4. 皇帝", u:{l:"關係穩如山。", w:"權威獲提升。", m:"正財運勢強。", a:"建立明確的秩序。"}, r:{l:"態度太強勢。", w:"管理出紕漏。", m:"發展遇瓶頸。", a:"放軟姿態更有效。"}},
+    {n:"5. 教皇", u:{l:"得長輩認可。", w:"有貴人指引。", m:"聽專業建議。", a:"遵循傳統與智慧。"}, r:{l:"觀念有衝突。", w:"做事太教條。", m:"防訊息誤差。", a:"尋找靈魂的導師。"}},
+    {n:"6. 戀人", u:{l:"浪漫的連結。", w:"合作很愉快。", m:"合夥利生財。", a:"跟隨內心的選擇。"}, r:{l:"面臨抉擇難。", w:"溝通出缺口。", m:"防情變損財。", a:"理智分析真需求。"}},
+    {n:"7. 戰車", u:{l:"進展極迅速。", w:"競爭中勝出。", m:"財來自遠方。", a:"專注目標必成功。"}, r:{l:"方向不清晰。", w:"動力嚴重缺。", m:"意外開支多。", a:"找回內在控制感。"}},
+    {n:"8. 力量", u:{l:"柔情化矛盾。", w:"以柔克剛強。", m:"理性控支出。", a:"信心是成功關鍵。"}, r:{l:"耐心已耗盡。", w:"挑戰前退縮。", m:"情緒化花錢。", a:"找回內在的勇氣。"},
+    {n:"9. 隱士", u:{l:"冷靜尋真愛。", w:"鑽研技術強。", m:"宜節流度日。", a:"往內求才有答案。"}, r:{l:"自我太封閉。", w:"訊息太遲滯。", m:"財政陷困難。", a:"主動與外界連結。"},
+    {n:"10. 命運輪", u:{l:"宿命的緣分。", w:"抓住新機遇。", m:"意外好收穫。", a:"順應自然的變化。"}, r:{l:"運勢較反覆。", w:"錯失了好機。", m:"避開大風險。", a:"靜待下一個轉機。"},
+    {n:"11. 正義", u:{l:"平等且誠實。", w:"合同簽順利。", m:"收支很平衡。", a:"客觀公正地處理。"}, r:{l:"感情被誤解。", w:"付出不等價。", m:"防法律風險。", a:"修正心中的偏見。"},
+    {n:"12. 吊人", u:{l:"換位去思考。", w:"瓶頸沉潛期。", m:"宜保守觀望。", a:"換個角度看世界。"}, r:{l:"無謂的犧牲。", w:"原地在踏步。", m:"僵局難突破。", a:"主動尋求轉變點。"},
+    {n:"13. 死神", u:{l:"結束舊關係。", w:"迎來新轉型。", m:"清理舊負債。", a:"不破就不能立。"}, r:{l:"抗拒談結束。", w:"轉型極痛苦。", m:"債務在擴大。", a:"放手才能更自在。"},
+    {n:"14. 節制", u:{l:"心靈很契合。", w:"協調有良方。", m:"管理很得法。", a:"平衡是成功之道。"}, r:{l:"溝通失平衡。", w:"人際極緊張。", m:"開支無節制。", a:"找回生活的節奏。"},
+    {n:"15. 惡魔", u:{l:"慾望糾纏深。", w:"野心大壓大。", m:"偏財防陷阱。", a:"看清心中的執念。"}, r:{l:"感情覺醒時。", w:"走出職陰霾。", m:"財務漸透明。", a:"勇敢剪斷舊枷鎖。"},
+    {n:"16. 高塔", u:{l:"突發的分手。", w:"重建的契機。", m:"突發性損失。", a:"崩潰後重生更強。"}, r:{l:"逃避大危機。", w:"內怨易爆發。", m:"損失緩期到。", a:"長痛不如短痛。"},
+    {n:"17. 星星", u:{l:"療癒見希望。", w:"才華獲認可。", m:"長期增長強。", a:"保持心中的純真。"}, r:{l:"希望暫破滅。", w:"創意已枯竭。", m:"預算落了空。", a:"黑暗中尋找微光。"},
+    {n:"18. 月亮", u:{l:"不安且迷茫。", w:"充滿變數期。", m:"嚴控小預算。", a:"真相在迷霧背後。"}, r:{l:"真相大白時。", w:"方向變清晰。", m:"風險受控制。", a:"擁抱直覺與潛意識。"},
+    {n:"19. 太陽", u:{l:"熱情喜悅多。", w:"名利獲雙收。", m:"財運極亨通。", a:"展現你的正能量。"}, r:{l:"成功晚一步。", w:"發展暫受挫。", m:"盈餘不如願。", a:"保持陽光的心態。"},
+    {n:"20. 審判", u:{l:"舊情復燃結。", w:"努力被看見。", m:"糾紛得解決。", a:"開啟全新的一頁。"}, r:{l:"逃避做決定。", w:"錯失晉升期。", m:"財務糾紛拖。", a:"誠實地面對自我。"},
+    {n:"21. 世界", u:{l:"圓滿且合一。", w:"更高的循環。", m:"物質極滿足。", a:"慶祝階段性成功。"}, r:{l:"仍存有缺憾。", w:"欠臨門一腳。", m:"未達預期標。", a:"堅持最後一段路。"}
 ];
 
-let picks = [];
+let currentCards = [];
 
-function draw() {
-    // 1. 重置卡片狀態與資料
-    picks = [];
+function startReading() {
+    // 重置所有卡片
+    currentCards = [];
     for(let i=0; i<3; i++) {
         const el = document.getElementById(`card${i}`);
-        el.classList.remove('is-flipped', 'is-reversed');
-        document.getElementById(`content${i}`).innerHTML = "";
+        el.className = "card-inner"; // 清除所有 flip 類
+        document.getElementById(`face${i}`).innerHTML = "";
     }
     
-    // 2. 隨機抽牌邏輯
-    let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
-    let selected = shuffled.slice(0, 3);
+    // 洗牌與選牌
+    let pool = [...data].sort(() => Math.random() - 0.5);
+    let selected = pool.slice(0, 3);
     
-    selected.forEach((card, i) => {
-        const isRev = Math.random() < 0.5;
-        picks.push({ ...card, isRev });
+    selected.forEach(c => {
+        currentCards.push({ ...c, rev: Math.random() < 0.5 });
     });
     
-    document.getElementById('daily-quote').innerText = "✨ 連結完成！請點擊上方三張牌背翻牌。";
+    document.getElementById('hint').innerText = "✨ 連結成功！請逐一翻開卡片。";
 }
 
-function flipCard(idx) {
-    if (picks.length === 0) {
-        alert("請先點擊下方按鈕啟動牌陣！");
+function handleFlip(idx) {
+    if (currentCards.length === 0) {
+        alert("請先點擊啟動按鈕！");
         return;
     }
     
-    const cardData = picks[idx];
+    const card = currentCards[idx];
     const el = document.getElementById(`card${idx}`);
-    const content = document.getElementById(`content${idx}`);
+    const face = document.getElementById(`face${idx}`);
     
-    if (el.classList.contains('is-flipped')) return;
+    if (el.classList.contains('is-flipped') || el.classList.contains('is-reversed')) return;
 
-    const res = cardData.isRev ? cardData.rev : cardData.up;
-    content.innerHTML = `
-        <div class="card-title">${cardData.n}${cardData.isRev ? '<br>(逆位)' : '(正位)'}</div>
-        <div class="card-detail">
+    const res = card.rev ? card.r : card.u;
+    face.innerHTML = `
+        <div class="c-name">${card.n}${card.rev ? '<br>(逆位)' : '(正位)'}</div>
+        <div class="c-txt">
             <b>❤️ 愛情</b>${res.l}
             <b>💼 事業</b>${res.w}
             <b>💰 財運</b>${res.m}
         </div>
-        <div class="card-advice">💡 ${res.a}</div>
+        <div class="c-adv">💡 ${res.a}</div>
     `;
 
-    if (cardData.isRev) el.classList.add('is-reversed');
+    if (card.rev) el.classList.add('is-reversed');
     else el.classList.add('is-flipped');
 }
 
 function shareToFB() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    const u = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}`, '_blank');
 }
 </script>
 </body>
